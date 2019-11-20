@@ -47,13 +47,181 @@
 #include <sys/time.h>
 #include "serial1.h"
 #include <unistd.h>
+#include <stdlib.h>
 /**
  * @file    main.c
  * @brief   
  * @details  ** Enable global interrupt since Zumo library uses interrupts. **<br>&nbsp;&nbsp;&nbsp;CyGlobalIntEnable;<br>
 */
 
-#if 1
+#if 0
+//assignment 1
+
+void dot(void);
+void dash(void);
+
+void zmain(void)
+    {
+        while(1){
+            
+            dot();
+            
+            vTaskDelay(500);
+
+            dash();
+
+            dot(); 
+            
+            vTaskDelay(2000);
+            
+        }
+
+    }
+
+    void dot(void) {
+        for (int i = 1; i <=3; i++) {
+            BatteryLed_Write(1);
+            Beep(50, 100);
+            vTaskDelay(50);
+            BatteryLed_Write(0);
+            vTaskDelay(50);
+        }
+    }
+
+    void dash(void) {
+        for (int i = 1; i <=3; i++) {
+             BatteryLed_Write(1);
+            Beep(50, 100);
+            vTaskDelay(250);
+            BatteryLed_Write(0);
+            vTaskDelay(250);
+
+        }
+    }
+
+#endif
+
+#if 0
+//assignment 2
+    
+void zmain(void) {
+
+    TickType_t start;
+    TickType_t end;
+    int time, age;
+    printf("Enter your age: \n");
+    start = xTaskGetTickCount();
+    scanf("%d", &age);
+    end = xTaskGetTickCount();
+    time = (end - start)/1000;
+    printf("Execution time: %d \n", time);
+
+    if (age < 22) {
+        
+        if (time < 3) {
+            printf("Super fast dude! \n");
+        }
+        
+        else if (time < 5 && time >= 3) {
+            printf("So medicore. \n");
+        }
+        
+        else {
+            printf("My granny is faster than you! \n");
+        }
+    }
+    
+    else if (age >= 22 && age <= 50) {
+        
+        if (time < 3) {
+            printf("Be quick or be dead \n");
+        }
+        else if (time < 5 && time >= 3) {
+            printf("You are so average. \n");
+        }
+        else {
+            printf("Have you been smoking something illegal? \n");
+        }
+    }
+
+    else {
+        
+        if (time < 3) {
+            printf("Still going strong \n");
+        }
+        else if (time < 5 && time >= 3) {
+            printf("You are doing ok for your age. \n");
+        }
+        else {
+            printf("Do they still allow you to drive? \n");
+        }
+    }
+    
+    while(1){
+        vTaskDelay(100);
+    }
+}
+
+#endif
+
+#if 0
+//assignment 3
+//int i;    
+void flash(void);
+
+void zmain(void){
+    
+    ADC_Battery_Start();
+
+    int16 adcresult =0;
+    float volts = 0.0;
+    float percentage;
+ 
+    printf("\nStart\n");
+
+    BatteryLed_Write(0); 
+
+
+    while(true)
+    {
+
+        ADC_Battery_StartConvert(); 
+        if(ADC_Battery_IsEndConversion(ADC_Battery_WAIT_FOR_RESULT)) {
+            
+            adcresult = ADC_Battery_GetResult16();
+            percentage = (adcresult / 4095.0) * 5;
+            volts = percentage * 1.5;
+
+            printf("ADC value: %d Volts: %.2f\r\n", adcresult, volts);
+            vTaskDelay(500);
+        }
+
+    while (volts < 4) {
+            
+        flash();
+
+        if (SW1_Read() == 0) {
+            
+            BatteryLed_Write(0);
+            break;
+
+            }
+        }
+    }
+}
+
+void flash(void) {
+for (int i = 1; i <=3; i++) {
+BatteryLed_Write(1);
+vTaskDelay(500);
+BatteryLed_Write(0);
+vTaskDelay(500);
+}
+}
+
+#endif
+
+#if 0
 // Hello World!
 void zmain(void)
 {
@@ -187,18 +355,123 @@ void zmain(void)
 
 
 #if 0
-//ultrasonic sensor//
+//ultrasonic sensor// week 3 //assignment 2
 void zmain(void)
 {
-    Ultra_Start();                          // Ultra Sonic Start function
     
-    while(true) {
+    vTaskDelay(1000);
+    
+    Ultra_Start();              // Ultra Sonic Start function
+    motor_start();              // enable motor controller
+       
+    while (true){
+        
+        motor_forward(100, 100);    // moving forward
+        
         int d = Ultra_GetDistance();
-        // Print the detected distance (centimeters)
-        printf("distance = %d\r\n", d);
-        vTaskDelay(200);
-    }
+
+                printf("distance = %d\r\n", d);           // Print the detected distance (centimeters)
+
+                    if(d < 25)
+                    
+                        {
+                            Beep(100, 150);
+                            
+                            motor_backward(100, 500);     // moving backward
+                            
+                            motor_turn(200, 0, 500);      // turn
+                            
+                            //motor_forward(0,0);         // stop motors
+                            
+                            //motor_stop();               // disable motor controller
+                            
+                        }
+                }        
 }   
+#endif
+
+#if 0
+//accelerometer// week 3 //assignment 3
+void zmain(void)
+    {
+        
+    vTaskDelay(1000);
+    
+    void randomrun();
+    void escape();
+    
+    motor_start();              // enable motor controller
+        
+    struct accData_ data;
+
+    printf("Accelerometer test...\n");
+        if(!LSM303D_Start()){
+
+            printf("LSM303D failed to initialize!!! Program is Ending!!!\n");
+            while(1) vTaskDelay(10);
+
+        }
+        
+    else
+    printf("Device Ok...\n");
+
+
+    while(true)
+        {     
+            
+            randomrun();
+                          
+            LSM303D_Read_Acc(&data);
+            
+            int x = data.accX * (-1);
+            int y = data.accY * (-1);
+            
+            printf("x=%d \t y=%d\n", x, y);
+            
+            if (x > 2500)
+            {
+                escape();
+            }
+        }
+    }
+    
+void randomrun(void)
+    {
+        int r = rand() % 1000;
+     
+        if (r < 990)
+        {
+            motor_forward(232, 10);
+        }
+            
+        else if (r > 990 && r < 995)
+        {
+            motor_turn(150, 50, 500);
+        }
+            
+        else if (r > 995)
+        {
+            motor_turn(50, 150, 500);
+        }
+    }
+    
+void escape(void)
+    {
+        int r = rand() % 10;
+        
+        motor_backward(150, 1000);
+        
+        if (r < 5)
+        {
+            motor_turn(200, 0, 500);
+        }
+        
+        else if (r > 5)
+        {
+            motor_turn(0, 200, 500);
+        }
+    }
+        
 #endif
 
 #if 0
@@ -228,17 +501,40 @@ void zmain(void)
 
 
 #if 0
-//IR receiver - read raw data
+//IR receiver - read raw data //week 4 //assigment 1//
 void zmain(void)
 {
+    while(true){
+        
+        if (SW1_Read() == 0) 
+            {
+            
+            motor_start();              // enable motor controller
+
+            vTaskDelay(1000);
+            
+            motor_forward(100,2000);
+             
+            motor_forward(0,0);         // stop motors
+
+            motor_stop();               // disable motor controller
+           
+            break;
+            
+            }
+               
+        }
+    
     IR_Start();
     
     uint32_t IR_val; 
     
-    printf("\n\nIR test\n");
+    printf("\n\nIR test\nHello humans!!\n");
     
     IR_flush(); // clear IR receive buffer
     printf("Buffer cleared\n");
+    
+        
     
     // print received IR pulses and their lengths
     while(true)
@@ -248,16 +544,36 @@ void zmain(void)
             int b = 0;
             if((IR_val & IR_SIGNAL_HIGH) != 0) b = 1; // get pulse state (0/1)
             printf("%d %d\r\n",b, l);
+            
+            Beep(150,150);
+            //vTaskDelay(1000);
+            IR_flush();
+            
+            break;
         }
-    }    
+    }
+    
+    while(true)
+    {
+        motor_start();
+        motor_forward(100,2000);
+        
+        motor_forward(0,0);         // stop motors
+
+        motor_stop();               // disable motor controller
+        
+        break;
+    }
  }   
 #endif
 
 
-#if 0
+#if 1
 //reflectance
 void zmain(void)
 {
+    vTaskDelay(1000);
+    
     struct sensors_ ref;
     struct sensors_ dig;
 
@@ -267,45 +583,104 @@ void zmain(void)
 
     while(true)
     {
+        motor_start();
+        
+        motor_forward(100,10);
+        
         // read raw sensor values
         reflectance_read(&ref);
         // print out each period of reflectance sensors
-        printf("%5d %5d %5d %5d %5d %5d\r\n", ref.l3, ref.l2, ref.l1, ref.r1, ref.r2, ref.r3);       
+        //printf("Sensor value: %5d %5d %5d %5d %5d %5d\r\n", ref.l3, ref.l2, ref.l1, ref.r1, ref.r2, ref.r3);       
         
         // read digital values that are based on threshold. 0 = white, 1 = black
         // when blackness value is over threshold the sensors reads 1, otherwise 0
         reflectance_digital(&dig); 
         //print out 0 or 1 according to results of reflectance period
-        printf("%5d %5d %5d %5d %5d %5d \r\n", dig.l3, dig.l2, dig.l1, dig.r1, dig.r2, dig.r3);        
+        //printf("Sensor value: %5d %5d %5d %5d %5d %5d \r\n", dig.l3, dig.l2, dig.l1, dig.r1, dig.r2, dig.r3);        
         
-        vTaskDelay(200);
+        if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 1)
+            {
+                motor_turn(200,0, 400);             
+            }
+              
+            else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 0)
+                {
+                    motor_turn(200,50, 50);             
+                }
+                
+                 else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 1 && dig.r3 == 1)
+                    {
+                        motor_turn(250, 0, 50);             
+                    }
+                
+                    else if (dig.l3 == 0 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0)
+                        {
+                            motor_turn(50,200, 50);             
+                        }
+                    
+                        else if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0)
+                            {
+                                motor_turn(0, 250, 50);             
+                            }
+                        
+                            else if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 1)
+                                {
+                                    motor_forward(0,0);
+                                    motor_stop();
+                                    break;
+                                }
+        
+        //vTaskDelay(500);
     }
 }   
 #endif
 
 
 #if 0
-//motor
+//motor //week 3 //assignment 1
 void zmain(void)
 {
-    motor_start();              // enable motor controller
-    motor_forward(0,0);         // set speed to zero to stop motors
+    while (1){
+        
+        if (SW1_Read() == 0) {
+        
+        motor_start();              // enable motor controller
+        
+        motor_forward(0,0);         // set speed to zero to stop motors
 
-    vTaskDelay(3000);
-    
-    motor_forward(100,2000);     // moving forward
-    motor_turn(200,50,2000);     // turn
-    motor_turn(50,200,2000);     // turn
-    motor_backward(100,2000);    // moving backward
-     
-    motor_forward(0,0);         // stop motors
+        vTaskDelay(1000);
+        
+        motor_turn(105, 100, 3500);    // moving forward
 
-    motor_stop();               // disable motor controller
-    
-    while(true)
-    {
-        vTaskDelay(100);
+        motor_turn(200,50,645);     // turn
+
+        motor_turn(105, 100, 2600);    // moving forward
+
+        motor_turn(200,50,645);     // turn
+        
+        motor_turn(105, 100, 2650);    // moving forward
+        
+        motor_turn(200,50,645);     // turn
+        
+        motor_turn(145,75,1800);    // turn inside
+        
+        motor_turn(105, 100, 1200);    // moving forward
+        
+        vTaskDelay(500);
+        
+        //motor_backward(100,2000);    // moving backward
+         
+        motor_forward(0,0);         // stop motors
+
+        motor_stop();               // disable motor controller
+        
+        //while(true)
+        //{
+        //    vTaskDelay(100);
+        //}
     }
+    }
+    
 }
 #endif
 
