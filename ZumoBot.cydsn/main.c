@@ -48,6 +48,7 @@
 #include "serial1.h"
 #include <unistd.h>
 #include <stdlib.h>
+//#include <stbool.h>
 /**
  * @file    main.c
  * @brief   
@@ -570,69 +571,164 @@ void zmain(void)
 
 #if 1
 //reflectance
+    
+int onblack, onwhite, passed;    
+    
 void zmain(void)
-{
-    vTaskDelay(1000);
+{   
+    void linecounter();
+    void reflectancedrive();
+        
+    IR_Start();    
+    uint32_t IR_val;     
+    IR_flush();
+   
+    motor_start();
     
-    struct sensors_ ref;
-    struct sensors_ dig;
-
-    reflectance_start();
-    reflectance_set_threshold(9000, 9000, 11000, 11000, 9000, 9000); // set center sensor threshold to 11000 and others to 9000
-    
-
-    while(true)
+    while(true)             // Wait for user button
     {
-        motor_start();
         
-        motor_forward(100,10);
-        
-        // read raw sensor values
-        reflectance_read(&ref);
-        // print out each period of reflectance sensors
-        //printf("Sensor value: %5d %5d %5d %5d %5d %5d\r\n", ref.l3, ref.l2, ref.l1, ref.r1, ref.r2, ref.r3);       
-        
-        // read digital values that are based on threshold. 0 = white, 1 = black
-        // when blackness value is over threshold the sensors reads 1, otherwise 0
-        reflectance_digital(&dig); 
-        //print out 0 or 1 according to results of reflectance period
-        //printf("Sensor value: %5d %5d %5d %5d %5d %5d \r\n", dig.l3, dig.l2, dig.l1, dig.r1, dig.r2, dig.r3);        
-        
-        if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 1)
+        if (SW1_Read() == 0) 
             {
-                motor_turn(200,0, 400);             
+                
+            vTaskDelay(1000);
+            
+            break;
+            
             }
-              
-            else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 0)
-                {
-                    motor_turn(200,50, 50);             
-                }
-                
-                 else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 1 && dig.r3 == 1)
-                    {
-                        motor_turn(250, 0, 50);             
-                    }
-                
-                    else if (dig.l3 == 0 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0)
-                        {
-                            motor_turn(50,200, 50);             
-                        }
-                    
-                        else if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0)
-                            {
-                                motor_turn(0, 250, 50);             
-                            }
-                        
-                            else if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 1)
-                                {
-                                    motor_forward(0,0);
-                                    motor_stop();
-                                    break;
-                                }
+               
+    }
+    
+    while(true)             // Drive to first line
+    {
         
-        //vTaskDelay(500);
+        linecounter();
+        
+        reflectancedrive();
+        
+        if(onblack==1)
+            {
+                Beep(100, 100);
+                motor_forward(0, 0);
+                break;
+            }
+               
+    }
+    
+    while(true)             // Wait for IR signal
+    {
+        if(IR_get(&IR_val, portMAX_DELAY)) {
+            int l = IR_val & IR_SIGNAL_MASK; // get pulse length
+            int b = 0;
+            if((IR_val & IR_SIGNAL_HIGH) != 0) b = 1; // get pulse state (0/1)
+            printf("%d %d\r\n",b, l);
+            
+            Beep(150,150);
+            IR_flush();
+                      
+            break;
+        }
+    }
+
+    while(true)             // Drive
+    {               
+        linecounter();
+        
+        reflectancedrive();
     }
 }   
+
+void linecounter(void)
+    {
+        struct sensors_ ref;
+        struct sensors_ dig;
+
+        reflectance_start();
+        reflectance_set_threshold(9000, 9000, 11000, 11000, 9000, 9000);
+        
+        reflectance_read(&ref);
+        reflectance_digital(&dig);
+        
+        printf("Sensor value: %5d %5d %5d %5d %5d %5d \r\n", dig.l3, dig.l2, dig.l1, dig.r1, dig.r2, dig.r3);
+        printf("a=%d b=%d c=%d\n", onblack, onwhite, passed);
+        
+        if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 1)
+            {
+                onblack = 1;               
+            }
+        
+        if (dig.l3 != 1 && dig.r3 != 1)
+            {
+                onwhite = 1;    
+            }      
+            
+        if(onblack == 1 && onwhite == 1)
+            {
+                passed++;
+                onblack = 0;
+            }
+            
+        else{ onwhite = 0; }    
+    }
+    
+void reflectancedrive(void)
+    {
+    
+        struct sensors_ ref;
+        struct sensors_ dig;
+
+        reflectance_start();
+        reflectance_set_threshold(9000, 9000, 11000, 11000, 9000, 9000);
+       
+        reflectance_read(&ref);
+        reflectance_digital(&dig);
+    
+        if ((dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0))
+            {
+                motor_forward(100, 10);
+            }
+            
+            /*else if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0)
+                    {
+                        motor_turn(0, 200, 400);             
+                    }*/
+        
+                /*else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 1)
+                    {
+                        motor_turn(200, 0, 400);             
+                    }*/
+                      
+                    else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 0)
+                        {
+                            motor_turn(200, 50, 50);             
+                        }
+                        
+                         else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 1 && dig.r3 == 1)
+                            {
+                                motor_turn(250, 0, 50);             
+                            }
+                        
+                            else if (dig.l3 == 0 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0)
+                                {
+                                    motor_turn(50, 200, 50);             
+                                }
+                            
+                                else if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0)
+                                    {
+                                        motor_turn(0, 250, 50);             
+                                    }
+                                
+                                    else if (passed == 1)
+                                        {
+                                            motor_forward(0, 0);
+                                        }
+                    
+                    else
+                    {
+                        motor_forward(100, 10);
+                    }
+    }
+    
 #endif
 
 
