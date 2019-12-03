@@ -48,7 +48,13 @@
 #include "serial1.h"
 #include <unistd.h>
 #include <stdlib.h>
-//#include <stbool.h>
+#define FORWARD 100*0.5
+#define RIGHT 200*0.5
+#define LEFT 200*0.5
+
+#define G5 255
+#define G6 255 / 2
+#define JOTAIN 225
 /**
  * @file    main.c
  * @brief   
@@ -367,13 +373,13 @@ void zmain(void)
        
     while (true){
         
-        motor_forward(100, 100);    // moving forward
+        motor_forward(100, 10);    // moving forward
         
         int d = Ultra_GetDistance();
 
                 printf("distance = %d\r\n", d);           // Print the detected distance (centimeters)
 
-                    if(d < 25)
+                    if(d < 10)
                     
                         {
                             Beep(100, 150);
@@ -398,8 +404,15 @@ void zmain(void)
         
     vTaskDelay(1000);
     
+    
     void randomrun();
     void escape();
+    void attack();
+    
+    while(SW1_Read() == 1)             // Wait for user button
+        {
+            vTaskDelay(1000);
+        }
     
     motor_start();              // enable motor controller
         
@@ -431,7 +444,8 @@ void zmain(void)
             
             if (x > 2500)
             {
-                escape();
+                //escape();
+                attack();
             }
         }
     }
@@ -472,6 +486,23 @@ void escape(void)
             motor_turn(0, 200, 500);
         }
     }
+    
+void attack(void)
+    {
+        int r = rand() % 10;
+        
+        motor_backward(150, 1000);
+        
+        if (r < 5)
+        {
+            motor_turn(200, 0, 500);
+        }
+        
+        else if (r > 5)
+        {
+            motor_turn(0, 200, 500);
+        }
+    }    
         
 #endif
 
@@ -569,7 +600,7 @@ void zmain(void)
 #endif
 
 
-#if 1
+#if 0
 //reflectance
     
 int onblack, onwhite, passed;    
@@ -585,20 +616,10 @@ void zmain(void)
    
     motor_start();
     
-    while(true)             // Wait for user button
-    {
-        
-        if (SW1_Read() == 0) 
-            {
-                
+    while(SW1_Read() == 1)             // Wait for user button
+        {
             vTaskDelay(1000);
-            
-            break;
-            
-            }
-               
-    }
-    
+        }
     while(true)             // Drive to first line
     {
         
@@ -682,46 +703,71 @@ void reflectancedrive(void)
        
         reflectance_read(&ref);
         reflectance_digital(&dig);
+        
+        void tank_turn_left(uint8, uint32);
+        void tank_turn_right(uint8, uint32);
     
-        if ((dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0))
+        if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0) //forward
             {
-                motor_forward(100, 10);
+                motor_forward(250, 10);
             }
             
-            /*else if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0)
+            else if ((dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0)||(dig.l3 == 0 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0)) // 90 degree turn right
                     {
-                        motor_turn(0, 200, 400);             
-                    }*/
+                        vTaskDelay(50);
+                        
+                        if ((dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0)||(dig.l3 == 0 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0)) // recheck
+                        {
+                            //motor_turn(0, 200, 400);
+                            tank_turn_left(200, 200);
+                        }          
+                    }
         
-                /*else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 1)
+                else if ((dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 1)||(dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 0)) //90 degree turn left
                     {
-                        motor_turn(200, 0, 400);             
-                    }*/
+                        vTaskDelay(50);
+                        
+                        if ((dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 1)||(dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 0)) // reheck
+                        {
+                            //motor_turn(200, 0, 400);
+                            tank_turn_right(200, 200);
+                        }          
+                    }
                       
-                    else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 0)
+                    else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 0) // turn right
                         {
                             motor_turn(200, 50, 50);             
                         }
                         
-                         else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 1 && dig.r3 == 1)
-                            {
-                                motor_turn(250, 0, 50);             
-                            }
-                        
-                            else if (dig.l3 == 0 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0)
+                             else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 1 && dig.r3 == 1) // hard turn right
                                 {
-                                    motor_turn(50, 200, 50);             
+                                    motor_turn(250, 0, 100);             
+                                }
+                                
+                                else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 1) //extra hard turn right
+                                {
+                                    motor_turn(255, 0, 200);             
                                 }
                             
-                                else if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0)
+                                else if (dig.l3 == 0 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0) // turn left
                                     {
-                                        motor_turn(0, 250, 50);             
+                                        motor_turn(50, 200, 50);             
                                     }
                                 
-                                    else if (passed == 1)
+                                    else if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0) // hard turn left
                                         {
-                                            motor_forward(0, 0);
+                                            motor_turn(0, 250, 100);             
                                         }
+                                        
+                                        else if (dig.l3 == 1 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0) // extra hard turn left
+                                        {
+                                            motor_turn(0, 255, 200);             
+                                        }
+                                    
+                                            else if (passed == 2) // stop //"passed == 2" : stop while 2 lines passed
+                                                {
+                                                    motor_forward(0, 0);
+                                                }
                     
                     else
                     {
@@ -729,8 +775,208 @@ void reflectancedrive(void)
                     }
     }
     
+    void tank_turn_left(uint8 speed, uint32 delay)
+    {
+        MotorDirLeft_Write(1);      // set LeftMotor forward mode
+        MotorDirRight_Write(0);     // set RightMotor forward mode
+        PWM_WriteCompare1(speed);
+        PWM_WriteCompare2(speed);
+        vTaskDelay(delay);
+    }
+
+    void tank_turn_right(uint8 speed, uint32 delay)
+    {
+        MotorDirLeft_Write(0);      // set LeftMotor forward mode
+        MotorDirRight_Write(1);     // set RightMotor forward mode
+        PWM_WriteCompare1(speed); 
+        PWM_WriteCompare2(speed);
+        vTaskDelay(delay);
+    }
+    
 #endif
 
+
+
+#if 0
+//reflectance //tank turn
+    
+int onblack, onwhite, passed;   
+void tank_turn_left(uint8, uint32);
+void tank_turn_right(uint8, uint32);
+void linecounter();
+void reflectancedrive();
+    
+void zmain(void)
+{   
+    IR_Start();    
+    uint32_t IR_val;     
+    IR_flush();
+   
+    motor_start();
+    
+    while(SW1_Read() == 1);             // Wait for user button
+    
+    while(true)             // Drive to first line
+    {
+        
+        linecounter();
+        
+        reflectancedrive();
+        
+        if(onblack==1)
+            {
+                Beep(100, 100);
+                motor_forward(0, 0);
+                break;
+            }
+               
+    }
+    
+    while(true)             // Wait for IR signal
+    {
+        if(IR_get(&IR_val, portMAX_DELAY)) {
+            int l = IR_val & IR_SIGNAL_MASK; // get pulse length
+            int b = 0;
+            if((IR_val & IR_SIGNAL_HIGH) != 0) b = 1; // get pulse state (0/1)
+            printf("%d %d\r\n",b, l);
+            
+            Beep(150,150);
+            IR_flush();
+                      
+            break;
+        }
+    }
+
+    while(true)             // Drive
+    {               
+        linecounter();
+        
+        reflectancedrive();
+    }
+}   
+
+void linecounter(void)
+    {
+        struct sensors_ ref;
+        struct sensors_ dig;
+
+        reflectance_start();
+        reflectance_set_threshold(9000, 9000, 11000, 11000, 9000, 9000);
+        
+        reflectance_read(&ref);
+        reflectance_digital(&dig);
+        
+        printf("Sensor value: %5d %5d %5d %5d %5d %5d \r\n", dig.l3, dig.l2, dig.l1, dig.r1, dig.r2, dig.r3);
+        printf("a=%d b=%d c=%d\n", onblack, onwhite, passed);
+        
+        if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 1)
+            {
+                onblack = 1;               
+            }
+        
+        if (dig.l3 != 1 || dig.r3 != 1)
+            {
+                onwhite = 1;    
+            }      
+            
+        if(onblack == 1 && onwhite == 1)
+            {
+                passed++;
+                onblack = 0;
+            }
+            
+        else{ onwhite = 0; }    
+    }
+    
+void reflectancedrive(void)
+    {
+    
+        struct sensors_ ref;
+        struct sensors_ dig;
+
+        reflectance_start();
+        reflectance_set_threshold(9000, 9000, 11000, 11000, 9000, 9000);
+       
+        reflectance_read(&ref);
+        reflectance_digital(&dig);
+    
+        if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0) //forward
+            {
+                motor_forward(FORWARD, 10);
+            }
+            
+            else if (onblack == 1 && passed == 1)//(dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0) // 90 degree turn right
+                    {
+                        vTaskDelay(500);
+                        tank_turn_left(100, 800);
+                    }
+        
+                else if ((onblack == 1 && passed == 2) || (onblack == 1 && passed == 3))//(dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 1) //90 degree turn left
+                    {
+                        vTaskDelay(500);
+                        tank_turn_right(100, 800);      
+                    }
+                      
+                    else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 0) // turn right
+                        {
+                            motor_turn(100, 50, 10);             
+                        }
+                        
+                             else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 1 && dig.r3 == 1) // hard turn right
+                                {
+                                    motor_turn(150, 0, 10);             
+                                }
+                                
+                                else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 1) //extra hard turn right
+                                {
+                                    motor_turn(150, 0, 10);             
+                                }
+                            
+                                else if (dig.l3 == 0 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0) // turn left
+                                    {
+                                        motor_turn(50, 100, 10);             
+                                    }
+                                
+                                    else if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0) // hard turn left
+                                        {
+                                            motor_turn(0, 150, 10);             
+                                        }
+                                        
+                                        else if (dig.l3 == 1 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0) // extra hard turn left
+                                        {
+                                            motor_turn(0, 150, 10);             
+                                        }
+                                    
+                                            else if (passed == 5) // stop
+                                                {
+                                                    motor_forward(0, 0);
+                                                }
+                    
+                    else
+                    {
+                        motor_forward(FORWARD, 10);
+                    }
+    }
+   
+void tank_turn_left(uint8 speed, uint32 delay)
+{
+    MotorDirLeft_Write(1);      // set LeftMotor forward mode
+    MotorDirRight_Write(0);     // set RightMotor forward mode
+    PWM_WriteCompare1(speed);
+    PWM_WriteCompare2(speed);
+    vTaskDelay(delay);
+}
+
+void tank_turn_right(uint8 speed, uint32 delay)
+{
+    MotorDirLeft_Write(0);      // set LeftMotor forward mode
+    MotorDirRight_Write(1);     // set RightMotor forward mode
+    PWM_WriteCompare1(speed); 
+    PWM_WriteCompare2(speed);
+    vTaskDelay(delay);
+}
+    
+#endif
 
 #if 0
 //motor //week 3 //assignment 1
@@ -903,5 +1149,284 @@ void zmain(void)
     }
  }   
 #endif
+
+#if 0
+
+    // PROJECT // 1:RING //
+
+int ooxxoo, oxxooo, oooxxo, xooooo, ooooox, xoooox, x_or_x;    
+int x_axle, y_axle, distance;
+void sensors();    
+void reflectance();
+void linefollow();
+void ring();
+void escape();
+void tank_turn_left(uint8, uint32);
+void tank_turn_right(uint8, uint32);
+    
+void zmain(void)
+{   
+    IR_Start();    
+    IR_flush();
+    Ultra_Start();
+    motor_start();
+    
+    while(SW1_Read() == 1);             // Wait for user button
+    
+    while(true)             // Drive to first line
+    {
+        sensors();
+        
+        linefollow();
+        
+        if(x_or_x == 1)
+            {
+                Beep(100,100);
+                motor_forward(0, 0);
+                break;
+            }         
+    }
+    
+    while(true)             // Wait for IR signal
+    {
+        IR_wait();
+        Beep(100,50);
+        Beep(100,100);
+        Beep(100,150);
+        Beep(100,200);
+        motor_forward(255, 100);
+        break;
+    }
+
+    while(true)             // Drive
+    {               
+        sensors();
+        
+        ring();
+        
+        escape();
+    }
+}   
+
+// Functions:
+
+    void sensors(void)
+    {
+        struct accData_ data;
+        struct sensors_ ref;
+        struct sensors_ dig;
+
+        LSM303D_Start();
+        reflectance_start();
+        reflectance_set_threshold(9000, 9000, 11000, 11000, 9000, 9000);
+        
+        reflectance_read(&ref);
+        reflectance_digital(&dig);
+        
+        LSM303D_Read_Acc(&data);
+            
+        x_axle = data.accX * (-1);  //effective value for x_axle is 2500!
+        y_axle = data.accY * (-1);
+            
+        /*printf("x-axle=%d \t y-axle=%d\n", x_axle, y_axle);
+        
+        if (x_axle  > 3000)
+            {
+                printf("X\n");
+                Beep(100,100);
+            }*/
+        
+        distance = Ultra_GetDistance(); //set distance value
+        
+        if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0) //set ooxxoo value
+            {
+                ooxxoo = 1;
+            }
+            
+        else if (dig.l3 == 0 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0) //set oxxooo value
+            {
+                oxxooo = 1;
+            }
+                
+        else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 0) // set oooxxo value
+            {
+                oooxxo = 1;
+            }
+            
+        else if (dig.l3 == 1 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0) // set xooooo value
+            {
+                xooooo = 1;
+            }
+            
+        else if (dig.l3 == 1 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 == 0) // set ooooox value
+            {
+                ooooox = 1;
+            }      
+         
+        else if (dig.l3 == 1 && dig.r3 == 1) //set xoooox value
+            {
+                xoooox = 1;
+            }
+            
+        else if (dig.l3 == 1 || dig.r3 == 1) //set x_or_x value
+            {
+                x_or_x = 1;
+            }    
+                
+        else ooxxoo = 0, oxxooo = 0, oooxxo = 0, xooooo = 0, ooooox = 0, xoooox = 0, x_or_x = 0;
+    }
+    
+    void linefollow(void)
+    {   
+        if (ooxxoo == 1)
+            {
+                motor_forward(100, 1);
+            }
+            
+        else if (oxxooo == 1)
+            {
+                motor_turn(100, 200, 1);
+            }
+            
+        else if (oooxxo == 1)
+            {
+                motor_turn(200, 100, 1);
+            }
+                
+        else motor_forward(100, 1);
+    }
+    
+    void ring(void)
+    {
+        int r = rand() % 10;
+        
+        if (r < 8)                                      // drive forward
+        {
+            for (int i = 0; i <100; i++)
+            {
+                if (x_or_x != 1 && distance > 30)
+                    {
+                        motor_forward (100, 1);
+                    }
+                    
+                else break;
+            }
+        }
+            
+        if (r == 8)                                      // turn left
+                {
+                    for (int i = 0; i <200; i++)
+                    {
+                        if (x_or_x != 1  && distance > 30)
+                            {
+                                motor_turn(0, 255, 1);
+                            }
+                            
+                        else break;  
+                    }
+                }
+            
+        if (r == 9)                                      // turn right
+            {
+                for (int i = 0; i <200; i++)
+                {
+                    if (x_or_x != 1  && distance > 30)
+                        {
+                            motor_turn(255, 0, 1);
+                        }
+                        
+                    else break;     
+                }
+            }
+        
+        if (x_or_x != 1  && distance < 30) //attack
+            {
+                motor_forward(255, 1);
+            }
+    }  
+    
+    void escape(void)
+    {
+        int r = rand() % 10;
+        
+        if (xoooox == 1)
+            {
+                motor_backward(255, 200);
+                
+                if (r < 5)
+                {
+                    tank_turn_left(255, 300);
+                }
+            
+                    if (r > 5)
+                    {
+                        tank_turn_right(255, 300);
+                    }
+            }
+        
+        if (x_or_x == 1)
+            {
+                if (r < 5)
+                {
+                    motor_forward(0, 0);
+                    tank_turn_left(255, 100);
+                    motor_backward(255, 100);
+                }
+            
+                    if (r > 5)
+                    {
+                        motor_forward(0, 0);
+                        tank_turn_right(255, 100);
+                        motor_backward(255, 100);
+                    }
+            }
+            
+        if (x_axle > 3000 && distance > 5)
+            {
+                Beep(100, 100);
+                tank_turn_left(255, 200);
+            }
+            
+    }
+
+    void tank_turn_left(uint8 speed, uint32 delay)
+    {
+        MotorDirLeft_Write(1);      // set LeftMotor backward mode
+        MotorDirRight_Write(0);     // set RightMotor forward mode
+        PWM_WriteCompare1(speed);
+        PWM_WriteCompare2(speed);
+        vTaskDelay(delay);
+    }
+
+    void tank_turn_right(uint8 speed, uint32 delay)
+    {
+        MotorDirLeft_Write(0);      // set LeftMotor forward mode
+        MotorDirRight_Write(1);     // set RightMotor backward mode
+        PWM_WriteCompare1(speed); 
+        PWM_WriteCompare2(speed);
+        vTaskDelay(delay);
+    }
+    
+#endif
+
+
+
+#if 1
+
+    // PROJECT // 3:MAZE //
+
+
+    
+void zmain(void)
+{
+    while(SW1_Read() == 1)
+    {
+        //Beep(1000, G5);    //G-5
+        //Beep(1000, G6);  //G-6
+        Beep(1000, JOTAIN);  //G-6
+    }
+}
+#endif
+
 
 /* [] END OF FILE */

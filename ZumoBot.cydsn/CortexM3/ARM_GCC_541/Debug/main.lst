@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 1
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 1
 
 
    1              		.syntax unified
@@ -19,14 +19,14 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 1
   16              		.text
   17              	.Ltext0:
   18              		.cfi_sections	.debug_frame
-  19              		.section	.text.linecounter,"ax",%progbits
+  19              		.section	.text.zmain,"ax",%progbits
   20              		.align	2
-  21              		.global	linecounter
+  21              		.global	zmain
   22              		.thumb
   23              		.thumb_func
-  24              		.type	linecounter, %function
-  25              	linecounter:
-  26              	.LFB86:
+  24              		.type	zmain, %function
+  25              	zmain:
+  26              	.LFB85:
   27              		.file 1 "main.c"
    1:main.c        **** /**
    2:main.c        **** * @mainpage ZumoBot Project
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 1
   28:main.c        ****     I2C, UART, Serial<br>
   29:main.c        ****     </p>
   30:main.c        **** */
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 2
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 2
 
 
   31:main.c        **** 
@@ -81,2685 +81,1931 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 1
   48:main.c        **** #include "serial1.h"
   49:main.c        **** #include <unistd.h>
   50:main.c        **** #include <stdlib.h>
-  51:main.c        **** //#include <stbool.h>
-  52:main.c        **** /**
-  53:main.c        ****  * @file    main.c
-  54:main.c        ****  * @brief   
-  55:main.c        ****  * @details  ** Enable global interrupt since Zumo library uses interrupts. **<br>&nbsp;&nbsp;&nbsp
-  56:main.c        **** */
-  57:main.c        **** 
-  58:main.c        **** #if 0
-  59:main.c        **** //assignment 1
-  60:main.c        **** 
-  61:main.c        **** void dot(void);
-  62:main.c        **** void dash(void);
+  51:main.c        **** #define FORWARD 100*0.5
+  52:main.c        **** #define RIGHT 200*0.5
+  53:main.c        **** #define LEFT 200*0.5
+  54:main.c        **** 
+  55:main.c        **** #define G5 255
+  56:main.c        **** #define G6 255 / 2
+  57:main.c        **** #define JOTAIN 230
+  58:main.c        **** /**
+  59:main.c        ****  * @file    main.c
+  60:main.c        ****  * @brief   
+  61:main.c        ****  * @details  ** Enable global interrupt since Zumo library uses interrupts. **<br>&nbsp;&nbsp;&nbsp
+  62:main.c        **** */
   63:main.c        **** 
-  64:main.c        **** void zmain(void)
-  65:main.c        ****     {
-  66:main.c        ****         while(1){
-  67:main.c        ****             
-  68:main.c        ****             dot();
-  69:main.c        ****             
-  70:main.c        ****             vTaskDelay(500);
-  71:main.c        **** 
-  72:main.c        ****             dash();
-  73:main.c        **** 
-  74:main.c        ****             dot(); 
+  64:main.c        **** #if 0
+  65:main.c        **** //assignment 1
+  66:main.c        **** 
+  67:main.c        **** void dot(void);
+  68:main.c        **** void dash(void);
+  69:main.c        **** 
+  70:main.c        **** void zmain(void)
+  71:main.c        ****     {
+  72:main.c        ****         while(1){
+  73:main.c        ****             
+  74:main.c        ****             dot();
   75:main.c        ****             
-  76:main.c        ****             vTaskDelay(2000);
-  77:main.c        ****             
-  78:main.c        ****         }
+  76:main.c        ****             vTaskDelay(500);
+  77:main.c        **** 
+  78:main.c        ****             dash();
   79:main.c        **** 
-  80:main.c        ****     }
-  81:main.c        **** 
-  82:main.c        ****     void dot(void) {
-  83:main.c        ****         for (int i = 1; i <=3; i++) {
-  84:main.c        ****             BatteryLed_Write(1);
-  85:main.c        ****             Beep(50, 100);
-  86:main.c        ****             vTaskDelay(50);
-  87:main.c        ****             BatteryLed_Write(0);
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 3
+  80:main.c        ****             dot(); 
+  81:main.c        ****             
+  82:main.c        ****             vTaskDelay(2000);
+  83:main.c        ****             
+  84:main.c        ****         }
+  85:main.c        **** 
+  86:main.c        ****     }
+  87:main.c        **** 
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 3
 
 
-  88:main.c        ****             vTaskDelay(50);
-  89:main.c        ****         }
-  90:main.c        ****     }
-  91:main.c        **** 
-  92:main.c        ****     void dash(void) {
-  93:main.c        ****         for (int i = 1; i <=3; i++) {
-  94:main.c        ****              BatteryLed_Write(1);
-  95:main.c        ****             Beep(50, 100);
-  96:main.c        ****             vTaskDelay(250);
-  97:main.c        ****             BatteryLed_Write(0);
-  98:main.c        ****             vTaskDelay(250);
-  99:main.c        **** 
- 100:main.c        ****         }
- 101:main.c        ****     }
- 102:main.c        **** 
- 103:main.c        **** #endif
- 104:main.c        **** 
- 105:main.c        **** #if 0
- 106:main.c        **** //assignment 2
- 107:main.c        ****     
- 108:main.c        **** void zmain(void) {
- 109:main.c        **** 
- 110:main.c        ****     TickType_t start;
- 111:main.c        ****     TickType_t end;
- 112:main.c        ****     int time, age;
- 113:main.c        ****     printf("Enter your age: \n");
- 114:main.c        ****     start = xTaskGetTickCount();
- 115:main.c        ****     scanf("%d", &age);
- 116:main.c        ****     end = xTaskGetTickCount();
- 117:main.c        ****     time = (end - start)/1000;
- 118:main.c        ****     printf("Execution time: %d \n", time);
- 119:main.c        **** 
- 120:main.c        ****     if (age < 22) {
- 121:main.c        ****         
- 122:main.c        ****         if (time < 3) {
- 123:main.c        ****             printf("Super fast dude! \n");
- 124:main.c        ****         }
- 125:main.c        ****         
- 126:main.c        ****         else if (time < 5 && time >= 3) {
- 127:main.c        ****             printf("So medicore. \n");
- 128:main.c        ****         }
- 129:main.c        ****         
- 130:main.c        ****         else {
- 131:main.c        ****             printf("My granny is faster than you! \n");
- 132:main.c        ****         }
- 133:main.c        ****     }
- 134:main.c        ****     
- 135:main.c        ****     else if (age >= 22 && age <= 50) {
- 136:main.c        ****         
- 137:main.c        ****         if (time < 3) {
- 138:main.c        ****             printf("Be quick or be dead \n");
- 139:main.c        ****         }
- 140:main.c        ****         else if (time < 5 && time >= 3) {
- 141:main.c        ****             printf("You are so average. \n");
- 142:main.c        ****         }
- 143:main.c        ****         else {
- 144:main.c        ****             printf("Have you been smoking something illegal? \n");
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 4
+  88:main.c        ****     void dot(void) {
+  89:main.c        ****         for (int i = 1; i <=3; i++) {
+  90:main.c        ****             BatteryLed_Write(1);
+  91:main.c        ****             Beep(50, 100);
+  92:main.c        ****             vTaskDelay(50);
+  93:main.c        ****             BatteryLed_Write(0);
+  94:main.c        ****             vTaskDelay(50);
+  95:main.c        ****         }
+  96:main.c        ****     }
+  97:main.c        **** 
+  98:main.c        ****     void dash(void) {
+  99:main.c        ****         for (int i = 1; i <=3; i++) {
+ 100:main.c        ****              BatteryLed_Write(1);
+ 101:main.c        ****             Beep(50, 100);
+ 102:main.c        ****             vTaskDelay(250);
+ 103:main.c        ****             BatteryLed_Write(0);
+ 104:main.c        ****             vTaskDelay(250);
+ 105:main.c        **** 
+ 106:main.c        ****         }
+ 107:main.c        ****     }
+ 108:main.c        **** 
+ 109:main.c        **** #endif
+ 110:main.c        **** 
+ 111:main.c        **** #if 0
+ 112:main.c        **** //assignment 2
+ 113:main.c        ****     
+ 114:main.c        **** void zmain(void) {
+ 115:main.c        **** 
+ 116:main.c        ****     TickType_t start;
+ 117:main.c        ****     TickType_t end;
+ 118:main.c        ****     int time, age;
+ 119:main.c        ****     printf("Enter your age: \n");
+ 120:main.c        ****     start = xTaskGetTickCount();
+ 121:main.c        ****     scanf("%d", &age);
+ 122:main.c        ****     end = xTaskGetTickCount();
+ 123:main.c        ****     time = (end - start)/1000;
+ 124:main.c        ****     printf("Execution time: %d \n", time);
+ 125:main.c        **** 
+ 126:main.c        ****     if (age < 22) {
+ 127:main.c        ****         
+ 128:main.c        ****         if (time < 3) {
+ 129:main.c        ****             printf("Super fast dude! \n");
+ 130:main.c        ****         }
+ 131:main.c        ****         
+ 132:main.c        ****         else if (time < 5 && time >= 3) {
+ 133:main.c        ****             printf("So medicore. \n");
+ 134:main.c        ****         }
+ 135:main.c        ****         
+ 136:main.c        ****         else {
+ 137:main.c        ****             printf("My granny is faster than you! \n");
+ 138:main.c        ****         }
+ 139:main.c        ****     }
+ 140:main.c        ****     
+ 141:main.c        ****     else if (age >= 22 && age <= 50) {
+ 142:main.c        ****         
+ 143:main.c        ****         if (time < 3) {
+ 144:main.c        ****             printf("Be quick or be dead \n");
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 4
 
 
  145:main.c        ****         }
- 146:main.c        ****     }
- 147:main.c        **** 
- 148:main.c        ****     else {
- 149:main.c        ****         
- 150:main.c        ****         if (time < 3) {
- 151:main.c        ****             printf("Still going strong \n");
- 152:main.c        ****         }
- 153:main.c        ****         else if (time < 5 && time >= 3) {
- 154:main.c        ****             printf("You are doing ok for your age. \n");
- 155:main.c        ****         }
- 156:main.c        ****         else {
- 157:main.c        ****             printf("Do they still allow you to drive? \n");
+ 146:main.c        ****         else if (time < 5 && time >= 3) {
+ 147:main.c        ****             printf("You are so average. \n");
+ 148:main.c        ****         }
+ 149:main.c        ****         else {
+ 150:main.c        ****             printf("Have you been smoking something illegal? \n");
+ 151:main.c        ****         }
+ 152:main.c        ****     }
+ 153:main.c        **** 
+ 154:main.c        ****     else {
+ 155:main.c        ****         
+ 156:main.c        ****         if (time < 3) {
+ 157:main.c        ****             printf("Still going strong \n");
  158:main.c        ****         }
- 159:main.c        ****     }
- 160:main.c        ****     
- 161:main.c        ****     while(1){
- 162:main.c        ****         vTaskDelay(100);
- 163:main.c        ****     }
- 164:main.c        **** }
- 165:main.c        **** 
- 166:main.c        **** #endif
- 167:main.c        **** 
- 168:main.c        **** #if 0
- 169:main.c        **** //assignment 3
- 170:main.c        **** //int i;    
- 171:main.c        **** void flash(void);
- 172:main.c        **** 
- 173:main.c        **** void zmain(void){
- 174:main.c        ****     
- 175:main.c        ****     ADC_Battery_Start();
- 176:main.c        **** 
- 177:main.c        ****     int16 adcresult =0;
- 178:main.c        ****     float volts = 0.0;
- 179:main.c        ****     float percentage;
- 180:main.c        ****  
- 181:main.c        ****     printf("\nStart\n");
+ 159:main.c        ****         else if (time < 5 && time >= 3) {
+ 160:main.c        ****             printf("You are doing ok for your age. \n");
+ 161:main.c        ****         }
+ 162:main.c        ****         else {
+ 163:main.c        ****             printf("Do they still allow you to drive? \n");
+ 164:main.c        ****         }
+ 165:main.c        ****     }
+ 166:main.c        ****     
+ 167:main.c        ****     while(1){
+ 168:main.c        ****         vTaskDelay(100);
+ 169:main.c        ****     }
+ 170:main.c        **** }
+ 171:main.c        **** 
+ 172:main.c        **** #endif
+ 173:main.c        **** 
+ 174:main.c        **** #if 0
+ 175:main.c        **** //assignment 3
+ 176:main.c        **** //int i;    
+ 177:main.c        **** void flash(void);
+ 178:main.c        **** 
+ 179:main.c        **** void zmain(void){
+ 180:main.c        ****     
+ 181:main.c        ****     ADC_Battery_Start();
  182:main.c        **** 
- 183:main.c        ****     BatteryLed_Write(0); 
- 184:main.c        **** 
- 185:main.c        **** 
- 186:main.c        ****     while(true)
- 187:main.c        ****     {
+ 183:main.c        ****     int16 adcresult =0;
+ 184:main.c        ****     float volts = 0.0;
+ 185:main.c        ****     float percentage;
+ 186:main.c        ****  
+ 187:main.c        ****     printf("\nStart\n");
  188:main.c        **** 
- 189:main.c        ****         ADC_Battery_StartConvert(); 
- 190:main.c        ****         if(ADC_Battery_IsEndConversion(ADC_Battery_WAIT_FOR_RESULT)) {
- 191:main.c        ****             
- 192:main.c        ****             adcresult = ADC_Battery_GetResult16();
- 193:main.c        ****             percentage = (adcresult / 4095.0) * 5;
- 194:main.c        ****             volts = percentage * 1.5;
- 195:main.c        **** 
- 196:main.c        ****             printf("ADC value: %d Volts: %.2f\r\n", adcresult, volts);
- 197:main.c        ****             vTaskDelay(500);
- 198:main.c        ****         }
- 199:main.c        **** 
- 200:main.c        ****     while (volts < 4) {
- 201:main.c        ****             
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 5
+ 189:main.c        ****     BatteryLed_Write(0); 
+ 190:main.c        **** 
+ 191:main.c        **** 
+ 192:main.c        ****     while(true)
+ 193:main.c        ****     {
+ 194:main.c        **** 
+ 195:main.c        ****         ADC_Battery_StartConvert(); 
+ 196:main.c        ****         if(ADC_Battery_IsEndConversion(ADC_Battery_WAIT_FOR_RESULT)) {
+ 197:main.c        ****             
+ 198:main.c        ****             adcresult = ADC_Battery_GetResult16();
+ 199:main.c        ****             percentage = (adcresult / 4095.0) * 5;
+ 200:main.c        ****             volts = percentage * 1.5;
+ 201:main.c        **** 
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 5
 
 
- 202:main.c        ****         flash();
- 203:main.c        **** 
- 204:main.c        ****         if (SW1_Read() == 0) {
- 205:main.c        ****             
- 206:main.c        ****             BatteryLed_Write(0);
- 207:main.c        ****             break;
- 208:main.c        **** 
- 209:main.c        ****             }
- 210:main.c        ****         }
- 211:main.c        ****     }
- 212:main.c        **** }
- 213:main.c        **** 
- 214:main.c        **** void flash(void) {
- 215:main.c        **** for (int i = 1; i <=3; i++) {
- 216:main.c        **** BatteryLed_Write(1);
- 217:main.c        **** vTaskDelay(500);
- 218:main.c        **** BatteryLed_Write(0);
- 219:main.c        **** vTaskDelay(500);
- 220:main.c        **** }
- 221:main.c        **** }
- 222:main.c        **** 
- 223:main.c        **** #endif
- 224:main.c        **** 
- 225:main.c        **** #if 0
- 226:main.c        **** // Hello World!
- 227:main.c        **** void zmain(void)
- 228:main.c        **** {
- 229:main.c        ****     printf("\nHello, World!\n");
+ 202:main.c        ****             printf("ADC value: %d Volts: %.2f\r\n", adcresult, volts);
+ 203:main.c        ****             vTaskDelay(500);
+ 204:main.c        ****         }
+ 205:main.c        **** 
+ 206:main.c        ****     while (volts < 4) {
+ 207:main.c        ****             
+ 208:main.c        ****         flash();
+ 209:main.c        **** 
+ 210:main.c        ****         if (SW1_Read() == 0) {
+ 211:main.c        ****             
+ 212:main.c        ****             BatteryLed_Write(0);
+ 213:main.c        ****             break;
+ 214:main.c        **** 
+ 215:main.c        ****             }
+ 216:main.c        ****         }
+ 217:main.c        ****     }
+ 218:main.c        **** }
+ 219:main.c        **** 
+ 220:main.c        **** void flash(void) {
+ 221:main.c        **** for (int i = 1; i <=3; i++) {
+ 222:main.c        **** BatteryLed_Write(1);
+ 223:main.c        **** vTaskDelay(500);
+ 224:main.c        **** BatteryLed_Write(0);
+ 225:main.c        **** vTaskDelay(500);
+ 226:main.c        **** }
+ 227:main.c        **** }
+ 228:main.c        **** 
+ 229:main.c        **** #endif
  230:main.c        **** 
- 231:main.c        ****     while(true)
- 232:main.c        ****     {
- 233:main.c        ****         vTaskDelay(100); // sleep (in an infinite loop)
- 234:main.c        ****     }
- 235:main.c        ****  }   
- 236:main.c        **** #endif
- 237:main.c        **** 
- 238:main.c        **** #if 0
- 239:main.c        **** // Name and age
- 240:main.c        **** void zmain(void)
- 241:main.c        **** {
- 242:main.c        ****     char name[32];
- 243:main.c        ****     int age;
- 244:main.c        ****     
- 245:main.c        ****     
- 246:main.c        ****     printf("\n\n");
- 247:main.c        ****     
- 248:main.c        ****     printf("Enter your name: ");
- 249:main.c        ****     //fflush(stdout);
- 250:main.c        ****     scanf("%s", name);
- 251:main.c        ****     printf("Enter your age: ");
- 252:main.c        ****     //fflush(stdout);
- 253:main.c        ****     scanf("%d", &age);
- 254:main.c        ****     
- 255:main.c        ****     printf("You are [%s], age = %d\n", name, age);
- 256:main.c        **** 
- 257:main.c        ****     while(true)
- 258:main.c        ****     {
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 6
+ 231:main.c        **** #if 0
+ 232:main.c        **** // Hello World!
+ 233:main.c        **** void zmain(void)
+ 234:main.c        **** {
+ 235:main.c        ****     printf("\nHello, World!\n");
+ 236:main.c        **** 
+ 237:main.c        ****     while(true)
+ 238:main.c        ****     {
+ 239:main.c        ****         vTaskDelay(100); // sleep (in an infinite loop)
+ 240:main.c        ****     }
+ 241:main.c        ****  }   
+ 242:main.c        **** #endif
+ 243:main.c        **** 
+ 244:main.c        **** #if 0
+ 245:main.c        **** // Name and age
+ 246:main.c        **** void zmain(void)
+ 247:main.c        **** {
+ 248:main.c        ****     char name[32];
+ 249:main.c        ****     int age;
+ 250:main.c        ****     
+ 251:main.c        ****     
+ 252:main.c        ****     printf("\n\n");
+ 253:main.c        ****     
+ 254:main.c        ****     printf("Enter your name: ");
+ 255:main.c        ****     //fflush(stdout);
+ 256:main.c        ****     scanf("%s", name);
+ 257:main.c        ****     printf("Enter your age: ");
+ 258:main.c        ****     //fflush(stdout);
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 6
 
 
- 259:main.c        ****         BatteryLed_Write(!SW1_Read());
- 260:main.c        ****         vTaskDelay(100);
- 261:main.c        ****     }
- 262:main.c        ****  }   
- 263:main.c        **** #endif
- 264:main.c        **** 
- 265:main.c        **** 
- 266:main.c        **** #if 0
- 267:main.c        **** //battery level//
- 268:main.c        **** void zmain(void)
- 269:main.c        **** {
- 270:main.c        ****     ADC_Battery_Start();        
+ 259:main.c        ****     scanf("%d", &age);
+ 260:main.c        ****     
+ 261:main.c        ****     printf("You are [%s], age = %d\n", name, age);
+ 262:main.c        **** 
+ 263:main.c        ****     while(true)
+ 264:main.c        ****     {
+ 265:main.c        ****         BatteryLed_Write(!SW1_Read());
+ 266:main.c        ****         vTaskDelay(100);
+ 267:main.c        ****     }
+ 268:main.c        ****  }   
+ 269:main.c        **** #endif
+ 270:main.c        **** 
  271:main.c        **** 
- 272:main.c        ****     int16 adcresult =0;
- 273:main.c        ****     float volts = 0.0;
- 274:main.c        **** 
- 275:main.c        ****     printf("\nBoot\n");
- 276:main.c        **** 
- 277:main.c        ****     //BatteryLed_Write(1); // Switch led on 
- 278:main.c        ****     BatteryLed_Write(0); // Switch led off 
- 279:main.c        ****     //uint8 button;
- 280:main.c        ****     //button = SW1_Read(); // read SW1 on pSoC board
- 281:main.c        ****     // SW1_Read() returns zero when button is pressed
- 282:main.c        ****     // SW1_Read() returns one when button is not pressed
- 283:main.c        **** 
- 284:main.c        ****     while(true)
- 285:main.c        ****     {
- 286:main.c        ****         char msg[80];
- 287:main.c        ****         ADC_Battery_StartConvert(); // start sampling
- 288:main.c        ****         if(ADC_Battery_IsEndConversion(ADC_Battery_WAIT_FOR_RESULT)) {   // wait for ADC converted 
- 289:main.c        ****             adcresult = ADC_Battery_GetResult16(); // get the ADC value (0 - 4095)
- 290:main.c        ****             // convert value to Volts
- 291:main.c        ****             // you need to implement the conversion
- 292:main.c        ****             
- 293:main.c        ****             // Print both ADC results and converted value
- 294:main.c        ****             printf("%d %f\r\n",adcresult, volts);
- 295:main.c        ****         }
- 296:main.c        ****         vTaskDelay(500);
- 297:main.c        ****     }
- 298:main.c        ****  }   
- 299:main.c        **** #endif
- 300:main.c        **** 
- 301:main.c        **** #if 0
- 302:main.c        **** // button
- 303:main.c        **** void zmain(void)
- 304:main.c        **** {
- 305:main.c        ****     while(true) {
- 306:main.c        ****         printf("Press button within 5 seconds!\n");
- 307:main.c        ****         int i = 50;
- 308:main.c        ****         while(i > 0) {
- 309:main.c        ****             if(SW1_Read() == 0) {
- 310:main.c        ****                 break;
- 311:main.c        ****             }
- 312:main.c        ****             vTaskDelay(100);
- 313:main.c        ****             --i;
- 314:main.c        ****         }
- 315:main.c        ****         if(i > 0) {
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 7
+ 272:main.c        **** #if 0
+ 273:main.c        **** //battery level//
+ 274:main.c        **** void zmain(void)
+ 275:main.c        **** {
+ 276:main.c        ****     ADC_Battery_Start();        
+ 277:main.c        **** 
+ 278:main.c        ****     int16 adcresult =0;
+ 279:main.c        ****     float volts = 0.0;
+ 280:main.c        **** 
+ 281:main.c        ****     printf("\nBoot\n");
+ 282:main.c        **** 
+ 283:main.c        ****     //BatteryLed_Write(1); // Switch led on 
+ 284:main.c        ****     BatteryLed_Write(0); // Switch led off 
+ 285:main.c        ****     //uint8 button;
+ 286:main.c        ****     //button = SW1_Read(); // read SW1 on pSoC board
+ 287:main.c        ****     // SW1_Read() returns zero when button is pressed
+ 288:main.c        ****     // SW1_Read() returns one when button is not pressed
+ 289:main.c        **** 
+ 290:main.c        ****     while(true)
+ 291:main.c        ****     {
+ 292:main.c        ****         char msg[80];
+ 293:main.c        ****         ADC_Battery_StartConvert(); // start sampling
+ 294:main.c        ****         if(ADC_Battery_IsEndConversion(ADC_Battery_WAIT_FOR_RESULT)) {   // wait for ADC converted 
+ 295:main.c        ****             adcresult = ADC_Battery_GetResult16(); // get the ADC value (0 - 4095)
+ 296:main.c        ****             // convert value to Volts
+ 297:main.c        ****             // you need to implement the conversion
+ 298:main.c        ****             
+ 299:main.c        ****             // Print both ADC results and converted value
+ 300:main.c        ****             printf("%d %f\r\n",adcresult, volts);
+ 301:main.c        ****         }
+ 302:main.c        ****         vTaskDelay(500);
+ 303:main.c        ****     }
+ 304:main.c        ****  }   
+ 305:main.c        **** #endif
+ 306:main.c        **** 
+ 307:main.c        **** #if 0
+ 308:main.c        **** // button
+ 309:main.c        **** void zmain(void)
+ 310:main.c        **** {
+ 311:main.c        ****     while(true) {
+ 312:main.c        ****         printf("Press button within 5 seconds!\n");
+ 313:main.c        ****         int i = 50;
+ 314:main.c        ****         while(i > 0) {
+ 315:main.c        ****             if(SW1_Read() == 0) {
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 7
 
 
- 316:main.c        ****             printf("Good work\n");
- 317:main.c        ****             while(SW1_Read() == 0) vTaskDelay(10); // wait until button is released
- 318:main.c        ****         }
- 319:main.c        ****         else {
- 320:main.c        ****             printf("You didn't press the button\n");
- 321:main.c        ****         }
- 322:main.c        ****     }
- 323:main.c        **** }
- 324:main.c        **** #endif
- 325:main.c        **** 
- 326:main.c        **** #if 0
- 327:main.c        **** // button
- 328:main.c        **** void zmain(void)
- 329:main.c        **** {
- 330:main.c        ****     printf("\nBoot\n");
+ 316:main.c        ****                 break;
+ 317:main.c        ****             }
+ 318:main.c        ****             vTaskDelay(100);
+ 319:main.c        ****             --i;
+ 320:main.c        ****         }
+ 321:main.c        ****         if(i > 0) {
+ 322:main.c        ****             printf("Good work\n");
+ 323:main.c        ****             while(SW1_Read() == 0) vTaskDelay(10); // wait until button is released
+ 324:main.c        ****         }
+ 325:main.c        ****         else {
+ 326:main.c        ****             printf("You didn't press the button\n");
+ 327:main.c        ****         }
+ 328:main.c        ****     }
+ 329:main.c        **** }
+ 330:main.c        **** #endif
  331:main.c        **** 
- 332:main.c        ****     //BatteryLed_Write(1); // Switch led on 
- 333:main.c        ****     BatteryLed_Write(0); // Switch led off 
- 334:main.c        ****     
- 335:main.c        ****     //uint8 button;
- 336:main.c        ****     //button = SW1_Read(); // read SW1 on pSoC board
- 337:main.c        ****     // SW1_Read() returns zero when button is pressed
- 338:main.c        ****     // SW1_Read() returns one when button is not pressed
- 339:main.c        ****     
- 340:main.c        ****     bool led = false;
- 341:main.c        ****     
- 342:main.c        ****     while(true)
- 343:main.c        ****     {
- 344:main.c        ****         // toggle led state when button is pressed
- 345:main.c        ****         if(SW1_Read() == 0) {
- 346:main.c        ****             led = !led;
- 347:main.c        ****             BatteryLed_Write(led);
- 348:main.c        ****             if(led) printf("Led is ON\n");
- 349:main.c        ****             else printf("Led is OFF\n");
- 350:main.c        ****             Beep(1000, 150);
- 351:main.c        ****             while(SW1_Read() == 0) vTaskDelay(10); // wait while button is being pressed
- 352:main.c        ****         }        
- 353:main.c        ****     }
- 354:main.c        ****  }   
- 355:main.c        **** #endif
- 356:main.c        **** 
- 357:main.c        **** 
- 358:main.c        **** #if 0
- 359:main.c        **** //ultrasonic sensor// week 3 //assignment 2
- 360:main.c        **** void zmain(void)
- 361:main.c        **** {
- 362:main.c        ****     
- 363:main.c        ****     vTaskDelay(1000);
- 364:main.c        ****     
- 365:main.c        ****     Ultra_Start();              // Ultra Sonic Start function
- 366:main.c        ****     motor_start();              // enable motor controller
- 367:main.c        ****        
- 368:main.c        ****     while (true){
- 369:main.c        ****         
- 370:main.c        ****         motor_forward(100, 100);    // moving forward
- 371:main.c        ****         
- 372:main.c        ****         int d = Ultra_GetDistance();
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 8
+ 332:main.c        **** #if 0
+ 333:main.c        **** // button
+ 334:main.c        **** void zmain(void)
+ 335:main.c        **** {
+ 336:main.c        ****     printf("\nBoot\n");
+ 337:main.c        **** 
+ 338:main.c        ****     //BatteryLed_Write(1); // Switch led on 
+ 339:main.c        ****     BatteryLed_Write(0); // Switch led off 
+ 340:main.c        ****     
+ 341:main.c        ****     //uint8 button;
+ 342:main.c        ****     //button = SW1_Read(); // read SW1 on pSoC board
+ 343:main.c        ****     // SW1_Read() returns zero when button is pressed
+ 344:main.c        ****     // SW1_Read() returns one when button is not pressed
+ 345:main.c        ****     
+ 346:main.c        ****     bool led = false;
+ 347:main.c        ****     
+ 348:main.c        ****     while(true)
+ 349:main.c        ****     {
+ 350:main.c        ****         // toggle led state when button is pressed
+ 351:main.c        ****         if(SW1_Read() == 0) {
+ 352:main.c        ****             led = !led;
+ 353:main.c        ****             BatteryLed_Write(led);
+ 354:main.c        ****             if(led) printf("Led is ON\n");
+ 355:main.c        ****             else printf("Led is OFF\n");
+ 356:main.c        ****             Beep(1000, 150);
+ 357:main.c        ****             while(SW1_Read() == 0) vTaskDelay(10); // wait while button is being pressed
+ 358:main.c        ****         }        
+ 359:main.c        ****     }
+ 360:main.c        ****  }   
+ 361:main.c        **** #endif
+ 362:main.c        **** 
+ 363:main.c        **** 
+ 364:main.c        **** #if 0
+ 365:main.c        **** //ultrasonic sensor// week 3 //assignment 2
+ 366:main.c        **** void zmain(void)
+ 367:main.c        **** {
+ 368:main.c        ****     
+ 369:main.c        ****     vTaskDelay(1000);
+ 370:main.c        ****     
+ 371:main.c        ****     Ultra_Start();              // Ultra Sonic Start function
+ 372:main.c        ****     motor_start();              // enable motor controller
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 8
 
 
- 373:main.c        **** 
- 374:main.c        ****                 printf("distance = %d\r\n", d);           // Print the detected distance (centimete
- 375:main.c        **** 
- 376:main.c        ****                     if(d < 25)
- 377:main.c        ****                     
- 378:main.c        ****                         {
- 379:main.c        ****                             Beep(100, 150);
- 380:main.c        ****                             
- 381:main.c        ****                             motor_backward(100, 500);     // moving backward
- 382:main.c        ****                             
- 383:main.c        ****                             motor_turn(200, 0, 500);      // turn
- 384:main.c        ****                             
- 385:main.c        ****                             //motor_forward(0,0);         // stop motors
+ 373:main.c        ****        
+ 374:main.c        ****     while (true){
+ 375:main.c        ****         
+ 376:main.c        ****         motor_forward(100, 10);    // moving forward
+ 377:main.c        ****         
+ 378:main.c        ****         int d = Ultra_GetDistance();
+ 379:main.c        **** 
+ 380:main.c        ****                 printf("distance = %d\r\n", d);           // Print the detected distance (centimete
+ 381:main.c        **** 
+ 382:main.c        ****                     if(d < 10)
+ 383:main.c        ****                     
+ 384:main.c        ****                         {
+ 385:main.c        ****                             Beep(100, 150);
  386:main.c        ****                             
- 387:main.c        ****                             //motor_stop();               // disable motor controller
+ 387:main.c        ****                             motor_backward(100, 500);     // moving backward
  388:main.c        ****                             
- 389:main.c        ****                         }
- 390:main.c        ****                 }        
- 391:main.c        **** }   
- 392:main.c        **** #endif
- 393:main.c        **** 
- 394:main.c        **** #if 0
- 395:main.c        **** //accelerometer// week 3 //assignment 3
- 396:main.c        **** void zmain(void)
- 397:main.c        ****     {
- 398:main.c        ****         
- 399:main.c        ****     vTaskDelay(1000);
- 400:main.c        ****     
- 401:main.c        ****     void randomrun();
- 402:main.c        ****     void escape();
- 403:main.c        ****     
- 404:main.c        ****     motor_start();              // enable motor controller
- 405:main.c        ****         
- 406:main.c        ****     struct accData_ data;
- 407:main.c        **** 
- 408:main.c        ****     printf("Accelerometer test...\n");
- 409:main.c        ****         if(!LSM303D_Start()){
- 410:main.c        **** 
- 411:main.c        ****             printf("LSM303D failed to initialize!!! Program is Ending!!!\n");
- 412:main.c        ****             while(1) vTaskDelay(10);
- 413:main.c        **** 
- 414:main.c        ****         }
- 415:main.c        ****         
- 416:main.c        ****     else
- 417:main.c        ****     printf("Device Ok...\n");
- 418:main.c        **** 
- 419:main.c        **** 
- 420:main.c        ****     while(true)
- 421:main.c        ****         {     
- 422:main.c        ****             
- 423:main.c        ****             randomrun();
- 424:main.c        ****                           
- 425:main.c        ****             LSM303D_Read_Acc(&data);
- 426:main.c        ****             
- 427:main.c        ****             int x = data.accX * (-1);
- 428:main.c        ****             int y = data.accY * (-1);
- 429:main.c        ****             
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 9
+ 389:main.c        ****                             motor_turn(200, 0, 500);      // turn
+ 390:main.c        ****                             
+ 391:main.c        ****                             //motor_forward(0,0);         // stop motors
+ 392:main.c        ****                             
+ 393:main.c        ****                             //motor_stop();               // disable motor controller
+ 394:main.c        ****                             
+ 395:main.c        ****                         }
+ 396:main.c        ****                 }        
+ 397:main.c        **** }   
+ 398:main.c        **** #endif
+ 399:main.c        **** 
+ 400:main.c        **** #if 0
+ 401:main.c        **** //accelerometer// week 3 //assignment 3
+ 402:main.c        **** void zmain(void)
+ 403:main.c        ****     {
+ 404:main.c        ****         
+ 405:main.c        ****     vTaskDelay(1000);
+ 406:main.c        ****     
+ 407:main.c        ****     
+ 408:main.c        ****     void randomrun();
+ 409:main.c        ****     void escape();
+ 410:main.c        ****     void attack();
+ 411:main.c        ****     
+ 412:main.c        ****     while(SW1_Read() == 1)             // Wait for user button
+ 413:main.c        ****         {
+ 414:main.c        ****             vTaskDelay(1000);
+ 415:main.c        ****         }
+ 416:main.c        ****     
+ 417:main.c        ****     motor_start();              // enable motor controller
+ 418:main.c        ****         
+ 419:main.c        ****     struct accData_ data;
+ 420:main.c        **** 
+ 421:main.c        ****     printf("Accelerometer test...\n");
+ 422:main.c        ****         if(!LSM303D_Start()){
+ 423:main.c        **** 
+ 424:main.c        ****             printf("LSM303D failed to initialize!!! Program is Ending!!!\n");
+ 425:main.c        ****             while(1) vTaskDelay(10);
+ 426:main.c        **** 
+ 427:main.c        ****         }
+ 428:main.c        ****         
+ 429:main.c        ****     else
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 9
 
 
- 430:main.c        ****             printf("x=%d \t y=%d\n", x, y);
- 431:main.c        ****             
- 432:main.c        ****             if (x > 2500)
- 433:main.c        ****             {
- 434:main.c        ****                 escape();
- 435:main.c        ****             }
- 436:main.c        ****         }
- 437:main.c        ****     }
- 438:main.c        ****     
- 439:main.c        **** void randomrun(void)
- 440:main.c        ****     {
- 441:main.c        ****         int r = rand() % 1000;
- 442:main.c        ****      
- 443:main.c        ****         if (r < 990)
- 444:main.c        ****         {
- 445:main.c        ****             motor_forward(232, 10);
- 446:main.c        ****         }
- 447:main.c        ****             
- 448:main.c        ****         else if (r > 990 && r < 995)
- 449:main.c        ****         {
- 450:main.c        ****             motor_turn(150, 50, 500);
- 451:main.c        ****         }
- 452:main.c        ****             
- 453:main.c        ****         else if (r > 995)
- 454:main.c        ****         {
- 455:main.c        ****             motor_turn(50, 150, 500);
- 456:main.c        ****         }
- 457:main.c        ****     }
- 458:main.c        ****     
- 459:main.c        **** void escape(void)
- 460:main.c        ****     {
- 461:main.c        ****         int r = rand() % 10;
- 462:main.c        ****         
- 463:main.c        ****         motor_backward(150, 1000);
- 464:main.c        ****         
- 465:main.c        ****         if (r < 5)
- 466:main.c        ****         {
- 467:main.c        ****             motor_turn(200, 0, 500);
- 468:main.c        ****         }
- 469:main.c        ****         
- 470:main.c        ****         else if (r > 5)
- 471:main.c        ****         {
- 472:main.c        ****             motor_turn(0, 200, 500);
- 473:main.c        ****         }
- 474:main.c        ****     }
- 475:main.c        ****         
- 476:main.c        **** #endif
- 477:main.c        **** 
- 478:main.c        **** #if 0
- 479:main.c        **** //IR receiverm - how to wait for IR remote commands
- 480:main.c        **** void zmain(void)
- 481:main.c        **** {
- 482:main.c        ****     IR_Start();
- 483:main.c        ****     
- 484:main.c        ****     printf("\n\nIR test\n");
- 485:main.c        ****     
- 486:main.c        ****     IR_flush(); // clear IR receive buffer
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 10
+ 430:main.c        ****     printf("Device Ok...\n");
+ 431:main.c        **** 
+ 432:main.c        **** 
+ 433:main.c        ****     while(true)
+ 434:main.c        ****         {     
+ 435:main.c        ****             
+ 436:main.c        ****             randomrun();
+ 437:main.c        ****                           
+ 438:main.c        ****             LSM303D_Read_Acc(&data);
+ 439:main.c        ****             
+ 440:main.c        ****             int x = data.accX * (-1);
+ 441:main.c        ****             int y = data.accY * (-1);
+ 442:main.c        ****             
+ 443:main.c        ****             printf("x=%d \t y=%d\n", x, y);
+ 444:main.c        ****             
+ 445:main.c        ****             if (x > 2500)
+ 446:main.c        ****             {
+ 447:main.c        ****                 //escape();
+ 448:main.c        ****                 attack();
+ 449:main.c        ****             }
+ 450:main.c        ****         }
+ 451:main.c        ****     }
+ 452:main.c        ****     
+ 453:main.c        **** void randomrun(void)
+ 454:main.c        ****     {
+ 455:main.c        ****         int r = rand() % 1000;
+ 456:main.c        ****      
+ 457:main.c        ****         if (r < 990)
+ 458:main.c        ****         {
+ 459:main.c        ****             motor_forward(232, 10);
+ 460:main.c        ****         }
+ 461:main.c        ****             
+ 462:main.c        ****         else if (r > 990 && r < 995)
+ 463:main.c        ****         {
+ 464:main.c        ****             motor_turn(150, 50, 500);
+ 465:main.c        ****         }
+ 466:main.c        ****             
+ 467:main.c        ****         else if (r > 995)
+ 468:main.c        ****         {
+ 469:main.c        ****             motor_turn(50, 150, 500);
+ 470:main.c        ****         }
+ 471:main.c        ****     }
+ 472:main.c        ****     
+ 473:main.c        **** void escape(void)
+ 474:main.c        ****     {
+ 475:main.c        ****         int r = rand() % 10;
+ 476:main.c        ****         
+ 477:main.c        ****         motor_backward(150, 1000);
+ 478:main.c        ****         
+ 479:main.c        ****         if (r < 5)
+ 480:main.c        ****         {
+ 481:main.c        ****             motor_turn(200, 0, 500);
+ 482:main.c        ****         }
+ 483:main.c        ****         
+ 484:main.c        ****         else if (r > 5)
+ 485:main.c        ****         {
+ 486:main.c        ****             motor_turn(0, 200, 500);
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 10
 
 
- 487:main.c        ****     printf("Buffer cleared\n");
- 488:main.c        ****     
- 489:main.c        ****     bool led = false;
- 490:main.c        ****     // Toggle led when IR signal is received
- 491:main.c        ****     while(true)
- 492:main.c        ****     {
- 493:main.c        ****         IR_wait();  // wait for IR command
- 494:main.c        ****         led = !led;
- 495:main.c        ****         BatteryLed_Write(led);
- 496:main.c        ****         if(led) printf("Led is ON\n");
- 497:main.c        ****         else printf("Led is OFF\n");
- 498:main.c        ****     }    
- 499:main.c        ****  }   
- 500:main.c        **** #endif
- 501:main.c        **** 
- 502:main.c        **** 
- 503:main.c        **** 
- 504:main.c        **** #if 0
- 505:main.c        **** //IR receiver - read raw data //week 4 //assigment 1//
- 506:main.c        **** void zmain(void)
- 507:main.c        **** {
- 508:main.c        ****     while(true){
- 509:main.c        ****         
- 510:main.c        ****         if (SW1_Read() == 0) 
- 511:main.c        ****             {
- 512:main.c        ****             
- 513:main.c        ****             motor_start();              // enable motor controller
- 514:main.c        **** 
- 515:main.c        ****             vTaskDelay(1000);
- 516:main.c        ****             
- 517:main.c        ****             motor_forward(100,2000);
- 518:main.c        ****              
- 519:main.c        ****             motor_forward(0,0);         // stop motors
- 520:main.c        **** 
- 521:main.c        ****             motor_stop();               // disable motor controller
- 522:main.c        ****            
- 523:main.c        ****             break;
- 524:main.c        ****             
- 525:main.c        ****             }
- 526:main.c        ****                
- 527:main.c        ****         }
- 528:main.c        ****     
- 529:main.c        ****     IR_Start();
- 530:main.c        ****     
- 531:main.c        ****     uint32_t IR_val; 
- 532:main.c        ****     
- 533:main.c        ****     printf("\n\nIR test\nHello humans!!\n");
- 534:main.c        ****     
- 535:main.c        ****     IR_flush(); // clear IR receive buffer
- 536:main.c        ****     printf("Buffer cleared\n");
- 537:main.c        ****     
- 538:main.c        ****         
- 539:main.c        ****     
- 540:main.c        ****     // print received IR pulses and their lengths
- 541:main.c        ****     while(true)
- 542:main.c        ****     {
- 543:main.c        ****         if(IR_get(&IR_val, portMAX_DELAY)) {
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 11
+ 487:main.c        ****         }
+ 488:main.c        ****     }
+ 489:main.c        ****     
+ 490:main.c        **** void attack(void)
+ 491:main.c        ****     {
+ 492:main.c        ****         int r = rand() % 10;
+ 493:main.c        ****         
+ 494:main.c        ****         motor_backward(150, 1000);
+ 495:main.c        ****         
+ 496:main.c        ****         if (r < 5)
+ 497:main.c        ****         {
+ 498:main.c        ****             motor_turn(200, 0, 500);
+ 499:main.c        ****         }
+ 500:main.c        ****         
+ 501:main.c        ****         else if (r > 5)
+ 502:main.c        ****         {
+ 503:main.c        ****             motor_turn(0, 200, 500);
+ 504:main.c        ****         }
+ 505:main.c        ****     }    
+ 506:main.c        ****         
+ 507:main.c        **** #endif
+ 508:main.c        **** 
+ 509:main.c        **** #if 0
+ 510:main.c        **** //IR receiverm - how to wait for IR remote commands
+ 511:main.c        **** void zmain(void)
+ 512:main.c        **** {
+ 513:main.c        ****     IR_Start();
+ 514:main.c        ****     
+ 515:main.c        ****     printf("\n\nIR test\n");
+ 516:main.c        ****     
+ 517:main.c        ****     IR_flush(); // clear IR receive buffer
+ 518:main.c        ****     printf("Buffer cleared\n");
+ 519:main.c        ****     
+ 520:main.c        ****     bool led = false;
+ 521:main.c        ****     // Toggle led when IR signal is received
+ 522:main.c        ****     while(true)
+ 523:main.c        ****     {
+ 524:main.c        ****         IR_wait();  // wait for IR command
+ 525:main.c        ****         led = !led;
+ 526:main.c        ****         BatteryLed_Write(led);
+ 527:main.c        ****         if(led) printf("Led is ON\n");
+ 528:main.c        ****         else printf("Led is OFF\n");
+ 529:main.c        ****     }    
+ 530:main.c        ****  }   
+ 531:main.c        **** #endif
+ 532:main.c        **** 
+ 533:main.c        **** 
+ 534:main.c        **** 
+ 535:main.c        **** #if 0
+ 536:main.c        **** //IR receiver - read raw data //week 4 //assigment 1//
+ 537:main.c        **** void zmain(void)
+ 538:main.c        **** {
+ 539:main.c        ****     while(true){
+ 540:main.c        ****         
+ 541:main.c        ****         if (SW1_Read() == 0) 
+ 542:main.c        ****             {
+ 543:main.c        ****             
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 11
 
 
- 544:main.c        ****             int l = IR_val & IR_SIGNAL_MASK; // get pulse length
- 545:main.c        ****             int b = 0;
- 546:main.c        ****             if((IR_val & IR_SIGNAL_HIGH) != 0) b = 1; // get pulse state (0/1)
- 547:main.c        ****             printf("%d %d\r\n",b, l);
- 548:main.c        ****             
- 549:main.c        ****             Beep(150,150);
- 550:main.c        ****             //vTaskDelay(1000);
- 551:main.c        ****             IR_flush();
- 552:main.c        ****             
- 553:main.c        ****             break;
- 554:main.c        ****         }
- 555:main.c        ****     }
- 556:main.c        ****     
- 557:main.c        ****     while(true)
- 558:main.c        ****     {
- 559:main.c        ****         motor_start();
- 560:main.c        ****         motor_forward(100,2000);
- 561:main.c        ****         
- 562:main.c        ****         motor_forward(0,0);         // stop motors
- 563:main.c        **** 
- 564:main.c        ****         motor_stop();               // disable motor controller
- 565:main.c        ****         
- 566:main.c        ****         break;
- 567:main.c        ****     }
- 568:main.c        ****  }   
- 569:main.c        **** #endif
- 570:main.c        **** 
- 571:main.c        **** 
- 572:main.c        **** #if 1
- 573:main.c        **** //reflectance
- 574:main.c        ****     
- 575:main.c        **** int a, b, c;    
- 576:main.c        ****     
- 577:main.c        **** void zmain(void)
- 578:main.c        **** {   
- 579:main.c        ****     void linecounter();
- 580:main.c        ****     void reflectancedrive();
- 581:main.c        ****         
- 582:main.c        ****     IR_Start();    
- 583:main.c        ****     uint32_t IR_val;     
- 584:main.c        ****     IR_flush();
- 585:main.c        ****    
- 586:main.c        ****     motor_start();
+ 544:main.c        ****             motor_start();              // enable motor controller
+ 545:main.c        **** 
+ 546:main.c        ****             vTaskDelay(1000);
+ 547:main.c        ****             
+ 548:main.c        ****             motor_forward(100,2000);
+ 549:main.c        ****              
+ 550:main.c        ****             motor_forward(0,0);         // stop motors
+ 551:main.c        **** 
+ 552:main.c        ****             motor_stop();               // disable motor controller
+ 553:main.c        ****            
+ 554:main.c        ****             break;
+ 555:main.c        ****             
+ 556:main.c        ****             }
+ 557:main.c        ****                
+ 558:main.c        ****         }
+ 559:main.c        ****     
+ 560:main.c        ****     IR_Start();
+ 561:main.c        ****     
+ 562:main.c        ****     uint32_t IR_val; 
+ 563:main.c        ****     
+ 564:main.c        ****     printf("\n\nIR test\nHello humans!!\n");
+ 565:main.c        ****     
+ 566:main.c        ****     IR_flush(); // clear IR receive buffer
+ 567:main.c        ****     printf("Buffer cleared\n");
+ 568:main.c        ****     
+ 569:main.c        ****         
+ 570:main.c        ****     
+ 571:main.c        ****     // print received IR pulses and their lengths
+ 572:main.c        ****     while(true)
+ 573:main.c        ****     {
+ 574:main.c        ****         if(IR_get(&IR_val, portMAX_DELAY)) {
+ 575:main.c        ****             int l = IR_val & IR_SIGNAL_MASK; // get pulse length
+ 576:main.c        ****             int b = 0;
+ 577:main.c        ****             if((IR_val & IR_SIGNAL_HIGH) != 0) b = 1; // get pulse state (0/1)
+ 578:main.c        ****             printf("%d %d\r\n",b, l);
+ 579:main.c        ****             
+ 580:main.c        ****             Beep(150,150);
+ 581:main.c        ****             //vTaskDelay(1000);
+ 582:main.c        ****             IR_flush();
+ 583:main.c        ****             
+ 584:main.c        ****             break;
+ 585:main.c        ****         }
+ 586:main.c        ****     }
  587:main.c        ****     
- 588:main.c        ****     while(true)             // Wait for user button
+ 588:main.c        ****     while(true)
  589:main.c        ****     {
- 590:main.c        ****         
- 591:main.c        ****         if (SW1_Read() == 0) 
- 592:main.c        ****             {
- 593:main.c        ****                 
- 594:main.c        ****             vTaskDelay(1000);
- 595:main.c        ****             
- 596:main.c        ****             break;
- 597:main.c        ****             
- 598:main.c        ****             }
- 599:main.c        ****                
- 600:main.c        ****     }
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 12
+ 590:main.c        ****         motor_start();
+ 591:main.c        ****         motor_forward(100,2000);
+ 592:main.c        ****         
+ 593:main.c        ****         motor_forward(0,0);         // stop motors
+ 594:main.c        **** 
+ 595:main.c        ****         motor_stop();               // disable motor controller
+ 596:main.c        ****         
+ 597:main.c        ****         break;
+ 598:main.c        ****     }
+ 599:main.c        ****  }   
+ 600:main.c        **** #endif
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 12
 
 
- 601:main.c        ****     
- 602:main.c        ****     while(true)             // Drive to first line
- 603:main.c        ****     {
- 604:main.c        ****         
- 605:main.c        ****         linecounter();
- 606:main.c        ****         
- 607:main.c        ****         reflectancedrive();
- 608:main.c        ****         
- 609:main.c        ****         if(a==1)
- 610:main.c        ****             {
- 611:main.c        ****                 Beep(100, 100);
- 612:main.c        ****                 motor_forward(0, 0);
- 613:main.c        ****                 break;
- 614:main.c        ****             }
- 615:main.c        ****                
- 616:main.c        ****     }
- 617:main.c        ****     
- 618:main.c        ****     while(true)             // Wait for IR signal
- 619:main.c        ****     {
- 620:main.c        ****         if(IR_get(&IR_val, portMAX_DELAY)) {
- 621:main.c        ****             int l = IR_val & IR_SIGNAL_MASK; // get pulse length
- 622:main.c        ****             int b = 0;
- 623:main.c        ****             if((IR_val & IR_SIGNAL_HIGH) != 0) b = 1; // get pulse state (0/1)
- 624:main.c        ****             printf("%d %d\r\n",b, l);
- 625:main.c        ****             
- 626:main.c        ****             Beep(150,150);
- 627:main.c        ****             IR_flush();
- 628:main.c        ****                       
- 629:main.c        ****             break;
- 630:main.c        ****         }
- 631:main.c        ****     }
- 632:main.c        **** 
- 633:main.c        ****     while(true)             // Drive
- 634:main.c        ****     {               
- 635:main.c        ****         linecounter();
- 636:main.c        ****         
- 637:main.c        ****         reflectancedrive();
- 638:main.c        ****     }
- 639:main.c        **** }   
- 640:main.c        **** 
- 641:main.c        **** void linecounter(void)
- 642:main.c        ****     {
-  28              		.loc 1 642 0
-  29              		.cfi_startproc
-  30              		@ args = 0, pretend = 0, frame = 24
-  31              		@ frame_needed = 0, uses_anonymous_args = 0
-  32 0000 30B5     		push	{r4, r5, lr}
-  33              		.cfi_def_cfa_offset 12
-  34              		.cfi_offset 4, -12
-  35              		.cfi_offset 5, -8
-  36              		.cfi_offset 14, -4
-  37 0002 8BB0     		sub	sp, sp, #44
-  38              		.cfi_def_cfa_offset 56
- 643:main.c        ****         struct sensors_ ref;
- 644:main.c        ****         struct sensors_ dig;
- 645:main.c        **** 
- 646:main.c        ****         reflectance_start();
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 13
-
-
-  39              		.loc 1 646 0
-  40 0004 FFF7FEFF 		bl	reflectance_start
-  41              	.LVL0:
- 647:main.c        ****         reflectance_set_threshold(9000, 9000, 11000, 11000, 9000, 9000);
-  42              		.loc 1 647 0
-  43 0008 42F22830 		movw	r0, #9000
-  44 000c 0190     		str	r0, [sp, #4]
-  45 000e 0090     		str	r0, [sp]
-  46 0010 42F6F823 		movw	r3, #11000
-  47 0014 1A46     		mov	r2, r3
-  48 0016 0146     		mov	r1, r0
-  49 0018 FFF7FEFF 		bl	reflectance_set_threshold
-  50              	.LVL1:
- 648:main.c        ****         
- 649:main.c        ****         reflectance_read(&ref);
-  51              		.loc 1 649 0
-  52 001c 07A8     		add	r0, sp, #28
-  53 001e FFF7FEFF 		bl	reflectance_read
-  54              	.LVL2:
- 650:main.c        ****         reflectance_digital(&dig);
-  55              		.loc 1 650 0
-  56 0022 04A8     		add	r0, sp, #16
-  57 0024 FFF7FEFF 		bl	reflectance_digital
-  58              	.LVL3:
- 651:main.c        ****         
- 652:main.c        ****         printf("Sensor value: %5d %5d %5d %5d %5d %5d \r\n", dig.l3, dig.l2, dig.l1, dig.r1, dig.r2
-  59              		.loc 1 652 0
-  60 0028 BDF81010 		ldrh	r1, [sp, #16]
-  61 002c BDF81220 		ldrh	r2, [sp, #18]
-  62 0030 BDF81430 		ldrh	r3, [sp, #20]
-  63 0034 BDF81600 		ldrh	r0, [sp, #22]
-  64 0038 BDF81840 		ldrh	r4, [sp, #24]
-  65 003c BDF81A50 		ldrh	r5, [sp, #26]
-  66 0040 0295     		str	r5, [sp, #8]
-  67 0042 0194     		str	r4, [sp, #4]
-  68 0044 0090     		str	r0, [sp]
-  69 0046 2248     		ldr	r0, .L7
-  70 0048 FFF7FEFF 		bl	printf
-  71              	.LVL4:
- 653:main.c        ****         printf("a=%d b=%d c=%d\n", a, b, c);
-  72              		.loc 1 653 0
-  73 004c 214B     		ldr	r3, .L7+4
-  74 004e 1B68     		ldr	r3, [r3]
-  75 0050 214A     		ldr	r2, .L7+8
-  76 0052 1268     		ldr	r2, [r2]
-  77 0054 2149     		ldr	r1, .L7+12
-  78 0056 0968     		ldr	r1, [r1]
-  79 0058 2148     		ldr	r0, .L7+16
-  80 005a FFF7FEFF 		bl	printf
-  81              	.LVL5:
- 654:main.c        ****         
- 655:main.c        ****         if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 1)
-  82              		.loc 1 655 0
-  83 005e BDF81030 		ldrh	r3, [sp, #16]
-  84 0062 012B     		cmp	r3, #1
-  85 0064 16D1     		bne	.L2
-  86              		.loc 1 655 0 is_stmt 0 discriminator 1
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 14
-
-
-  87 0066 BDF81220 		ldrh	r2, [sp, #18]
-  88 006a 012A     		cmp	r2, #1
-  89 006c 12D1     		bne	.L2
-  90              		.loc 1 655 0 discriminator 2
-  91 006e BDF81420 		ldrh	r2, [sp, #20]
-  92 0072 012A     		cmp	r2, #1
-  93 0074 0ED1     		bne	.L2
-  94              		.loc 1 655 0 discriminator 3
-  95 0076 BDF81620 		ldrh	r2, [sp, #22]
-  96 007a 012A     		cmp	r2, #1
-  97 007c 0AD1     		bne	.L2
-  98              		.loc 1 655 0 discriminator 4
-  99 007e BDF81820 		ldrh	r2, [sp, #24]
- 100 0082 012A     		cmp	r2, #1
- 101 0084 06D1     		bne	.L2
- 102              		.loc 1 655 0 discriminator 5
- 103 0086 BDF81A20 		ldrh	r2, [sp, #26]
- 104 008a 012A     		cmp	r2, #1
- 105 008c 02D1     		bne	.L2
- 656:main.c        ****             {
- 657:main.c        ****                 a = 1;               
- 106              		.loc 1 657 0 is_stmt 1
- 107 008e 0121     		movs	r1, #1
- 108 0090 124A     		ldr	r2, .L7+12
- 109 0092 1160     		str	r1, [r2]
- 110              	.L2:
- 658:main.c        ****             }
- 659:main.c        ****         
- 660:main.c        ****         if (dig.l3 != 1 && dig.r3 != 1)
- 111              		.loc 1 660 0
- 112 0094 012B     		cmp	r3, #1
- 113 0096 06D0     		beq	.L3
- 114              		.loc 1 660 0 is_stmt 0 discriminator 1
- 115 0098 BDF81A30 		ldrh	r3, [sp, #26]
- 116 009c 012B     		cmp	r3, #1
- 117 009e 02D0     		beq	.L3
- 661:main.c        ****             {
- 662:main.c        ****                 b = 1;    
- 118              		.loc 1 662 0 is_stmt 1
- 119 00a0 0122     		movs	r2, #1
- 120 00a2 0D4B     		ldr	r3, .L7+8
- 121 00a4 1A60     		str	r2, [r3]
- 122              	.L3:
- 663:main.c        ****             }      
- 664:main.c        ****             
- 665:main.c        ****         if(a==1 && b == 1)
- 123              		.loc 1 665 0
- 124 00a6 0D4B     		ldr	r3, .L7+12
- 125 00a8 1B68     		ldr	r3, [r3]
- 126 00aa 012B     		cmp	r3, #1
- 127 00ac 0BD1     		bne	.L4
- 128              		.loc 1 665 0 is_stmt 0 discriminator 1
- 129 00ae 0A4B     		ldr	r3, .L7+8
- 130 00b0 1B68     		ldr	r3, [r3]
- 131 00b2 012B     		cmp	r3, #1
- 132 00b4 07D1     		bne	.L4
- 666:main.c        ****             {
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 15
-
-
- 667:main.c        ****                 c++;
- 133              		.loc 1 667 0 is_stmt 1
- 134 00b6 074A     		ldr	r2, .L7+4
- 135 00b8 1368     		ldr	r3, [r2]
- 136 00ba 0133     		adds	r3, r3, #1
- 137 00bc 1360     		str	r3, [r2]
- 668:main.c        ****                 a = 0;
- 138              		.loc 1 668 0
- 139 00be 0022     		movs	r2, #0
- 140 00c0 064B     		ldr	r3, .L7+12
- 141 00c2 1A60     		str	r2, [r3]
- 142 00c4 02E0     		b	.L1
- 143              	.L4:
- 669:main.c        ****             }
- 670:main.c        ****             
- 671:main.c        ****         else{ b = 0; }    
- 144              		.loc 1 671 0
- 145 00c6 0022     		movs	r2, #0
- 146 00c8 034B     		ldr	r3, .L7+8
- 147 00ca 1A60     		str	r2, [r3]
- 148              	.L1:
- 672:main.c        ****     }
- 149              		.loc 1 672 0
- 150 00cc 0BB0     		add	sp, sp, #44
- 151              		.cfi_def_cfa_offset 12
- 152              		@ sp needed
- 153 00ce 30BD     		pop	{r4, r5, pc}
- 154              	.L8:
- 155              		.align	2
- 156              	.L7:
- 157 00d0 00000000 		.word	.LC0
- 158 00d4 00000000 		.word	c
- 159 00d8 00000000 		.word	b
- 160 00dc 00000000 		.word	a
- 161 00e0 2C000000 		.word	.LC1
- 162              		.cfi_endproc
- 163              	.LFE86:
- 164              		.size	linecounter, .-linecounter
- 165              		.section	.text.reflectancedrive,"ax",%progbits
- 166              		.align	2
- 167              		.global	reflectancedrive
- 168              		.thumb
- 169              		.thumb_func
- 170              		.type	reflectancedrive, %function
- 171              	reflectancedrive:
- 172              	.LFB87:
- 673:main.c        ****     
- 674:main.c        **** void reflectancedrive(void)
- 675:main.c        ****     {
- 173              		.loc 1 675 0
- 174              		.cfi_startproc
- 175              		@ args = 0, pretend = 0, frame = 24
- 176              		@ frame_needed = 0, uses_anonymous_args = 0
- 177 0000 00B5     		push	{lr}
- 178              		.cfi_def_cfa_offset 4
- 179              		.cfi_offset 14, -4
- 180 0002 89B0     		sub	sp, sp, #36
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 16
-
-
- 181              		.cfi_def_cfa_offset 40
- 676:main.c        ****     
- 677:main.c        ****         struct sensors_ ref;
- 678:main.c        ****         struct sensors_ dig;
- 679:main.c        **** 
- 680:main.c        ****         reflectance_start();
- 182              		.loc 1 680 0
- 183 0004 FFF7FEFF 		bl	reflectance_start
- 184              	.LVL6:
- 681:main.c        ****         reflectance_set_threshold(9000, 9000, 11000, 11000, 9000, 9000);
- 185              		.loc 1 681 0
- 186 0008 42F22830 		movw	r0, #9000
- 187 000c 0190     		str	r0, [sp, #4]
- 188 000e 0090     		str	r0, [sp]
- 189 0010 42F6F823 		movw	r3, #11000
- 190 0014 1A46     		mov	r2, r3
- 191 0016 0146     		mov	r1, r0
- 192 0018 FFF7FEFF 		bl	reflectance_set_threshold
- 193              	.LVL7:
- 682:main.c        ****        
- 683:main.c        ****         reflectance_read(&ref);
- 194              		.loc 1 683 0
- 195 001c 05A8     		add	r0, sp, #20
- 196 001e FFF7FEFF 		bl	reflectance_read
- 197              	.LVL8:
- 684:main.c        ****         reflectance_digital(&dig);
- 198              		.loc 1 684 0
- 199 0022 02A8     		add	r0, sp, #8
- 200 0024 FFF7FEFF 		bl	reflectance_digital
- 201              	.LVL9:
- 685:main.c        ****     
- 686:main.c        ****         if ((dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0
- 202              		.loc 1 686 0
- 203 0028 BDF80830 		ldrh	r3, [sp, #8]
- 204 002c ABB9     		cbnz	r3, .L10
- 205              		.loc 1 686 0 is_stmt 0 discriminator 1
- 206 002e BDF80A20 		ldrh	r2, [sp, #10]
- 207 0032 92B9     		cbnz	r2, .L10
- 208              		.loc 1 686 0 discriminator 2
- 209 0034 BDF80C20 		ldrh	r2, [sp, #12]
- 210 0038 012A     		cmp	r2, #1
- 211 003a 0ED1     		bne	.L10
- 212              		.loc 1 686 0 discriminator 3
- 213 003c BDF80E20 		ldrh	r2, [sp, #14]
- 214 0040 012A     		cmp	r2, #1
- 215 0042 0AD1     		bne	.L10
- 216              		.loc 1 686 0 discriminator 4
- 217 0044 BDF81020 		ldrh	r2, [sp, #16]
- 218 0048 3AB9     		cbnz	r2, .L10
- 219              		.loc 1 686 0 discriminator 5
- 220 004a BDF81220 		ldrh	r2, [sp, #18]
- 221 004e 22B9     		cbnz	r2, .L10
- 687:main.c        ****             {
- 688:main.c        ****                 motor_forward(100, 10);
- 222              		.loc 1 688 0 is_stmt 1
- 223 0050 0A21     		movs	r1, #10
- 224 0052 6420     		movs	r0, #100
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 17
-
-
- 225 0054 FFF7FEFF 		bl	motor_forward
- 226              	.LVL10:
- 227 0058 6CE0     		b	.L9
- 228              	.L10:
- 689:main.c        ****             }
- 690:main.c        ****             
- 691:main.c        ****             /*else if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && d
- 692:main.c        ****                     {
- 693:main.c        ****                         motor_turn(0, 200, 400);             
- 694:main.c        ****                     }*/
- 695:main.c        ****         
- 696:main.c        ****                 /*else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 
- 697:main.c        ****                     {
- 698:main.c        ****                         motor_turn(200, 0, 400);             
- 699:main.c        ****                     }*/
- 700:main.c        ****                       
- 701:main.c        ****                     else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 1 && dig.r2 == 
- 229              		.loc 1 701 0
- 230 005a B3B9     		cbnz	r3, .L12
- 231              		.loc 1 701 0 is_stmt 0 discriminator 1
- 232 005c BDF80A20 		ldrh	r2, [sp, #10]
- 233 0060 9AB9     		cbnz	r2, .L12
- 234              		.loc 1 701 0 discriminator 2
- 235 0062 BDF80C20 		ldrh	r2, [sp, #12]
- 236 0066 82B9     		cbnz	r2, .L12
- 237              		.loc 1 701 0 discriminator 3
- 238 0068 BDF80E20 		ldrh	r2, [sp, #14]
- 239 006c 012A     		cmp	r2, #1
- 240 006e 0CD1     		bne	.L12
- 241              		.loc 1 701 0 discriminator 4
- 242 0070 BDF81020 		ldrh	r2, [sp, #16]
- 243 0074 012A     		cmp	r2, #1
- 244 0076 08D1     		bne	.L12
- 245              		.loc 1 701 0 discriminator 5
- 246 0078 BDF81220 		ldrh	r2, [sp, #18]
- 247 007c 2AB9     		cbnz	r2, .L12
- 702:main.c        ****                         {
- 703:main.c        ****                             motor_turn(200, 50, 50);             
- 248              		.loc 1 703 0 is_stmt 1
- 249 007e 3222     		movs	r2, #50
- 250 0080 1146     		mov	r1, r2
- 251 0082 C820     		movs	r0, #200
- 252 0084 FFF7FEFF 		bl	motor_turn
- 253              	.LVL11:
- 254 0088 54E0     		b	.L9
- 255              	.L12:
- 704:main.c        ****                         }
- 705:main.c        ****                         
- 706:main.c        ****                          else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && dig.r
- 256              		.loc 1 706 0
- 257 008a B3B9     		cbnz	r3, .L13
- 258              		.loc 1 706 0 is_stmt 0 discriminator 1
- 259 008c BDF80A20 		ldrh	r2, [sp, #10]
- 260 0090 9AB9     		cbnz	r2, .L13
- 261              		.loc 1 706 0 discriminator 2
- 262 0092 BDF80C20 		ldrh	r2, [sp, #12]
- 263 0096 82B9     		cbnz	r2, .L13
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 18
-
-
- 264              		.loc 1 706 0 discriminator 3
- 265 0098 BDF80E20 		ldrh	r2, [sp, #14]
- 266 009c 6AB9     		cbnz	r2, .L13
- 267              		.loc 1 706 0 discriminator 4
- 268 009e BDF81020 		ldrh	r2, [sp, #16]
- 269 00a2 012A     		cmp	r2, #1
- 270 00a4 09D1     		bne	.L13
- 271              		.loc 1 706 0 discriminator 5
- 272 00a6 BDF81220 		ldrh	r2, [sp, #18]
- 273 00aa 012A     		cmp	r2, #1
- 274 00ac 05D1     		bne	.L13
- 707:main.c        ****                             {
- 708:main.c        ****                                 motor_turn(250, 0, 50);             
- 275              		.loc 1 708 0 is_stmt 1
- 276 00ae 3222     		movs	r2, #50
- 277 00b0 0021     		movs	r1, #0
- 278 00b2 FA20     		movs	r0, #250
- 279 00b4 FFF7FEFF 		bl	motor_turn
- 280              	.LVL12:
- 281 00b8 3CE0     		b	.L9
- 282              	.L13:
- 709:main.c        ****                             }
- 710:main.c        ****                         
- 711:main.c        ****                             else if (dig.l3 == 0 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 0 && di
- 283              		.loc 1 711 0
- 284 00ba B3B9     		cbnz	r3, .L14
- 285              		.loc 1 711 0 is_stmt 0 discriminator 1
- 286 00bc BDF80A20 		ldrh	r2, [sp, #10]
- 287 00c0 012A     		cmp	r2, #1
- 288 00c2 12D1     		bne	.L14
- 289              		.loc 1 711 0 discriminator 2
- 290 00c4 BDF80C20 		ldrh	r2, [sp, #12]
- 291 00c8 012A     		cmp	r2, #1
- 292 00ca 0ED1     		bne	.L14
- 293              		.loc 1 711 0 discriminator 3
- 294 00cc BDF80E20 		ldrh	r2, [sp, #14]
- 295 00d0 5AB9     		cbnz	r2, .L14
- 296              		.loc 1 711 0 discriminator 4
- 297 00d2 BDF81020 		ldrh	r2, [sp, #16]
- 298 00d6 42B9     		cbnz	r2, .L14
- 299              		.loc 1 711 0 discriminator 5
- 300 00d8 BDF81220 		ldrh	r2, [sp, #18]
- 301 00dc 2AB9     		cbnz	r2, .L14
- 712:main.c        ****                                 {
- 713:main.c        ****                                     motor_turn(50, 200, 50);             
- 302              		.loc 1 713 0 is_stmt 1
- 303 00de 3222     		movs	r2, #50
- 304 00e0 C821     		movs	r1, #200
- 305 00e2 1046     		mov	r0, r2
- 306 00e4 FFF7FEFF 		bl	motor_turn
- 307              	.LVL13:
- 308 00e8 24E0     		b	.L9
- 309              	.L14:
- 714:main.c        ****                                 }
- 715:main.c        ****                             
- 716:main.c        ****                                 else if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 0 && dig.r1 == 0 &
- 310              		.loc 1 716 0
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 19
-
-
- 311 00ea 012B     		cmp	r3, #1
- 312 00ec 15D1     		bne	.L15
- 313              		.loc 1 716 0 is_stmt 0 discriminator 1
- 314 00ee BDF80A30 		ldrh	r3, [sp, #10]
- 315 00f2 012B     		cmp	r3, #1
- 316 00f4 11D1     		bne	.L15
- 317              		.loc 1 716 0 discriminator 2
- 318 00f6 BDF80C30 		ldrh	r3, [sp, #12]
- 319 00fa 73B9     		cbnz	r3, .L15
- 320              		.loc 1 716 0 discriminator 3
- 321 00fc BDF80E30 		ldrh	r3, [sp, #14]
- 322 0100 5BB9     		cbnz	r3, .L15
- 323              		.loc 1 716 0 discriminator 4
- 324 0102 BDF81030 		ldrh	r3, [sp, #16]
- 325 0106 43B9     		cbnz	r3, .L15
- 326              		.loc 1 716 0 discriminator 5
- 327 0108 BDF81230 		ldrh	r3, [sp, #18]
- 328 010c 2BB9     		cbnz	r3, .L15
- 717:main.c        ****                                     {
- 718:main.c        ****                                         motor_turn(0, 250, 50);             
- 329              		.loc 1 718 0 is_stmt 1
- 330 010e 3222     		movs	r2, #50
- 331 0110 FA21     		movs	r1, #250
- 332 0112 0020     		movs	r0, #0
- 333 0114 FFF7FEFF 		bl	motor_turn
- 334              	.LVL14:
- 335 0118 0CE0     		b	.L9
- 336              	.L15:
- 719:main.c        ****                                     }
- 720:main.c        ****                                 
- 721:main.c        ****                                     else if (c == 1)
- 337              		.loc 1 721 0
- 338 011a 084B     		ldr	r3, .L18
- 339 011c 1B68     		ldr	r3, [r3]
- 340 011e 012B     		cmp	r3, #1
- 341 0120 04D1     		bne	.L16
- 722:main.c        ****                                         {
- 723:main.c        ****                                             motor_forward(0, 0);
- 342              		.loc 1 723 0
- 343 0122 0021     		movs	r1, #0
- 344 0124 0846     		mov	r0, r1
- 345 0126 FFF7FEFF 		bl	motor_forward
- 346              	.LVL15:
- 347 012a 03E0     		b	.L9
- 348              	.L16:
- 724:main.c        ****                                         }
- 725:main.c        ****                     
- 726:main.c        ****                     else
- 727:main.c        ****                     {
- 728:main.c        ****                         motor_forward(100, 10);
- 349              		.loc 1 728 0
- 350 012c 0A21     		movs	r1, #10
- 351 012e 6420     		movs	r0, #100
- 352 0130 FFF7FEFF 		bl	motor_forward
- 353              	.LVL16:
- 354              	.L9:
- 729:main.c        ****                     }
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 20
-
-
- 730:main.c        ****     }
- 355              		.loc 1 730 0
- 356 0134 09B0     		add	sp, sp, #36
- 357              		.cfi_def_cfa_offset 4
- 358              		@ sp needed
- 359 0136 5DF804FB 		ldr	pc, [sp], #4
- 360              	.L19:
- 361 013a 00BF     		.align	2
- 362              	.L18:
- 363 013c 00000000 		.word	c
- 364              		.cfi_endproc
- 365              	.LFE87:
- 366              		.size	reflectancedrive, .-reflectancedrive
- 367              		.section	.text.zmain,"ax",%progbits
- 368              		.align	2
- 369              		.global	zmain
- 370              		.thumb
- 371              		.thumb_func
- 372              		.type	zmain, %function
- 373              	zmain:
- 374              	.LFB85:
- 578:main.c        ****     void linecounter();
- 375              		.loc 1 578 0
- 376              		.cfi_startproc
- 377              		@ args = 0, pretend = 0, frame = 8
- 378              		@ frame_needed = 0, uses_anonymous_args = 0
- 379 0000 00B5     		push	{lr}
- 380              		.cfi_def_cfa_offset 4
- 381              		.cfi_offset 14, -4
- 382 0002 83B0     		sub	sp, sp, #12
- 383              		.cfi_def_cfa_offset 16
- 582:main.c        ****     uint32_t IR_val;     
- 384              		.loc 1 582 0
- 385 0004 FFF7FEFF 		bl	IR_Start
- 386              	.LVL17:
- 584:main.c        ****    
- 387              		.loc 1 584 0
- 388 0008 FFF7FEFF 		bl	IR_flush
- 389              	.LVL18:
- 586:main.c        ****     
- 390              		.loc 1 586 0
- 391 000c FFF7FEFF 		bl	motor_start
- 392              	.LVL19:
- 393              	.L21:
- 591:main.c        ****             {
- 394              		.loc 1 591 0
- 395 0010 FFF7FEFF 		bl	SW1_Read
- 396              	.LVL20:
- 397 0014 0028     		cmp	r0, #0
- 398 0016 FBD1     		bne	.L21
- 594:main.c        ****             
- 399              		.loc 1 594 0
- 400 0018 4FF47A70 		mov	r0, #1000
- 401 001c FFF7FEFF 		bl	vTaskDelay
- 402              	.LVL21:
- 403              	.L22:
- 605:main.c        ****         
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 21
-
-
- 404              		.loc 1 605 0
- 405 0020 FFF7FEFF 		bl	linecounter
- 406              	.LVL22:
- 607:main.c        ****         
- 407              		.loc 1 607 0
- 408 0024 FFF7FEFF 		bl	reflectancedrive
- 409              	.LVL23:
- 609:main.c        ****             {
- 410              		.loc 1 609 0
- 411 0028 144B     		ldr	r3, .L28
- 412 002a 1B68     		ldr	r3, [r3]
- 413 002c 012B     		cmp	r3, #1
- 414 002e F7D1     		bne	.L22
- 611:main.c        ****                 motor_forward(0, 0);
- 415              		.loc 1 611 0
- 416 0030 6421     		movs	r1, #100
- 417 0032 0846     		mov	r0, r1
- 418 0034 FFF7FEFF 		bl	Beep
- 419              	.LVL24:
- 612:main.c        ****                 break;
- 420              		.loc 1 612 0
- 421 0038 0021     		movs	r1, #0
- 422 003a 0846     		mov	r0, r1
- 423 003c FFF7FEFF 		bl	motor_forward
- 424              	.LVL25:
- 425              	.L23:
- 620:main.c        ****             int l = IR_val & IR_SIGNAL_MASK; // get pulse length
- 426              		.loc 1 620 0
- 427 0040 4FF0FF31 		mov	r1, #-1
- 428 0044 01A8     		add	r0, sp, #4
- 429 0046 FFF7FEFF 		bl	IR_get
- 430              	.LVL26:
- 431 004a 0028     		cmp	r0, #0
- 432 004c F8D0     		beq	.L23
- 433              	.LBB2:
- 621:main.c        ****             int b = 0;
- 434              		.loc 1 621 0
- 435 004e 019B     		ldr	r3, [sp, #4]
- 436 0050 23F00042 		bic	r2, r3, #-2147483648
- 437              	.LVL27:
- 623:main.c        ****             printf("%d %d\r\n",b, l);
- 438              		.loc 1 623 0
- 439 0054 002B     		cmp	r3, #0
- 440 0056 01DB     		blt	.L26
- 622:main.c        ****             if((IR_val & IR_SIGNAL_HIGH) != 0) b = 1; // get pulse state (0/1)
- 441              		.loc 1 622 0
- 442 0058 0021     		movs	r1, #0
- 443 005a 00E0     		b	.L24
- 444              	.L26:
- 623:main.c        ****             printf("%d %d\r\n",b, l);
- 445              		.loc 1 623 0
- 446 005c 0121     		movs	r1, #1
- 447              	.L24:
- 448              	.LVL28:
- 624:main.c        ****             
- 449              		.loc 1 624 0
- 450 005e 0848     		ldr	r0, .L28+4
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 22
-
-
- 451 0060 FFF7FEFF 		bl	printf
- 452              	.LVL29:
- 626:main.c        ****             IR_flush();
- 453              		.loc 1 626 0
- 454 0064 9621     		movs	r1, #150
- 455 0066 0846     		mov	r0, r1
- 456 0068 FFF7FEFF 		bl	Beep
- 457              	.LVL30:
- 627:main.c        ****                       
- 458              		.loc 1 627 0
- 459 006c FFF7FEFF 		bl	IR_flush
- 460              	.LVL31:
- 461              	.L25:
- 462              	.LBE2:
- 635:main.c        ****         
- 463              		.loc 1 635 0 discriminator 1
- 464 0070 FFF7FEFF 		bl	linecounter
- 465              	.LVL32:
+ 601:main.c        **** 
+ 602:main.c        **** 
+ 603:main.c        **** #if 0
+ 604:main.c        **** //reflectance
+ 605:main.c        ****     
+ 606:main.c        **** int onblack, onwhite, passed;    
+ 607:main.c        ****     
+ 608:main.c        **** void zmain(void)
+ 609:main.c        **** {   
+ 610:main.c        ****     void linecounter();
+ 611:main.c        ****     void reflectancedrive();
+ 612:main.c        ****         
+ 613:main.c        ****     IR_Start();    
+ 614:main.c        ****     uint32_t IR_val;     
+ 615:main.c        ****     IR_flush();
+ 616:main.c        ****    
+ 617:main.c        ****     motor_start();
+ 618:main.c        ****     
+ 619:main.c        ****     while(SW1_Read() == 1)             // Wait for user button
+ 620:main.c        ****         {
+ 621:main.c        ****             vTaskDelay(1000);
+ 622:main.c        ****         }
+ 623:main.c        ****     while(true)             // Drive to first line
+ 624:main.c        ****     {
+ 625:main.c        ****         
+ 626:main.c        ****         linecounter();
+ 627:main.c        ****         
+ 628:main.c        ****         reflectancedrive();
+ 629:main.c        ****         
+ 630:main.c        ****         if(onblack==1)
+ 631:main.c        ****             {
+ 632:main.c        ****                 Beep(100, 100);
+ 633:main.c        ****                 motor_forward(0, 0);
+ 634:main.c        ****                 break;
+ 635:main.c        ****             }
+ 636:main.c        ****                
  637:main.c        ****     }
- 466              		.loc 1 637 0 discriminator 1
- 467 0074 FFF7FEFF 		bl	reflectancedrive
- 468              	.LVL33:
- 469 0078 FAE7     		b	.L25
- 470              	.L29:
- 471 007a 00BF     		.align	2
- 472              	.L28:
- 473 007c 00000000 		.word	a
- 474 0080 3C000000 		.word	.LC2
- 475              		.cfi_endproc
- 476              	.LFE85:
- 477              		.size	zmain, .-zmain
- 478              		.comm	c,4,4
- 479              		.comm	b,4,4
- 480              		.comm	a,4,4
- 481              		.section	.rodata.str1.4,"aMS",%progbits,1
- 482              		.align	2
- 483              	.LC0:
- 484 0000 53656E73 		.ascii	"Sensor value: %5d %5d %5d %5d %5d %5d \015\012\000"
- 484      6F722076 
- 484      616C7565 
- 484      3A202535 
- 484      64202535 
- 485 0029 000000   		.space	3
- 486              	.LC1:
- 487 002c 613D2564 		.ascii	"a=%d b=%d c=%d\012\000"
- 487      20623D25 
- 487      6420633D 
- 487      25640A00 
- 488              	.LC2:
- 489 003c 25642025 		.ascii	"%d %d\015\012\000"
- 489      640D0A00 
- 490              		.text
- 491              	.Letext0:
- 492              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
- 493              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
- 494              		.file 4 "..\\FreeRTOS\\Source\\portable\\GCC\\ARM_CM3/portmacro.h"
- 495              		.file 5 ".\\ZumoLibrary/Reflectance.h"
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 23
+ 638:main.c        ****     
+ 639:main.c        ****     while(true)             // Wait for IR signal
+ 640:main.c        ****     {
+ 641:main.c        ****         if(IR_get(&IR_val, portMAX_DELAY)) {
+ 642:main.c        ****             int l = IR_val & IR_SIGNAL_MASK; // get pulse length
+ 643:main.c        ****             int b = 0;
+ 644:main.c        ****             if((IR_val & IR_SIGNAL_HIGH) != 0) b = 1; // get pulse state (0/1)
+ 645:main.c        ****             printf("%d %d\r\n",b, l);
+ 646:main.c        ****             
+ 647:main.c        ****             Beep(150,150);
+ 648:main.c        ****             IR_flush();
+ 649:main.c        ****                       
+ 650:main.c        ****             break;
+ 651:main.c        ****         }
+ 652:main.c        ****     }
+ 653:main.c        **** 
+ 654:main.c        ****     while(true)             // Drive
+ 655:main.c        ****     {               
+ 656:main.c        ****         linecounter();
+ 657:main.c        ****         
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 13
 
 
- 496              		.file 6 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
- 497              		.file 7 ".\\ZumoLibrary/Motor.h"
- 498              		.file 8 ".\\ZumoLibrary/Beep.h"
- 499              		.file 9 ".\\ZumoLibrary/IR.h"
- 500              		.file 10 "Generated_Source\\PSoC5/SW1.h"
- 501              		.file 11 "..\\FreeRTOS\\Source\\include/task.h"
- 502              		.file 12 "Generated_Source\\PSoC5/core_cm3.h"
- 503              		.section	.debug_info,"",%progbits
- 504              	.Ldebug_info0:
- 505 0000 8E050000 		.4byte	0x58e
- 506 0004 0400     		.2byte	0x4
- 507 0006 00000000 		.4byte	.Ldebug_abbrev0
- 508 000a 04       		.byte	0x4
- 509 000b 01       		.uleb128 0x1
- 510 000c CD000000 		.4byte	.LASF39
- 511 0010 0C       		.byte	0xc
- 512 0011 19020000 		.4byte	.LASF40
- 513 0015 1C000000 		.4byte	.LASF41
- 514 0019 00000000 		.4byte	.Ldebug_ranges0+0
- 515 001d 00000000 		.4byte	0
- 516 0021 00000000 		.4byte	.Ldebug_line0
- 517 0025 02       		.uleb128 0x2
- 518 0026 01       		.byte	0x1
- 519 0027 06       		.byte	0x6
- 520 0028 74020000 		.4byte	.LASF0
- 521 002c 02       		.uleb128 0x2
- 522 002d 01       		.byte	0x1
- 523 002e 08       		.byte	0x8
- 524 002f BF000000 		.4byte	.LASF1
- 525 0033 02       		.uleb128 0x2
- 526 0034 02       		.byte	0x2
- 527 0035 05       		.byte	0x5
- 528 0036 38020000 		.4byte	.LASF2
- 529 003a 03       		.uleb128 0x3
- 530 003b A2010000 		.4byte	.LASF4
- 531 003f 02       		.byte	0x2
- 532 0040 2B       		.byte	0x2b
- 533 0041 45000000 		.4byte	0x45
- 534 0045 02       		.uleb128 0x2
- 535 0046 02       		.byte	0x2
- 536 0047 07       		.byte	0x7
- 537 0048 74010000 		.4byte	.LASF3
- 538 004c 03       		.uleb128 0x3
- 539 004d 46000000 		.4byte	.LASF5
- 540 0051 02       		.byte	0x2
- 541 0052 3F       		.byte	0x3f
- 542 0053 57000000 		.4byte	0x57
- 543 0057 02       		.uleb128 0x2
- 544 0058 04       		.byte	0x4
- 545 0059 05       		.byte	0x5
- 546 005a 54020000 		.4byte	.LASF6
- 547 005e 03       		.uleb128 0x3
- 548 005f B4010000 		.4byte	.LASF7
- 549 0063 02       		.byte	0x2
- 550 0064 41       		.byte	0x41
- 551 0065 69000000 		.4byte	0x69
- 552 0069 02       		.uleb128 0x2
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 24
+ 658:main.c        ****         reflectancedrive();
+ 659:main.c        ****     }
+ 660:main.c        **** }   
+ 661:main.c        **** 
+ 662:main.c        **** void linecounter(void)
+ 663:main.c        ****     {
+ 664:main.c        ****         struct sensors_ ref;
+ 665:main.c        ****         struct sensors_ dig;
+ 666:main.c        **** 
+ 667:main.c        ****         reflectance_start();
+ 668:main.c        ****         reflectance_set_threshold(9000, 9000, 11000, 11000, 9000, 9000);
+ 669:main.c        ****         
+ 670:main.c        ****         reflectance_read(&ref);
+ 671:main.c        ****         reflectance_digital(&dig);
+ 672:main.c        ****         
+ 673:main.c        ****         printf("Sensor value: %5d %5d %5d %5d %5d %5d \r\n", dig.l3, dig.l2, dig.l1, dig.r1, dig.r2
+ 674:main.c        ****         printf("a=%d b=%d c=%d\n", onblack, onwhite, passed);
+ 675:main.c        ****         
+ 676:main.c        ****         if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 1)
+ 677:main.c        ****             {
+ 678:main.c        ****                 onblack = 1;               
+ 679:main.c        ****             }
+ 680:main.c        ****         
+ 681:main.c        ****         if (dig.l3 != 1 && dig.r3 != 1)
+ 682:main.c        ****             {
+ 683:main.c        ****                 onwhite = 1;    
+ 684:main.c        ****             }      
+ 685:main.c        ****             
+ 686:main.c        ****         if(onblack == 1 && onwhite == 1)
+ 687:main.c        ****             {
+ 688:main.c        ****                 passed++;
+ 689:main.c        ****                 onblack = 0;
+ 690:main.c        ****             }
+ 691:main.c        ****             
+ 692:main.c        ****         else{ onwhite = 0; }    
+ 693:main.c        ****     }
+ 694:main.c        ****     
+ 695:main.c        **** void reflectancedrive(void)
+ 696:main.c        ****     {
+ 697:main.c        ****     
+ 698:main.c        ****         struct sensors_ ref;
+ 699:main.c        ****         struct sensors_ dig;
+ 700:main.c        **** 
+ 701:main.c        ****         reflectance_start();
+ 702:main.c        ****         reflectance_set_threshold(9000, 9000, 11000, 11000, 9000, 9000);
+ 703:main.c        ****        
+ 704:main.c        ****         reflectance_read(&ref);
+ 705:main.c        ****         reflectance_digital(&dig);
+ 706:main.c        ****         
+ 707:main.c        ****         void tank_turn_left(uint8, uint32);
+ 708:main.c        ****         void tank_turn_right(uint8, uint32);
+ 709:main.c        ****     
+ 710:main.c        ****         if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0)
+ 711:main.c        ****             {
+ 712:main.c        ****                 motor_forward(250, 10);
+ 713:main.c        ****             }
+ 714:main.c        ****             
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 14
 
 
- 553 006a 04       		.byte	0x4
- 554 006b 07       		.byte	0x7
- 555 006c 62010000 		.4byte	.LASF8
- 556 0070 02       		.uleb128 0x2
- 557 0071 08       		.byte	0x8
- 558 0072 05       		.byte	0x5
- 559 0073 0B020000 		.4byte	.LASF9
- 560 0077 02       		.uleb128 0x2
- 561 0078 08       		.byte	0x8
- 562 0079 07       		.byte	0x7
- 563 007a 87000000 		.4byte	.LASF10
- 564 007e 04       		.uleb128 0x4
- 565 007f 04       		.byte	0x4
- 566 0080 05       		.byte	0x5
- 567 0081 696E7400 		.ascii	"int\000"
- 568 0085 02       		.uleb128 0x2
- 569 0086 04       		.byte	0x4
- 570 0087 07       		.byte	0x7
- 571 0088 C5010000 		.4byte	.LASF11
- 572 008c 03       		.uleb128 0x3
- 573 008d 42020000 		.4byte	.LASF12
- 574 0091 03       		.byte	0x3
- 575 0092 24       		.byte	0x24
- 576 0093 3A000000 		.4byte	0x3a
- 577 0097 03       		.uleb128 0x3
- 578 0098 FA010000 		.4byte	.LASF13
- 579 009c 03       		.byte	0x3
- 580 009d 2C       		.byte	0x2c
- 581 009e 4C000000 		.4byte	0x4c
- 582 00a2 03       		.uleb128 0x3
- 583 00a3 4B020000 		.4byte	.LASF14
- 584 00a7 03       		.byte	0x3
- 585 00a8 30       		.byte	0x30
- 586 00a9 5E000000 		.4byte	0x5e
- 587 00ad 02       		.uleb128 0x2
- 588 00ae 04       		.byte	0x4
- 589 00af 04       		.byte	0x4
- 590 00b0 81000000 		.4byte	.LASF15
- 591 00b4 02       		.uleb128 0x2
- 592 00b5 08       		.byte	0x8
- 593 00b6 04       		.byte	0x4
- 594 00b7 AD010000 		.4byte	.LASF16
- 595 00bb 02       		.uleb128 0x2
- 596 00bc 01       		.byte	0x1
- 597 00bd 08       		.byte	0x8
- 598 00be DB010000 		.4byte	.LASF17
- 599 00c2 02       		.uleb128 0x2
- 600 00c3 08       		.byte	0x8
- 601 00c4 04       		.byte	0x4
- 602 00c5 68020000 		.4byte	.LASF18
- 603 00c9 02       		.uleb128 0x2
- 604 00ca 04       		.byte	0x4
- 605 00cb 07       		.byte	0x7
- 606 00cc 02020000 		.4byte	.LASF19
- 607 00d0 03       		.uleb128 0x3
- 608 00d1 11000000 		.4byte	.LASF20
- 609 00d5 04       		.byte	0x4
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 25
+ 715:main.c        ****             else if ((dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && di
+ 716:main.c        ****                     {
+ 717:main.c        ****                         vTaskDelay(50);
+ 718:main.c        ****                         
+ 719:main.c        ****                         if ((dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 
+ 720:main.c        ****                         {
+ 721:main.c        ****                             //motor_turn(0, 200, 400);
+ 722:main.c        ****                             tank_turn_left(200, 200);
+ 723:main.c        ****                         }          
+ 724:main.c        ****                     }
+ 725:main.c        ****         
+ 726:main.c        ****                 else if ((dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 &
+ 727:main.c        ****                     {
+ 728:main.c        ****                         vTaskDelay(50);
+ 729:main.c        ****                         
+ 730:main.c        ****                         if ((dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 
+ 731:main.c        ****                         {
+ 732:main.c        ****                             //motor_turn(200, 0, 400);
+ 733:main.c        ****                             tank_turn_right(200, 200);
+ 734:main.c        ****                         }          
+ 735:main.c        ****                     }
+ 736:main.c        ****                       
+ 737:main.c        ****                     else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 1 && dig.r2 == 
+ 738:main.c        ****                         {
+ 739:main.c        ****                             motor_turn(200, 50, 50);             
+ 740:main.c        ****                         }
+ 741:main.c        ****                         
+ 742:main.c        ****                              else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && d
+ 743:main.c        ****                                 {
+ 744:main.c        ****                                     motor_turn(250, 0, 100);             
+ 745:main.c        ****                                 }
+ 746:main.c        ****                                 
+ 747:main.c        ****                                 else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 &
+ 748:main.c        ****                                 {
+ 749:main.c        ****                                     motor_turn(255, 0, 200);             
+ 750:main.c        ****                                 }
+ 751:main.c        ****                             
+ 752:main.c        ****                                 else if (dig.l3 == 0 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 0 &
+ 753:main.c        ****                                     {
+ 754:main.c        ****                                         motor_turn(50, 200, 50);             
+ 755:main.c        ****                                     }
+ 756:main.c        ****                                 
+ 757:main.c        ****                                     else if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 0 && dig.r1 ==
+ 758:main.c        ****                                         {
+ 759:main.c        ****                                             motor_turn(0, 250, 100);             
+ 760:main.c        ****                                         }
+ 761:main.c        ****                                         
+ 762:main.c        ****                                         else if (dig.l3 == 1 && dig.l2 == 0 && dig.l1 == 0 && dig.r
+ 763:main.c        ****                                         {
+ 764:main.c        ****                                             motor_turn(0, 255, 200);             
+ 765:main.c        ****                                         }
+ 766:main.c        ****                                     
+ 767:main.c        ****                                             else if (passed == 2) // stop //"passed == 2" : stop wh
+ 768:main.c        ****                                                 {
+ 769:main.c        ****                                                     motor_forward(0, 0);
+ 770:main.c        ****                                                 }
+ 771:main.c        ****                     
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 15
 
 
- 610 00d6 3F       		.byte	0x3f
- 611 00d7 A2000000 		.4byte	0xa2
- 612 00db 05       		.uleb128 0x5
- 613 00dc 80020000 		.4byte	.LASF42
- 614 00e0 0C       		.byte	0xc
- 615 00e1 05       		.byte	0x5
- 616 00e2 0E       		.byte	0xe
- 617 00e3 2A010000 		.4byte	0x12a
- 618 00e7 06       		.uleb128 0x6
- 619 00e8 6C3300   		.ascii	"l3\000"
- 620 00eb 05       		.byte	0x5
- 621 00ec 0F       		.byte	0xf
- 622 00ed 8C000000 		.4byte	0x8c
- 623 00f1 00       		.byte	0
- 624 00f2 06       		.uleb128 0x6
- 625 00f3 6C3200   		.ascii	"l2\000"
- 626 00f6 05       		.byte	0x5
- 627 00f7 10       		.byte	0x10
- 628 00f8 8C000000 		.4byte	0x8c
- 629 00fc 02       		.byte	0x2
- 630 00fd 06       		.uleb128 0x6
- 631 00fe 6C3100   		.ascii	"l1\000"
- 632 0101 05       		.byte	0x5
- 633 0102 11       		.byte	0x11
- 634 0103 8C000000 		.4byte	0x8c
- 635 0107 04       		.byte	0x4
- 636 0108 06       		.uleb128 0x6
- 637 0109 723100   		.ascii	"r1\000"
- 638 010c 05       		.byte	0x5
- 639 010d 12       		.byte	0x12
- 640 010e 8C000000 		.4byte	0x8c
- 641 0112 06       		.byte	0x6
- 642 0113 06       		.uleb128 0x6
- 643 0114 723200   		.ascii	"r2\000"
- 644 0117 05       		.byte	0x5
- 645 0118 13       		.byte	0x13
- 646 0119 8C000000 		.4byte	0x8c
- 647 011d 08       		.byte	0x8
- 648 011e 06       		.uleb128 0x6
- 649 011f 723300   		.ascii	"r3\000"
- 650 0122 05       		.byte	0x5
- 651 0123 14       		.byte	0x14
- 652 0124 8C000000 		.4byte	0x8c
- 653 0128 0A       		.byte	0xa
- 654 0129 00       		.byte	0
- 655 012a 07       		.uleb128 0x7
- 656 012b 92020000 		.4byte	.LASF21
- 657 012f 01       		.byte	0x1
- 658 0130 8102     		.2byte	0x281
- 659 0132 00000000 		.4byte	.LFB86
- 660 0136 E4000000 		.4byte	.LFE86-.LFB86
- 661 013a 01       		.uleb128 0x1
- 662 013b 9C       		.byte	0x9c
- 663 013c 02020000 		.4byte	0x202
- 664 0140 08       		.uleb128 0x8
- 665 0141 72656600 		.ascii	"ref\000"
- 666 0145 01       		.byte	0x1
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 26
+ 772:main.c        ****                     else
+ 773:main.c        ****                     {
+ 774:main.c        ****                         motor_forward(100, 10);
+ 775:main.c        ****                     }
+ 776:main.c        ****     }
+ 777:main.c        ****     
+ 778:main.c        ****     void tank_turn_left(uint8 speed, uint32 delay)
+ 779:main.c        ****     {
+ 780:main.c        ****         MotorDirLeft_Write(1);      // set LeftMotor forward mode
+ 781:main.c        ****         MotorDirRight_Write(0);     // set RightMotor forward mode
+ 782:main.c        ****         PWM_WriteCompare1(speed);
+ 783:main.c        ****         PWM_WriteCompare2(speed);
+ 784:main.c        ****         vTaskDelay(delay);
+ 785:main.c        ****     }
+ 786:main.c        **** 
+ 787:main.c        ****     void tank_turn_right(uint8 speed, uint32 delay)
+ 788:main.c        ****     {
+ 789:main.c        ****         MotorDirLeft_Write(0);      // set LeftMotor forward mode
+ 790:main.c        ****         MotorDirRight_Write(1);     // set RightMotor forward mode
+ 791:main.c        ****         PWM_WriteCompare1(speed); 
+ 792:main.c        ****         PWM_WriteCompare2(speed);
+ 793:main.c        ****         vTaskDelay(delay);
+ 794:main.c        ****     }
+ 795:main.c        ****     
+ 796:main.c        **** #endif
+ 797:main.c        **** 
+ 798:main.c        **** 
+ 799:main.c        **** 
+ 800:main.c        **** #if 0
+ 801:main.c        **** //reflectance //tank turn
+ 802:main.c        ****     
+ 803:main.c        **** int onblack, onwhite, passed;   
+ 804:main.c        **** void tank_turn_left(uint8, uint32);
+ 805:main.c        **** void tank_turn_right(uint8, uint32);
+ 806:main.c        **** void linecounter();
+ 807:main.c        **** void reflectancedrive();
+ 808:main.c        ****     
+ 809:main.c        **** void zmain(void)
+ 810:main.c        **** {   
+ 811:main.c        ****     IR_Start();    
+ 812:main.c        ****     uint32_t IR_val;     
+ 813:main.c        ****     IR_flush();
+ 814:main.c        ****    
+ 815:main.c        ****     motor_start();
+ 816:main.c        ****     
+ 817:main.c        ****     while(SW1_Read() == 1);             // Wait for user button
+ 818:main.c        ****     
+ 819:main.c        ****     while(true)             // Drive to first line
+ 820:main.c        ****     {
+ 821:main.c        ****         
+ 822:main.c        ****         linecounter();
+ 823:main.c        ****         
+ 824:main.c        ****         reflectancedrive();
+ 825:main.c        ****         
+ 826:main.c        ****         if(onblack==1)
+ 827:main.c        ****             {
+ 828:main.c        ****                 Beep(100, 100);
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 16
 
 
- 667 0146 8302     		.2byte	0x283
- 668 0148 DB000000 		.4byte	0xdb
- 669 014c 02       		.uleb128 0x2
- 670 014d 91       		.byte	0x91
- 671 014e 64       		.sleb128 -28
- 672 014f 08       		.uleb128 0x8
- 673 0150 64696700 		.ascii	"dig\000"
- 674 0154 01       		.byte	0x1
- 675 0155 8402     		.2byte	0x284
- 676 0157 DB000000 		.4byte	0xdb
- 677 015b 02       		.uleb128 0x2
- 678 015c 91       		.byte	0x91
- 679 015d 58       		.sleb128 -40
- 680 015e 09       		.uleb128 0x9
- 681 015f 08000000 		.4byte	.LVL0
- 682 0163 F6040000 		.4byte	0x4f6
- 683 0167 0A       		.uleb128 0xa
- 684 0168 1C000000 		.4byte	.LVL1
- 685 016c 01050000 		.4byte	0x501
- 686 0170 A1010000 		.4byte	0x1a1
- 687 0174 0B       		.uleb128 0xb
- 688 0175 01       		.uleb128 0x1
- 689 0176 50       		.byte	0x50
- 690 0177 03       		.uleb128 0x3
- 691 0178 0A       		.byte	0xa
- 692 0179 2823     		.2byte	0x2328
- 693 017b 0B       		.uleb128 0xb
- 694 017c 01       		.uleb128 0x1
- 695 017d 51       		.byte	0x51
- 696 017e 03       		.uleb128 0x3
- 697 017f 0A       		.byte	0xa
- 698 0180 2823     		.2byte	0x2328
- 699 0182 0B       		.uleb128 0xb
- 700 0183 01       		.uleb128 0x1
- 701 0184 52       		.byte	0x52
- 702 0185 03       		.uleb128 0x3
- 703 0186 0A       		.byte	0xa
- 704 0187 F82A     		.2byte	0x2af8
- 705 0189 0B       		.uleb128 0xb
- 706 018a 01       		.uleb128 0x1
- 707 018b 53       		.byte	0x53
- 708 018c 03       		.uleb128 0x3
- 709 018d 0A       		.byte	0xa
- 710 018e F82A     		.2byte	0x2af8
- 711 0190 0B       		.uleb128 0xb
- 712 0191 02       		.uleb128 0x2
- 713 0192 7D       		.byte	0x7d
- 714 0193 00       		.sleb128 0
- 715 0194 03       		.uleb128 0x3
- 716 0195 0A       		.byte	0xa
- 717 0196 2823     		.2byte	0x2328
- 718 0198 0B       		.uleb128 0xb
- 719 0199 02       		.uleb128 0x2
- 720 019a 7D       		.byte	0x7d
- 721 019b 04       		.sleb128 4
- 722 019c 03       		.uleb128 0x3
- 723 019d 0A       		.byte	0xa
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 27
+ 829:main.c        ****                 motor_forward(0, 0);
+ 830:main.c        ****                 break;
+ 831:main.c        ****             }
+ 832:main.c        ****                
+ 833:main.c        ****     }
+ 834:main.c        ****     
+ 835:main.c        ****     while(true)             // Wait for IR signal
+ 836:main.c        ****     {
+ 837:main.c        ****         if(IR_get(&IR_val, portMAX_DELAY)) {
+ 838:main.c        ****             int l = IR_val & IR_SIGNAL_MASK; // get pulse length
+ 839:main.c        ****             int b = 0;
+ 840:main.c        ****             if((IR_val & IR_SIGNAL_HIGH) != 0) b = 1; // get pulse state (0/1)
+ 841:main.c        ****             printf("%d %d\r\n",b, l);
+ 842:main.c        ****             
+ 843:main.c        ****             Beep(150,150);
+ 844:main.c        ****             IR_flush();
+ 845:main.c        ****                       
+ 846:main.c        ****             break;
+ 847:main.c        ****         }
+ 848:main.c        ****     }
+ 849:main.c        **** 
+ 850:main.c        ****     while(true)             // Drive
+ 851:main.c        ****     {               
+ 852:main.c        ****         linecounter();
+ 853:main.c        ****         
+ 854:main.c        ****         reflectancedrive();
+ 855:main.c        ****     }
+ 856:main.c        **** }   
+ 857:main.c        **** 
+ 858:main.c        **** void linecounter(void)
+ 859:main.c        ****     {
+ 860:main.c        ****         struct sensors_ ref;
+ 861:main.c        ****         struct sensors_ dig;
+ 862:main.c        **** 
+ 863:main.c        ****         reflectance_start();
+ 864:main.c        ****         reflectance_set_threshold(9000, 9000, 11000, 11000, 9000, 9000);
+ 865:main.c        ****         
+ 866:main.c        ****         reflectance_read(&ref);
+ 867:main.c        ****         reflectance_digital(&dig);
+ 868:main.c        ****         
+ 869:main.c        ****         printf("Sensor value: %5d %5d %5d %5d %5d %5d \r\n", dig.l3, dig.l2, dig.l1, dig.r1, dig.r2
+ 870:main.c        ****         printf("a=%d b=%d c=%d\n", onblack, onwhite, passed);
+ 871:main.c        ****         
+ 872:main.c        ****         if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 == 1)
+ 873:main.c        ****             {
+ 874:main.c        ****                 onblack = 1;               
+ 875:main.c        ****             }
+ 876:main.c        ****         
+ 877:main.c        ****         if (dig.l3 != 1 || dig.r3 != 1)
+ 878:main.c        ****             {
+ 879:main.c        ****                 onwhite = 1;    
+ 880:main.c        ****             }      
+ 881:main.c        ****             
+ 882:main.c        ****         if(onblack == 1 && onwhite == 1)
+ 883:main.c        ****             {
+ 884:main.c        ****                 passed++;
+ 885:main.c        ****                 onblack = 0;
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 17
 
 
- 724 019e 2823     		.2byte	0x2328
- 725 01a0 00       		.byte	0
- 726 01a1 0A       		.uleb128 0xa
- 727 01a2 22000000 		.4byte	.LVL2
- 728 01a6 0C050000 		.4byte	0x50c
- 729 01aa B5010000 		.4byte	0x1b5
- 730 01ae 0B       		.uleb128 0xb
- 731 01af 01       		.uleb128 0x1
- 732 01b0 50       		.byte	0x50
- 733 01b1 02       		.uleb128 0x2
- 734 01b2 91       		.byte	0x91
- 735 01b3 64       		.sleb128 -28
- 736 01b4 00       		.byte	0
- 737 01b5 0A       		.uleb128 0xa
- 738 01b6 28000000 		.4byte	.LVL3
- 739 01ba 17050000 		.4byte	0x517
- 740 01be C9010000 		.4byte	0x1c9
- 741 01c2 0B       		.uleb128 0xb
- 742 01c3 01       		.uleb128 0x1
- 743 01c4 50       		.byte	0x50
- 744 01c5 02       		.uleb128 0x2
- 745 01c6 91       		.byte	0x91
- 746 01c7 58       		.sleb128 -40
- 747 01c8 00       		.byte	0
- 748 01c9 0A       		.uleb128 0xa
- 749 01ca 4C000000 		.4byte	.LVL4
- 750 01ce 22050000 		.4byte	0x522
- 751 01d2 EE010000 		.4byte	0x1ee
- 752 01d6 0B       		.uleb128 0xb
- 753 01d7 01       		.uleb128 0x1
- 754 01d8 50       		.byte	0x50
- 755 01d9 05       		.uleb128 0x5
- 756 01da 03       		.byte	0x3
- 757 01db 00000000 		.4byte	.LC0
- 758 01df 0B       		.uleb128 0xb
- 759 01e0 02       		.uleb128 0x2
- 760 01e1 7D       		.byte	0x7d
- 761 01e2 04       		.sleb128 4
- 762 01e3 02       		.uleb128 0x2
- 763 01e4 74       		.byte	0x74
- 764 01e5 00       		.sleb128 0
- 765 01e6 0B       		.uleb128 0xb
- 766 01e7 02       		.uleb128 0x2
- 767 01e8 7D       		.byte	0x7d
- 768 01e9 08       		.sleb128 8
- 769 01ea 02       		.uleb128 0x2
- 770 01eb 75       		.byte	0x75
- 771 01ec 00       		.sleb128 0
- 772 01ed 00       		.byte	0
- 773 01ee 0C       		.uleb128 0xc
- 774 01ef 5E000000 		.4byte	.LVL5
- 775 01f3 22050000 		.4byte	0x522
- 776 01f7 0B       		.uleb128 0xb
- 777 01f8 01       		.uleb128 0x1
- 778 01f9 50       		.byte	0x50
- 779 01fa 05       		.uleb128 0x5
- 780 01fb 03       		.byte	0x3
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 28
+ 886:main.c        ****             }
+ 887:main.c        ****             
+ 888:main.c        ****         else{ onwhite = 0; }    
+ 889:main.c        ****     }
+ 890:main.c        ****     
+ 891:main.c        **** void reflectancedrive(void)
+ 892:main.c        ****     {
+ 893:main.c        ****     
+ 894:main.c        ****         struct sensors_ ref;
+ 895:main.c        ****         struct sensors_ dig;
+ 896:main.c        **** 
+ 897:main.c        ****         reflectance_start();
+ 898:main.c        ****         reflectance_set_threshold(9000, 9000, 11000, 11000, 9000, 9000);
+ 899:main.c        ****        
+ 900:main.c        ****         reflectance_read(&ref);
+ 901:main.c        ****         reflectance_digital(&dig);
+ 902:main.c        ****     
+ 903:main.c        ****         if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0)
+ 904:main.c        ****             {
+ 905:main.c        ****                 motor_forward(FORWARD, 10);
+ 906:main.c        ****             }
+ 907:main.c        ****             
+ 908:main.c        ****             else if (onblack == 1 && passed == 1)//(dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 1 && di
+ 909:main.c        ****                     {
+ 910:main.c        ****                         vTaskDelay(500);
+ 911:main.c        ****                         tank_turn_left(100, 800);
+ 912:main.c        ****                     }
+ 913:main.c        ****         
+ 914:main.c        ****                 else if ((onblack == 1 && passed == 2) || (onblack == 1 && passed == 3))//(dig.l3 =
+ 915:main.c        ****                     {
+ 916:main.c        ****                         vTaskDelay(500);
+ 917:main.c        ****                         tank_turn_right(100, 800);      
+ 918:main.c        ****                     }
+ 919:main.c        ****                       
+ 920:main.c        ****                     else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 1 && dig.r2 == 
+ 921:main.c        ****                         {
+ 922:main.c        ****                             motor_turn(100, 50, 10);             
+ 923:main.c        ****                         }
+ 924:main.c        ****                         
+ 925:main.c        ****                              else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && d
+ 926:main.c        ****                                 {
+ 927:main.c        ****                                     motor_turn(150, 0, 10);             
+ 928:main.c        ****                                 }
+ 929:main.c        ****                                 
+ 930:main.c        ****                                 else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 &
+ 931:main.c        ****                                 {
+ 932:main.c        ****                                     motor_turn(150, 0, 10);             
+ 933:main.c        ****                                 }
+ 934:main.c        ****                             
+ 935:main.c        ****                                 else if (dig.l3 == 0 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 0 &
+ 936:main.c        ****                                     {
+ 937:main.c        ****                                         motor_turn(50, 100, 10);             
+ 938:main.c        ****                                     }
+ 939:main.c        ****                                 
+ 940:main.c        ****                                     else if (dig.l3 == 1 && dig.l2 == 1 && dig.l1 == 0 && dig.r1 ==
+ 941:main.c        ****                                         {
+ 942:main.c        ****                                             motor_turn(0, 150, 10);             
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 18
 
 
- 781 01fc 2C000000 		.4byte	.LC1
- 782 0200 00       		.byte	0
- 783 0201 00       		.byte	0
- 784 0202 07       		.uleb128 0x7
- 785 0203 20020000 		.4byte	.LASF22
- 786 0207 01       		.byte	0x1
- 787 0208 A202     		.2byte	0x2a2
- 788 020a 00000000 		.4byte	.LFB87
- 789 020e 40010000 		.4byte	.LFE87-.LFB87
- 790 0212 01       		.uleb128 0x1
- 791 0213 9C       		.byte	0x9c
- 792 0214 66030000 		.4byte	0x366
- 793 0218 08       		.uleb128 0x8
- 794 0219 72656600 		.ascii	"ref\000"
- 795 021d 01       		.byte	0x1
- 796 021e A502     		.2byte	0x2a5
- 797 0220 DB000000 		.4byte	0xdb
- 798 0224 02       		.uleb128 0x2
- 799 0225 91       		.byte	0x91
- 800 0226 6C       		.sleb128 -20
- 801 0227 08       		.uleb128 0x8
- 802 0228 64696700 		.ascii	"dig\000"
- 803 022c 01       		.byte	0x1
- 804 022d A602     		.2byte	0x2a6
- 805 022f DB000000 		.4byte	0xdb
- 806 0233 02       		.uleb128 0x2
- 807 0234 91       		.byte	0x91
- 808 0235 60       		.sleb128 -32
- 809 0236 09       		.uleb128 0x9
- 810 0237 08000000 		.4byte	.LVL6
- 811 023b F6040000 		.4byte	0x4f6
- 812 023f 0A       		.uleb128 0xa
- 813 0240 1C000000 		.4byte	.LVL7
- 814 0244 01050000 		.4byte	0x501
- 815 0248 79020000 		.4byte	0x279
- 816 024c 0B       		.uleb128 0xb
- 817 024d 01       		.uleb128 0x1
- 818 024e 50       		.byte	0x50
- 819 024f 03       		.uleb128 0x3
- 820 0250 0A       		.byte	0xa
- 821 0251 2823     		.2byte	0x2328
- 822 0253 0B       		.uleb128 0xb
- 823 0254 01       		.uleb128 0x1
- 824 0255 51       		.byte	0x51
- 825 0256 03       		.uleb128 0x3
- 826 0257 0A       		.byte	0xa
- 827 0258 2823     		.2byte	0x2328
- 828 025a 0B       		.uleb128 0xb
- 829 025b 01       		.uleb128 0x1
- 830 025c 52       		.byte	0x52
- 831 025d 03       		.uleb128 0x3
- 832 025e 0A       		.byte	0xa
- 833 025f F82A     		.2byte	0x2af8
- 834 0261 0B       		.uleb128 0xb
- 835 0262 01       		.uleb128 0x1
- 836 0263 53       		.byte	0x53
- 837 0264 03       		.uleb128 0x3
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 29
+ 943:main.c        ****                                         }
+ 944:main.c        ****                                         
+ 945:main.c        ****                                         else if (dig.l3 == 1 && dig.l2 == 0 && dig.l1 == 0 && dig.r
+ 946:main.c        ****                                         {
+ 947:main.c        ****                                             motor_turn(0, 150, 10);             
+ 948:main.c        ****                                         }
+ 949:main.c        ****                                     
+ 950:main.c        ****                                             else if (passed == 5) // stop
+ 951:main.c        ****                                                 {
+ 952:main.c        ****                                                     motor_forward(0, 0);
+ 953:main.c        ****                                                 }
+ 954:main.c        ****                     
+ 955:main.c        ****                     else
+ 956:main.c        ****                     {
+ 957:main.c        ****                         motor_forward(FORWARD, 10);
+ 958:main.c        ****                     }
+ 959:main.c        ****     }
+ 960:main.c        ****    
+ 961:main.c        **** void tank_turn_left(uint8 speed, uint32 delay)
+ 962:main.c        **** {
+ 963:main.c        ****     MotorDirLeft_Write(1);      // set LeftMotor forward mode
+ 964:main.c        ****     MotorDirRight_Write(0);     // set RightMotor forward mode
+ 965:main.c        ****     PWM_WriteCompare1(speed);
+ 966:main.c        ****     PWM_WriteCompare2(speed);
+ 967:main.c        ****     vTaskDelay(delay);
+ 968:main.c        **** }
+ 969:main.c        **** 
+ 970:main.c        **** void tank_turn_right(uint8 speed, uint32 delay)
+ 971:main.c        **** {
+ 972:main.c        ****     MotorDirLeft_Write(0);      // set LeftMotor forward mode
+ 973:main.c        ****     MotorDirRight_Write(1);     // set RightMotor forward mode
+ 974:main.c        ****     PWM_WriteCompare1(speed); 
+ 975:main.c        ****     PWM_WriteCompare2(speed);
+ 976:main.c        ****     vTaskDelay(delay);
+ 977:main.c        **** }
+ 978:main.c        ****     
+ 979:main.c        **** #endif
+ 980:main.c        **** 
+ 981:main.c        **** #if 0
+ 982:main.c        **** //motor //week 3 //assignment 1
+ 983:main.c        **** void zmain(void)
+ 984:main.c        **** {
+ 985:main.c        ****     while (1){
+ 986:main.c        ****         
+ 987:main.c        ****         if (SW1_Read() == 0) {
+ 988:main.c        ****         
+ 989:main.c        ****         motor_start();              // enable motor controller
+ 990:main.c        ****         
+ 991:main.c        ****         motor_forward(0,0);         // set speed to zero to stop motors
+ 992:main.c        **** 
+ 993:main.c        ****         vTaskDelay(1000);
+ 994:main.c        ****         
+ 995:main.c        ****         motor_turn(105, 100, 3500);    // moving forward
+ 996:main.c        **** 
+ 997:main.c        ****         motor_turn(200,50,645);     // turn
+ 998:main.c        **** 
+ 999:main.c        ****         motor_turn(105, 100, 2600);    // moving forward
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 19
 
 
- 838 0265 0A       		.byte	0xa
- 839 0266 F82A     		.2byte	0x2af8
- 840 0268 0B       		.uleb128 0xb
- 841 0269 02       		.uleb128 0x2
- 842 026a 7D       		.byte	0x7d
- 843 026b 00       		.sleb128 0
- 844 026c 03       		.uleb128 0x3
- 845 026d 0A       		.byte	0xa
- 846 026e 2823     		.2byte	0x2328
- 847 0270 0B       		.uleb128 0xb
- 848 0271 02       		.uleb128 0x2
- 849 0272 7D       		.byte	0x7d
- 850 0273 04       		.sleb128 4
- 851 0274 03       		.uleb128 0x3
- 852 0275 0A       		.byte	0xa
- 853 0276 2823     		.2byte	0x2328
- 854 0278 00       		.byte	0
- 855 0279 0A       		.uleb128 0xa
- 856 027a 22000000 		.4byte	.LVL8
- 857 027e 0C050000 		.4byte	0x50c
- 858 0282 8D020000 		.4byte	0x28d
- 859 0286 0B       		.uleb128 0xb
- 860 0287 01       		.uleb128 0x1
- 861 0288 50       		.byte	0x50
- 862 0289 02       		.uleb128 0x2
- 863 028a 91       		.byte	0x91
- 864 028b 6C       		.sleb128 -20
- 865 028c 00       		.byte	0
- 866 028d 0A       		.uleb128 0xa
- 867 028e 28000000 		.4byte	.LVL9
- 868 0292 17050000 		.4byte	0x517
- 869 0296 A1020000 		.4byte	0x2a1
- 870 029a 0B       		.uleb128 0xb
- 871 029b 01       		.uleb128 0x1
- 872 029c 50       		.byte	0x50
- 873 029d 02       		.uleb128 0x2
- 874 029e 91       		.byte	0x91
- 875 029f 60       		.sleb128 -32
- 876 02a0 00       		.byte	0
- 877 02a1 0A       		.uleb128 0xa
- 878 02a2 58000000 		.4byte	.LVL10
- 879 02a6 2D050000 		.4byte	0x52d
- 880 02aa BA020000 		.4byte	0x2ba
- 881 02ae 0B       		.uleb128 0xb
- 882 02af 01       		.uleb128 0x1
- 883 02b0 50       		.byte	0x50
- 884 02b1 02       		.uleb128 0x2
- 885 02b2 08       		.byte	0x8
- 886 02b3 64       		.byte	0x64
- 887 02b4 0B       		.uleb128 0xb
- 888 02b5 01       		.uleb128 0x1
- 889 02b6 51       		.byte	0x51
- 890 02b7 01       		.uleb128 0x1
- 891 02b8 3A       		.byte	0x3a
- 892 02b9 00       		.byte	0
- 893 02ba 0A       		.uleb128 0xa
- 894 02bb 88000000 		.4byte	.LVL11
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 30
+1000:main.c        **** 
+1001:main.c        ****         motor_turn(200,50,645);     // turn
+1002:main.c        ****         
+1003:main.c        ****         motor_turn(105, 100, 2650);    // moving forward
+1004:main.c        ****         
+1005:main.c        ****         motor_turn(200,50,645);     // turn
+1006:main.c        ****         
+1007:main.c        ****         motor_turn(145,75,1800);    // turn inside
+1008:main.c        ****         
+1009:main.c        ****         motor_turn(105, 100, 1200);    // moving forward
+1010:main.c        ****         
+1011:main.c        ****         vTaskDelay(500);
+1012:main.c        ****         
+1013:main.c        ****         //motor_backward(100,2000);    // moving backward
+1014:main.c        ****          
+1015:main.c        ****         motor_forward(0,0);         // stop motors
+1016:main.c        **** 
+1017:main.c        ****         motor_stop();               // disable motor controller
+1018:main.c        ****         
+1019:main.c        ****         //while(true)
+1020:main.c        ****         //{
+1021:main.c        ****         //    vTaskDelay(100);
+1022:main.c        ****         //}
+1023:main.c        ****     }
+1024:main.c        ****     }
+1025:main.c        ****     
+1026:main.c        **** }
+1027:main.c        **** #endif
+1028:main.c        **** 
+1029:main.c        **** #if 0
+1030:main.c        **** /* Example of how to use te Accelerometer!!!*/
+1031:main.c        **** void zmain(void)
+1032:main.c        **** {
+1033:main.c        ****     struct accData_ data;
+1034:main.c        ****     
+1035:main.c        ****     printf("Accelerometer test...\n");
+1036:main.c        **** 
+1037:main.c        ****     if(!LSM303D_Start()){
+1038:main.c        ****         printf("LSM303D failed to initialize!!! Program is Ending!!!\n");
+1039:main.c        ****         vTaskSuspend(NULL);
+1040:main.c        ****     }
+1041:main.c        ****     else {
+1042:main.c        ****         printf("Device Ok...\n");
+1043:main.c        ****     }
+1044:main.c        ****     
+1045:main.c        ****     while(true)
+1046:main.c        ****     {
+1047:main.c        ****         LSM303D_Read_Acc(&data);
+1048:main.c        ****         printf("%8d %8d %8d\n",data.accX, data.accY, data.accZ);
+1049:main.c        ****         vTaskDelay(50);
+1050:main.c        ****     }
+1051:main.c        ****  }   
+1052:main.c        **** #endif    
+1053:main.c        **** 
+1054:main.c        **** #if 0
+1055:main.c        **** // MQTT test
+1056:main.c        **** void zmain(void)
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 20
 
 
- 895 02bf 38050000 		.4byte	0x538
- 896 02c3 DA020000 		.4byte	0x2da
- 897 02c7 0B       		.uleb128 0xb
- 898 02c8 01       		.uleb128 0x1
- 899 02c9 50       		.byte	0x50
- 900 02ca 02       		.uleb128 0x2
- 901 02cb 09       		.byte	0x9
- 902 02cc C8       		.byte	0xc8
- 903 02cd 0B       		.uleb128 0xb
- 904 02ce 01       		.uleb128 0x1
- 905 02cf 51       		.byte	0x51
- 906 02d0 02       		.uleb128 0x2
- 907 02d1 08       		.byte	0x8
- 908 02d2 32       		.byte	0x32
- 909 02d3 0B       		.uleb128 0xb
- 910 02d4 01       		.uleb128 0x1
- 911 02d5 52       		.byte	0x52
- 912 02d6 02       		.uleb128 0x2
- 913 02d7 08       		.byte	0x8
- 914 02d8 32       		.byte	0x32
- 915 02d9 00       		.byte	0
- 916 02da 0A       		.uleb128 0xa
- 917 02db B8000000 		.4byte	.LVL12
- 918 02df 38050000 		.4byte	0x538
- 919 02e3 F9020000 		.4byte	0x2f9
- 920 02e7 0B       		.uleb128 0xb
- 921 02e8 01       		.uleb128 0x1
- 922 02e9 50       		.byte	0x50
- 923 02ea 02       		.uleb128 0x2
- 924 02eb 09       		.byte	0x9
- 925 02ec FA       		.byte	0xfa
- 926 02ed 0B       		.uleb128 0xb
- 927 02ee 01       		.uleb128 0x1
- 928 02ef 51       		.byte	0x51
- 929 02f0 01       		.uleb128 0x1
- 930 02f1 30       		.byte	0x30
- 931 02f2 0B       		.uleb128 0xb
- 932 02f3 01       		.uleb128 0x1
- 933 02f4 52       		.byte	0x52
- 934 02f5 02       		.uleb128 0x2
- 935 02f6 08       		.byte	0x8
- 936 02f7 32       		.byte	0x32
- 937 02f8 00       		.byte	0
- 938 02f9 0A       		.uleb128 0xa
- 939 02fa E8000000 		.4byte	.LVL13
- 940 02fe 38050000 		.4byte	0x538
- 941 0302 19030000 		.4byte	0x319
- 942 0306 0B       		.uleb128 0xb
- 943 0307 01       		.uleb128 0x1
- 944 0308 50       		.byte	0x50
- 945 0309 02       		.uleb128 0x2
- 946 030a 08       		.byte	0x8
- 947 030b 32       		.byte	0x32
- 948 030c 0B       		.uleb128 0xb
- 949 030d 01       		.uleb128 0x1
- 950 030e 51       		.byte	0x51
- 951 030f 02       		.uleb128 0x2
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 31
+1057:main.c        **** {
+1058:main.c        ****     int ctr = 0;
+1059:main.c        **** 
+1060:main.c        ****     printf("\nBoot\n");
+1061:main.c        ****     send_mqtt("Zumo01/debug", "Boot");
+1062:main.c        **** 
+1063:main.c        ****     //BatteryLed_Write(1); // Switch led on 
+1064:main.c        ****     BatteryLed_Write(0); // Switch led off 
+1065:main.c        **** 
+1066:main.c        ****     while(true)
+1067:main.c        ****     {
+1068:main.c        ****         printf("Ctr: %d, Button: %d\n", ctr, SW1_Read());
+1069:main.c        ****         print_mqtt("Zumo01/debug", "Ctr: %d, Button: %d", ctr, SW1_Read());
+1070:main.c        **** 
+1071:main.c        ****         vTaskDelay(1000);
+1072:main.c        ****         ctr++;
+1073:main.c        ****     }
+1074:main.c        ****  }   
+1075:main.c        **** #endif
+1076:main.c        **** 
+1077:main.c        **** 
+1078:main.c        **** #if 0
+1079:main.c        **** void zmain(void)
+1080:main.c        **** {    
+1081:main.c        ****     struct accData_ data;
+1082:main.c        ****     struct sensors_ ref;
+1083:main.c        ****     struct sensors_ dig;
+1084:main.c        ****     
+1085:main.c        ****     printf("MQTT and sensor test...\n");
+1086:main.c        **** 
+1087:main.c        ****     if(!LSM303D_Start()){
+1088:main.c        ****         printf("LSM303D failed to initialize!!! Program is Ending!!!\n");
+1089:main.c        ****         vTaskSuspend(NULL);
+1090:main.c        ****     }
+1091:main.c        ****     else {
+1092:main.c        ****         printf("Accelerometer Ok...\n");
+1093:main.c        ****     }
+1094:main.c        ****     
+1095:main.c        ****     int ctr = 0;
+1096:main.c        ****     reflectance_start();
+1097:main.c        ****     while(true)
+1098:main.c        ****     {
+1099:main.c        ****         LSM303D_Read_Acc(&data);
+1100:main.c        ****         // send data when we detect a hit and at 10 second intervals
+1101:main.c        ****         if(data.accX > 1500 || ++ctr > 1000) {
+1102:main.c        ****             printf("Acc: %8d %8d %8d\n",data.accX, data.accY, data.accZ);
+1103:main.c        ****             print_mqtt("Zumo01/acc", "%d,%d,%d", data.accX, data.accY, data.accZ);
+1104:main.c        ****             reflectance_read(&ref);
+1105:main.c        ****             printf("Ref: %8d %8d %8d %8d %8d %8d\n", ref.l3, ref.l2, ref.l1, ref.r1, ref.r2, ref.r3
+1106:main.c        ****             print_mqtt("Zumo01/ref", "%d,%d,%d,%d,%d,%d", ref.l3, ref.l2, ref.l1, ref.r1, ref.r2, r
+1107:main.c        ****             reflectance_digital(&dig);
+1108:main.c        ****             printf("Dig: %8d %8d %8d %8d %8d %8d\n", dig.l3, dig.l2, dig.l1, dig.r1, dig.r2, dig.r3
+1109:main.c        ****             print_mqtt("Zumo01/dig", "%d,%d,%d,%d,%d,%d", dig.l3, dig.l2, dig.l1, dig.r1, dig.r2, d
+1110:main.c        ****             ctr = 0;
+1111:main.c        ****         }
+1112:main.c        ****         vTaskDelay(10);
+1113:main.c        ****     }
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 21
 
 
- 952 0310 09       		.byte	0x9
- 953 0311 C8       		.byte	0xc8
- 954 0312 0B       		.uleb128 0xb
- 955 0313 01       		.uleb128 0x1
- 956 0314 52       		.byte	0x52
- 957 0315 02       		.uleb128 0x2
- 958 0316 08       		.byte	0x8
- 959 0317 32       		.byte	0x32
- 960 0318 00       		.byte	0
- 961 0319 0A       		.uleb128 0xa
- 962 031a 18010000 		.4byte	.LVL14
- 963 031e 38050000 		.4byte	0x538
- 964 0322 38030000 		.4byte	0x338
- 965 0326 0B       		.uleb128 0xb
- 966 0327 01       		.uleb128 0x1
- 967 0328 50       		.byte	0x50
- 968 0329 01       		.uleb128 0x1
- 969 032a 30       		.byte	0x30
- 970 032b 0B       		.uleb128 0xb
- 971 032c 01       		.uleb128 0x1
- 972 032d 51       		.byte	0x51
- 973 032e 02       		.uleb128 0x2
- 974 032f 09       		.byte	0x9
- 975 0330 FA       		.byte	0xfa
- 976 0331 0B       		.uleb128 0xb
- 977 0332 01       		.uleb128 0x1
- 978 0333 52       		.byte	0x52
- 979 0334 02       		.uleb128 0x2
- 980 0335 08       		.byte	0x8
- 981 0336 32       		.byte	0x32
- 982 0337 00       		.byte	0
- 983 0338 0A       		.uleb128 0xa
- 984 0339 2A010000 		.4byte	.LVL15
- 985 033d 2D050000 		.4byte	0x52d
- 986 0341 50030000 		.4byte	0x350
- 987 0345 0B       		.uleb128 0xb
- 988 0346 01       		.uleb128 0x1
- 989 0347 50       		.byte	0x50
- 990 0348 01       		.uleb128 0x1
- 991 0349 30       		.byte	0x30
- 992 034a 0B       		.uleb128 0xb
- 993 034b 01       		.uleb128 0x1
- 994 034c 51       		.byte	0x51
- 995 034d 01       		.uleb128 0x1
- 996 034e 30       		.byte	0x30
- 997 034f 00       		.byte	0
- 998 0350 0C       		.uleb128 0xc
- 999 0351 34010000 		.4byte	.LVL16
- 1000 0355 2D050000 		.4byte	0x52d
- 1001 0359 0B       		.uleb128 0xb
- 1002 035a 01       		.uleb128 0x1
- 1003 035b 50       		.byte	0x50
- 1004 035c 02       		.uleb128 0x2
- 1005 035d 08       		.byte	0x8
- 1006 035e 64       		.byte	0x64
- 1007 035f 0B       		.uleb128 0xb
- 1008 0360 01       		.uleb128 0x1
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 32
+1114:main.c        ****  }   
+1115:main.c        **** 
+1116:main.c        **** #endif
+1117:main.c        **** 
+1118:main.c        **** #if 0
+1119:main.c        **** void zmain(void)
+1120:main.c        **** {    
+1121:main.c        ****     RTC_Start(); // start real time clock
+1122:main.c        ****     
+1123:main.c        ****     RTC_TIME_DATE now;
+1124:main.c        **** 
+1125:main.c        ****     // set current time
+1126:main.c        ****     now.Hour = 12;
+1127:main.c        ****     now.Min = 34;
+1128:main.c        ****     now.Sec = 56;
+1129:main.c        ****     now.DayOfMonth = 25;
+1130:main.c        ****     now.Month = 9;
+1131:main.c        ****     now.Year = 2018;
+1132:main.c        ****     RTC_WriteTime(&now); // write the time to real time clock
+1133:main.c        **** 
+1134:main.c        ****     while(true)
+1135:main.c        ****     {
+1136:main.c        ****         if(SW1_Read() == 0) {
+1137:main.c        ****             // read the current time
+1138:main.c        ****             RTC_DisableInt(); /* Disable Interrupt of RTC Component */
+1139:main.c        ****             now = *RTC_ReadTime(); /* copy the current time to a local variable */
+1140:main.c        ****             RTC_EnableInt(); /* Enable Interrupt of RTC Component */
+1141:main.c        **** 
+1142:main.c        ****             // print the current time
+1143:main.c        ****             printf("%2d:%02d.%02d\n", now.Hour, now.Min, now.Sec);
+1144:main.c        ****             
+1145:main.c        ****             // wait until button is released
+1146:main.c        ****             while(SW1_Read() == 0) vTaskDelay(50);
+1147:main.c        ****         }
+1148:main.c        ****         vTaskDelay(50);
+1149:main.c        ****     }
+1150:main.c        ****  }   
+1151:main.c        **** #endif
+1152:main.c        **** 
+1153:main.c        **** #if 0
+1154:main.c        **** 
+1155:main.c        ****     // PROJECT // 1:RING //
+1156:main.c        **** 
+1157:main.c        **** int ooxxoo, oxxooo, oooxxo, xooooo, ooooox, xoooox, x_or_x;    
+1158:main.c        **** int x_axle, y_axle, distance;
+1159:main.c        **** void sensors();    
+1160:main.c        **** void reflectance();
+1161:main.c        **** void linefollow();
+1162:main.c        **** void ring();
+1163:main.c        **** void escape();
+1164:main.c        **** void tank_turn_left(uint8, uint32);
+1165:main.c        **** void tank_turn_right(uint8, uint32);
+1166:main.c        ****     
+1167:main.c        **** void zmain(void)
+1168:main.c        **** {   
+1169:main.c        ****     IR_Start();    
+1170:main.c        ****     IR_flush();
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 22
 
 
- 1009 0361 51       		.byte	0x51
- 1010 0362 01       		.uleb128 0x1
- 1011 0363 3A       		.byte	0x3a
- 1012 0364 00       		.byte	0
- 1013 0365 00       		.byte	0
- 1014 0366 0D       		.uleb128 0xd
- 1015 0367 BF010000 		.4byte	.LASF43
- 1016 036b 01       		.byte	0x1
- 1017 036c 4102     		.2byte	0x241
- 1018 036e 00000000 		.4byte	.LFB85
- 1019 0372 84000000 		.4byte	.LFE85-.LFB85
- 1020 0376 01       		.uleb128 0x1
- 1021 0377 9C       		.byte	0x9c
- 1022 0378 B5040000 		.4byte	0x4b5
- 1023 037c 0E       		.uleb128 0xe
- 1024 037d 92020000 		.4byte	.LASF21
- 1025 0381 01       		.byte	0x1
- 1026 0382 4302     		.2byte	0x243
- 1027 0384 8A030000 		.4byte	0x38a
- 1028 0388 0F       		.uleb128 0xf
- 1029 0389 00       		.byte	0
- 1030 038a 0E       		.uleb128 0xe
- 1031 038b 20020000 		.4byte	.LASF22
- 1032 038f 01       		.byte	0x1
- 1033 0390 4402     		.2byte	0x244
- 1034 0392 98030000 		.4byte	0x398
- 1035 0396 0F       		.uleb128 0xf
- 1036 0397 00       		.byte	0
- 1037 0398 10       		.uleb128 0x10
- 1038 0399 5B010000 		.4byte	.LASF23
- 1039 039d 01       		.byte	0x1
- 1040 039e 4702     		.2byte	0x247
- 1041 03a0 A2000000 		.4byte	0xa2
- 1042 03a4 02       		.uleb128 0x2
- 1043 03a5 91       		.byte	0x91
- 1044 03a6 74       		.sleb128 -12
- 1045 03a7 11       		.uleb128 0x11
- 1046 03a8 4E000000 		.4byte	.LBB2
- 1047 03ac 22000000 		.4byte	.LBE2-.LBB2
- 1048 03b0 0B040000 		.4byte	0x40b
- 1049 03b4 12       		.uleb128 0x12
- 1050 03b5 6C00     		.ascii	"l\000"
- 1051 03b7 01       		.byte	0x1
- 1052 03b8 6D02     		.2byte	0x26d
- 1053 03ba 7E000000 		.4byte	0x7e
- 1054 03be 00000000 		.4byte	.LLST0
- 1055 03c2 12       		.uleb128 0x12
- 1056 03c3 6200     		.ascii	"b\000"
- 1057 03c5 01       		.byte	0x1
- 1058 03c6 6E02     		.2byte	0x26e
- 1059 03c8 7E000000 		.4byte	0x7e
- 1060 03cc 13000000 		.4byte	.LLST1
- 1061 03d0 0A       		.uleb128 0xa
- 1062 03d1 64000000 		.4byte	.LVL29
- 1063 03d5 22050000 		.4byte	0x522
- 1064 03d9 E7030000 		.4byte	0x3e7
- 1065 03dd 0B       		.uleb128 0xb
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 33
+1171:main.c        ****     Ultra_Start();
+1172:main.c        ****     motor_start();
+1173:main.c        ****     
+1174:main.c        ****     while(SW1_Read() == 1);             // Wait for user button
+1175:main.c        ****     
+1176:main.c        ****     while(true)             // Drive to first line
+1177:main.c        ****     {
+1178:main.c        ****         sensors();
+1179:main.c        ****         
+1180:main.c        ****         linefollow();
+1181:main.c        ****         
+1182:main.c        ****         if(x_or_x == 1)
+1183:main.c        ****             {
+1184:main.c        ****                 Beep(100,100);
+1185:main.c        ****                 motor_forward(0, 0);
+1186:main.c        ****                 break;
+1187:main.c        ****             }         
+1188:main.c        ****     }
+1189:main.c        ****     
+1190:main.c        ****     while(true)             // Wait for IR signal
+1191:main.c        ****     {
+1192:main.c        ****         IR_wait();
+1193:main.c        ****         Beep(100,50);
+1194:main.c        ****         Beep(100,100);
+1195:main.c        ****         Beep(100,150);
+1196:main.c        ****         Beep(100,200);
+1197:main.c        ****         motor_forward(255, 100);
+1198:main.c        ****         break;
+1199:main.c        ****     }
+1200:main.c        **** 
+1201:main.c        ****     while(true)             // Drive
+1202:main.c        ****     {               
+1203:main.c        ****         sensors();
+1204:main.c        ****         
+1205:main.c        ****         ring();
+1206:main.c        ****         
+1207:main.c        ****         escape();
+1208:main.c        ****     }
+1209:main.c        **** }   
+1210:main.c        **** 
+1211:main.c        **** // Functions:
+1212:main.c        **** 
+1213:main.c        ****     void sensors(void)
+1214:main.c        ****     {
+1215:main.c        ****         struct accData_ data;
+1216:main.c        ****         struct sensors_ ref;
+1217:main.c        ****         struct sensors_ dig;
+1218:main.c        **** 
+1219:main.c        ****         LSM303D_Start();
+1220:main.c        ****         reflectance_start();
+1221:main.c        ****         reflectance_set_threshold(9000, 9000, 11000, 11000, 9000, 9000);
+1222:main.c        ****         
+1223:main.c        ****         reflectance_read(&ref);
+1224:main.c        ****         reflectance_digital(&dig);
+1225:main.c        ****         
+1226:main.c        ****         LSM303D_Read_Acc(&data);
+1227:main.c        ****             
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 23
 
 
- 1066 03de 01       		.uleb128 0x1
- 1067 03df 50       		.byte	0x50
- 1068 03e0 05       		.uleb128 0x5
- 1069 03e1 03       		.byte	0x3
- 1070 03e2 3C000000 		.4byte	.LC2
- 1071 03e6 00       		.byte	0
- 1072 03e7 0A       		.uleb128 0xa
- 1073 03e8 6C000000 		.4byte	.LVL30
- 1074 03ec 43050000 		.4byte	0x543
- 1075 03f0 01040000 		.4byte	0x401
- 1076 03f4 0B       		.uleb128 0xb
- 1077 03f5 01       		.uleb128 0x1
- 1078 03f6 50       		.byte	0x50
- 1079 03f7 02       		.uleb128 0x2
- 1080 03f8 08       		.byte	0x8
- 1081 03f9 96       		.byte	0x96
- 1082 03fa 0B       		.uleb128 0xb
- 1083 03fb 01       		.uleb128 0x1
- 1084 03fc 51       		.byte	0x51
- 1085 03fd 02       		.uleb128 0x2
- 1086 03fe 09       		.byte	0x9
- 1087 03ff 96       		.byte	0x96
- 1088 0400 00       		.byte	0
- 1089 0401 09       		.uleb128 0x9
- 1090 0402 70000000 		.4byte	.LVL31
- 1091 0406 4E050000 		.4byte	0x54e
- 1092 040a 00       		.byte	0
- 1093 040b 09       		.uleb128 0x9
- 1094 040c 08000000 		.4byte	.LVL17
- 1095 0410 59050000 		.4byte	0x559
- 1096 0414 09       		.uleb128 0x9
- 1097 0415 0C000000 		.4byte	.LVL18
- 1098 0419 4E050000 		.4byte	0x54e
- 1099 041d 09       		.uleb128 0x9
- 1100 041e 10000000 		.4byte	.LVL19
- 1101 0422 64050000 		.4byte	0x564
- 1102 0426 09       		.uleb128 0x9
- 1103 0427 14000000 		.4byte	.LVL20
- 1104 042b 6F050000 		.4byte	0x56f
- 1105 042f 0A       		.uleb128 0xa
- 1106 0430 20000000 		.4byte	.LVL21
- 1107 0434 7A050000 		.4byte	0x57a
- 1108 0438 44040000 		.4byte	0x444
- 1109 043c 0B       		.uleb128 0xb
- 1110 043d 01       		.uleb128 0x1
- 1111 043e 50       		.byte	0x50
- 1112 043f 03       		.uleb128 0x3
- 1113 0440 0A       		.byte	0xa
- 1114 0441 E803     		.2byte	0x3e8
- 1115 0443 00       		.byte	0
- 1116 0444 09       		.uleb128 0x9
- 1117 0445 24000000 		.4byte	.LVL22
- 1118 0449 2A010000 		.4byte	0x12a
- 1119 044d 09       		.uleb128 0x9
- 1120 044e 28000000 		.4byte	.LVL23
- 1121 0452 02020000 		.4byte	0x202
- 1122 0456 0A       		.uleb128 0xa
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 34
+1228:main.c        ****         x_axle = data.accX * (-1);  //effective value for x_axle is 2500!
+1229:main.c        ****         y_axle = data.accY * (-1);
+1230:main.c        ****             
+1231:main.c        ****         /*printf("x-axle=%d \t y-axle=%d\n", x_axle, y_axle);
+1232:main.c        ****         
+1233:main.c        ****         if (x_axle  > 3000)
+1234:main.c        ****             {
+1235:main.c        ****                 printf("X\n");
+1236:main.c        ****                 Beep(100,100);
+1237:main.c        ****             }*/
+1238:main.c        ****         
+1239:main.c        ****         distance = Ultra_GetDistance(); //set distance value
+1240:main.c        ****         
+1241:main.c        ****         if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 1 && dig.r1 == 1 && dig.r2 == 0 && dig.r3 == 0)
+1242:main.c        ****             {
+1243:main.c        ****                 ooxxoo = 1;
+1244:main.c        ****             }
+1245:main.c        ****             
+1246:main.c        ****         else if (dig.l3 == 0 && dig.l2 == 1 && dig.l1 == 1 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 
+1247:main.c        ****             {
+1248:main.c        ****                 oxxooo = 1;
+1249:main.c        ****             }
+1250:main.c        ****                 
+1251:main.c        ****         else if (dig.l3 == 0 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 1 && dig.r2 == 1 && dig.r3 
+1252:main.c        ****             {
+1253:main.c        ****                 oooxxo = 1;
+1254:main.c        ****             }
+1255:main.c        ****             
+1256:main.c        ****         else if (dig.l3 == 1 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 
+1257:main.c        ****             {
+1258:main.c        ****                 xooooo = 1;
+1259:main.c        ****             }
+1260:main.c        ****             
+1261:main.c        ****         else if (dig.l3 == 1 && dig.l2 == 0 && dig.l1 == 0 && dig.r1 == 0 && dig.r2 == 0 && dig.r3 
+1262:main.c        ****             {
+1263:main.c        ****                 ooooox = 1;
+1264:main.c        ****             }      
+1265:main.c        ****          
+1266:main.c        ****         else if (dig.l3 == 1 && dig.r3 == 1) //set xoooox value
+1267:main.c        ****             {
+1268:main.c        ****                 xoooox = 1;
+1269:main.c        ****             }
+1270:main.c        ****             
+1271:main.c        ****         else if (dig.l3 == 1 || dig.r3 == 1) //set x_or_x value
+1272:main.c        ****             {
+1273:main.c        ****                 x_or_x = 1;
+1274:main.c        ****             }    
+1275:main.c        ****                 
+1276:main.c        ****         else ooxxoo = 0, oxxooo = 0, oooxxo = 0, xooooo = 0, ooooox = 0, xoooox = 0, x_or_x = 0;
+1277:main.c        ****     }
+1278:main.c        ****     
+1279:main.c        ****     void linefollow(void)
+1280:main.c        ****     {   
+1281:main.c        ****         if (ooxxoo == 1)
+1282:main.c        ****             {
+1283:main.c        ****                 motor_forward(100, 1);
+1284:main.c        ****             }
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 24
 
 
- 1123 0457 38000000 		.4byte	.LVL24
- 1124 045b 43050000 		.4byte	0x543
- 1125 045f 70040000 		.4byte	0x470
- 1126 0463 0B       		.uleb128 0xb
- 1127 0464 01       		.uleb128 0x1
- 1128 0465 50       		.byte	0x50
- 1129 0466 02       		.uleb128 0x2
- 1130 0467 08       		.byte	0x8
- 1131 0468 64       		.byte	0x64
- 1132 0469 0B       		.uleb128 0xb
- 1133 046a 01       		.uleb128 0x1
- 1134 046b 51       		.byte	0x51
- 1135 046c 02       		.uleb128 0x2
- 1136 046d 08       		.byte	0x8
- 1137 046e 64       		.byte	0x64
- 1138 046f 00       		.byte	0
- 1139 0470 0A       		.uleb128 0xa
- 1140 0471 40000000 		.4byte	.LVL25
- 1141 0475 2D050000 		.4byte	0x52d
- 1142 0479 88040000 		.4byte	0x488
- 1143 047d 0B       		.uleb128 0xb
- 1144 047e 01       		.uleb128 0x1
- 1145 047f 50       		.byte	0x50
- 1146 0480 01       		.uleb128 0x1
- 1147 0481 30       		.byte	0x30
- 1148 0482 0B       		.uleb128 0xb
- 1149 0483 01       		.uleb128 0x1
- 1150 0484 51       		.byte	0x51
- 1151 0485 01       		.uleb128 0x1
- 1152 0486 30       		.byte	0x30
- 1153 0487 00       		.byte	0
- 1154 0488 0A       		.uleb128 0xa
- 1155 0489 4A000000 		.4byte	.LVL26
- 1156 048d 86050000 		.4byte	0x586
- 1157 0491 A2040000 		.4byte	0x4a2
- 1158 0495 0B       		.uleb128 0xb
- 1159 0496 01       		.uleb128 0x1
- 1160 0497 50       		.byte	0x50
- 1161 0498 02       		.uleb128 0x2
- 1162 0499 91       		.byte	0x91
- 1163 049a 74       		.sleb128 -12
- 1164 049b 0B       		.uleb128 0xb
- 1165 049c 01       		.uleb128 0x1
- 1166 049d 51       		.byte	0x51
- 1167 049e 02       		.uleb128 0x2
- 1168 049f 09       		.byte	0x9
- 1169 04a0 FF       		.byte	0xff
- 1170 04a1 00       		.byte	0
- 1171 04a2 09       		.uleb128 0x9
- 1172 04a3 74000000 		.4byte	.LVL32
- 1173 04a7 2A010000 		.4byte	0x12a
- 1174 04ab 09       		.uleb128 0x9
- 1175 04ac 78000000 		.4byte	.LVL33
- 1176 04b0 02020000 		.4byte	0x202
- 1177 04b4 00       		.byte	0
- 1178 04b5 13       		.uleb128 0x13
- 1179 04b6 87010000 		.4byte	.LASF24
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 35
+1285:main.c        ****             
+1286:main.c        ****         else if (oxxooo == 1)
+1287:main.c        ****             {
+1288:main.c        ****                 motor_turn(100, 200, 1);
+1289:main.c        ****             }
+1290:main.c        ****             
+1291:main.c        ****         else if (oooxxo == 1)
+1292:main.c        ****             {
+1293:main.c        ****                 motor_turn(200, 100, 1);
+1294:main.c        ****             }
+1295:main.c        ****                 
+1296:main.c        ****         else motor_forward(100, 1);
+1297:main.c        ****     }
+1298:main.c        ****     
+1299:main.c        ****     void ring(void)
+1300:main.c        ****     {
+1301:main.c        ****         int r = rand() % 10;
+1302:main.c        ****         
+1303:main.c        ****         if (r < 8)                                      // drive forward
+1304:main.c        ****         {
+1305:main.c        ****             for (int i = 0; i <100; i++)
+1306:main.c        ****             {
+1307:main.c        ****                 if (x_or_x != 1 && distance > 30)
+1308:main.c        ****                     {
+1309:main.c        ****                         motor_forward (100, 1);
+1310:main.c        ****                     }
+1311:main.c        ****                     
+1312:main.c        ****                 else break;
+1313:main.c        ****             }
+1314:main.c        ****         }
+1315:main.c        ****             
+1316:main.c        ****         if (r == 8)                                      // turn left
+1317:main.c        ****                 {
+1318:main.c        ****                     for (int i = 0; i <200; i++)
+1319:main.c        ****                     {
+1320:main.c        ****                         if (x_or_x != 1  && distance > 30)
+1321:main.c        ****                             {
+1322:main.c        ****                                 motor_turn(0, 255, 1);
+1323:main.c        ****                             }
+1324:main.c        ****                             
+1325:main.c        ****                         else break;  
+1326:main.c        ****                     }
+1327:main.c        ****                 }
+1328:main.c        ****             
+1329:main.c        ****         if (r == 9)                                      // turn right
+1330:main.c        ****             {
+1331:main.c        ****                 for (int i = 0; i <200; i++)
+1332:main.c        ****                 {
+1333:main.c        ****                     if (x_or_x != 1  && distance > 30)
+1334:main.c        ****                         {
+1335:main.c        ****                             motor_turn(255, 0, 1);
+1336:main.c        ****                         }
+1337:main.c        ****                         
+1338:main.c        ****                     else break;     
+1339:main.c        ****                 }
+1340:main.c        ****             }
+1341:main.c        ****         
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 25
 
 
- 1180 04ba 0C       		.byte	0xc
- 1181 04bb 1207     		.2byte	0x712
- 1182 04bd C1040000 		.4byte	0x4c1
- 1183 04c1 14       		.uleb128 0x14
- 1184 04c2 97000000 		.4byte	0x97
- 1185 04c6 15       		.uleb128 0x15
- 1186 04c7 6100     		.ascii	"a\000"
- 1187 04c9 01       		.byte	0x1
- 1188 04ca 3F02     		.2byte	0x23f
- 1189 04cc 7E000000 		.4byte	0x7e
- 1190 04d0 05       		.uleb128 0x5
- 1191 04d1 03       		.byte	0x3
- 1192 04d2 00000000 		.4byte	a
- 1193 04d6 15       		.uleb128 0x15
- 1194 04d7 6200     		.ascii	"b\000"
- 1195 04d9 01       		.byte	0x1
- 1196 04da 3F02     		.2byte	0x23f
- 1197 04dc 7E000000 		.4byte	0x7e
- 1198 04e0 05       		.uleb128 0x5
- 1199 04e1 03       		.byte	0x3
- 1200 04e2 00000000 		.4byte	b
- 1201 04e6 15       		.uleb128 0x15
- 1202 04e7 6300     		.ascii	"c\000"
- 1203 04e9 01       		.byte	0x1
- 1204 04ea 3F02     		.2byte	0x23f
- 1205 04ec 7E000000 		.4byte	0x7e
- 1206 04f0 05       		.uleb128 0x5
- 1207 04f1 03       		.byte	0x3
- 1208 04f2 00000000 		.4byte	c
- 1209 04f6 16       		.uleb128 0x16
- 1210 04f7 64000000 		.4byte	.LASF25
- 1211 04fb 64000000 		.4byte	.LASF25
- 1212 04ff 05       		.byte	0x5
- 1213 0500 17       		.byte	0x17
- 1214 0501 16       		.uleb128 0x16
- 1215 0502 9E000000 		.4byte	.LASF26
- 1216 0506 9E000000 		.4byte	.LASF26
- 1217 050a 05       		.byte	0x5
- 1218 050b 1A       		.byte	0x1a
- 1219 050c 16       		.uleb128 0x16
- 1220 050d 00000000 		.4byte	.LASF27
- 1221 0511 00000000 		.4byte	.LASF27
- 1222 0515 05       		.byte	0x5
- 1223 0516 18       		.byte	0x18
- 1224 0517 16       		.uleb128 0x16
- 1225 0518 50000000 		.4byte	.LASF28
- 1226 051c 50000000 		.4byte	.LASF28
- 1227 0520 05       		.byte	0x5
- 1228 0521 19       		.byte	0x19
- 1229 0522 16       		.uleb128 0x16
- 1230 0523 31020000 		.4byte	.LASF29
- 1231 0527 31020000 		.4byte	.LASF29
- 1232 052b 06       		.byte	0x6
- 1233 052c BB       		.byte	0xbb
- 1234 052d 16       		.uleb128 0x16
- 1235 052e 94010000 		.4byte	.LASF30
- 1236 0532 94010000 		.4byte	.LASF30
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 36
+1342:main.c        ****         if (x_or_x != 1  && distance < 30) //attack
+1343:main.c        ****             {
+1344:main.c        ****                 motor_forward(255, 1);
+1345:main.c        ****             }
+1346:main.c        ****     }  
+1347:main.c        ****     
+1348:main.c        ****     void escape(void)
+1349:main.c        ****     {
+1350:main.c        ****         int r = rand() % 10;
+1351:main.c        ****         
+1352:main.c        ****         if (xoooox == 1)
+1353:main.c        ****             {
+1354:main.c        ****                 motor_backward(255, 200);
+1355:main.c        ****                 
+1356:main.c        ****                 if (r < 5)
+1357:main.c        ****                 {
+1358:main.c        ****                     tank_turn_left(255, 300);
+1359:main.c        ****                 }
+1360:main.c        ****             
+1361:main.c        ****                     if (r > 5)
+1362:main.c        ****                     {
+1363:main.c        ****                         tank_turn_right(255, 300);
+1364:main.c        ****                     }
+1365:main.c        ****             }
+1366:main.c        ****         
+1367:main.c        ****         if (x_or_x == 1)
+1368:main.c        ****             {
+1369:main.c        ****                 if (r < 5)
+1370:main.c        ****                 {
+1371:main.c        ****                     motor_forward(0, 0);
+1372:main.c        ****                     tank_turn_left(255, 100);
+1373:main.c        ****                     motor_backward(255, 100);
+1374:main.c        ****                 }
+1375:main.c        ****             
+1376:main.c        ****                     if (r > 5)
+1377:main.c        ****                     {
+1378:main.c        ****                         motor_forward(0, 0);
+1379:main.c        ****                         tank_turn_right(255, 100);
+1380:main.c        ****                         motor_backward(255, 100);
+1381:main.c        ****                     }
+1382:main.c        ****             }
+1383:main.c        ****             
+1384:main.c        ****         if (x_axle > 3000 && distance > 5)
+1385:main.c        ****             {
+1386:main.c        ****                 Beep(100, 100);
+1387:main.c        ****                 tank_turn_left(255, 200);
+1388:main.c        ****             }
+1389:main.c        ****             
+1390:main.c        ****     }
+1391:main.c        **** 
+1392:main.c        ****     void tank_turn_left(uint8 speed, uint32 delay)
+1393:main.c        ****     {
+1394:main.c        ****         MotorDirLeft_Write(1);      // set LeftMotor backward mode
+1395:main.c        ****         MotorDirRight_Write(0);     // set RightMotor forward mode
+1396:main.c        ****         PWM_WriteCompare1(speed);
+1397:main.c        ****         PWM_WriteCompare2(speed);
+1398:main.c        ****         vTaskDelay(delay);
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 26
 
 
- 1237 0536 07       		.byte	0x7
- 1238 0537 0F       		.byte	0xf
- 1239 0538 16       		.uleb128 0x16
- 1240 0539 76000000 		.4byte	.LASF31
- 1241 053d 76000000 		.4byte	.LASF31
- 1242 0541 07       		.byte	0x7
- 1243 0542 12       		.byte	0x12
- 1244 0543 16       		.uleb128 0x16
- 1245 0544 EC010000 		.4byte	.LASF32
- 1246 0548 EC010000 		.4byte	.LASF32
- 1247 054c 08       		.byte	0x8
- 1248 054d 05       		.byte	0x5
- 1249 054e 16       		.uleb128 0x16
- 1250 054f 89020000 		.4byte	.LASF33
- 1251 0553 89020000 		.4byte	.LASF33
- 1252 0557 09       		.byte	0x9
- 1253 0558 18       		.byte	0x18
- 1254 0559 16       		.uleb128 0x16
- 1255 055a D2010000 		.4byte	.LASF34
- 1256 055e D2010000 		.4byte	.LASF34
- 1257 0562 09       		.byte	0x9
- 1258 0563 11       		.byte	0x11
- 1259 0564 16       		.uleb128 0x16
- 1260 0565 E0010000 		.4byte	.LASF35
- 1261 0569 E0010000 		.4byte	.LASF35
- 1262 056d 07       		.byte	0x7
- 1263 056e 0B       		.byte	0xb
- 1264 056f 16       		.uleb128 0x16
- 1265 0570 F1010000 		.4byte	.LASF36
- 1266 0574 F1010000 		.4byte	.LASF36
- 1267 0578 0A       		.byte	0xa
- 1268 0579 29       		.byte	0x29
- 1269 057a 17       		.uleb128 0x17
- 1270 057b 5D020000 		.4byte	.LASF37
- 1271 057f 5D020000 		.4byte	.LASF37
- 1272 0583 0B       		.byte	0xb
- 1273 0584 ED02     		.2byte	0x2ed
- 1274 0586 16       		.uleb128 0x16
- 1275 0587 B8000000 		.4byte	.LASF38
- 1276 058b B8000000 		.4byte	.LASF38
- 1277 058f 09       		.byte	0x9
- 1278 0590 15       		.byte	0x15
- 1279 0591 00       		.byte	0
- 1280              		.section	.debug_abbrev,"",%progbits
- 1281              	.Ldebug_abbrev0:
- 1282 0000 01       		.uleb128 0x1
- 1283 0001 11       		.uleb128 0x11
- 1284 0002 01       		.byte	0x1
- 1285 0003 25       		.uleb128 0x25
- 1286 0004 0E       		.uleb128 0xe
- 1287 0005 13       		.uleb128 0x13
- 1288 0006 0B       		.uleb128 0xb
- 1289 0007 03       		.uleb128 0x3
- 1290 0008 0E       		.uleb128 0xe
- 1291 0009 1B       		.uleb128 0x1b
- 1292 000a 0E       		.uleb128 0xe
- 1293 000b 55       		.uleb128 0x55
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 37
+1399:main.c        ****     }
+1400:main.c        **** 
+1401:main.c        ****     void tank_turn_right(uint8 speed, uint32 delay)
+1402:main.c        ****     {
+1403:main.c        ****         MotorDirLeft_Write(0);      // set LeftMotor forward mode
+1404:main.c        ****         MotorDirRight_Write(1);     // set RightMotor backward mode
+1405:main.c        ****         PWM_WriteCompare1(speed); 
+1406:main.c        ****         PWM_WriteCompare2(speed);
+1407:main.c        ****         vTaskDelay(delay);
+1408:main.c        ****     }
+1409:main.c        ****     
+1410:main.c        **** #endif
+1411:main.c        **** 
+1412:main.c        **** 
+1413:main.c        **** 
+1414:main.c        **** #if 1
+1415:main.c        **** 
+1416:main.c        ****     // PROJECT // 3:MAZE //
+1417:main.c        **** 
+1418:main.c        **** 
+1419:main.c        ****     
+1420:main.c        **** void zmain(void)
+1421:main.c        **** {
+  28              		.loc 1 1421 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+1422:main.c        ****     while(SW1_Read() == 1)
+  36              		.loc 1 1422 0
+  37 0002 04E0     		b	.L2
+  38              	.L3:
+1423:main.c        ****     {
+1424:main.c        ****         //Beep(1000, G5);    //G-5
+1425:main.c        ****         //Beep(1000, G6);  //G-6
+1426:main.c        ****         Beep(1000, JOTAIN);  //G-6
+  39              		.loc 1 1426 0
+  40 0004 E621     		movs	r1, #230
+  41 0006 4FF47A70 		mov	r0, #1000
+  42 000a FFF7FEFF 		bl	Beep
+  43              	.LVL0:
+  44              	.L2:
+1422:main.c        ****     while(SW1_Read() == 1)
+  45              		.loc 1 1422 0
+  46 000e FFF7FEFF 		bl	SW1_Read
+  47              	.LVL1:
+  48 0012 0128     		cmp	r0, #1
+  49 0014 F6D0     		beq	.L3
+1427:main.c        ****     }
+1428:main.c        **** }
+  50              		.loc 1 1428 0
+  51 0016 08BD     		pop	{r3, pc}
+  52              		.cfi_endproc
+  53              	.LFE85:
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 27
 
 
- 1294 000c 17       		.uleb128 0x17
- 1295 000d 11       		.uleb128 0x11
- 1296 000e 01       		.uleb128 0x1
- 1297 000f 10       		.uleb128 0x10
- 1298 0010 17       		.uleb128 0x17
- 1299 0011 00       		.byte	0
- 1300 0012 00       		.byte	0
- 1301 0013 02       		.uleb128 0x2
- 1302 0014 24       		.uleb128 0x24
- 1303 0015 00       		.byte	0
- 1304 0016 0B       		.uleb128 0xb
- 1305 0017 0B       		.uleb128 0xb
- 1306 0018 3E       		.uleb128 0x3e
- 1307 0019 0B       		.uleb128 0xb
- 1308 001a 03       		.uleb128 0x3
- 1309 001b 0E       		.uleb128 0xe
- 1310 001c 00       		.byte	0
- 1311 001d 00       		.byte	0
- 1312 001e 03       		.uleb128 0x3
- 1313 001f 16       		.uleb128 0x16
- 1314 0020 00       		.byte	0
- 1315 0021 03       		.uleb128 0x3
- 1316 0022 0E       		.uleb128 0xe
- 1317 0023 3A       		.uleb128 0x3a
- 1318 0024 0B       		.uleb128 0xb
- 1319 0025 3B       		.uleb128 0x3b
- 1320 0026 0B       		.uleb128 0xb
- 1321 0027 49       		.uleb128 0x49
- 1322 0028 13       		.uleb128 0x13
- 1323 0029 00       		.byte	0
- 1324 002a 00       		.byte	0
- 1325 002b 04       		.uleb128 0x4
- 1326 002c 24       		.uleb128 0x24
- 1327 002d 00       		.byte	0
- 1328 002e 0B       		.uleb128 0xb
- 1329 002f 0B       		.uleb128 0xb
- 1330 0030 3E       		.uleb128 0x3e
- 1331 0031 0B       		.uleb128 0xb
- 1332 0032 03       		.uleb128 0x3
- 1333 0033 08       		.uleb128 0x8
- 1334 0034 00       		.byte	0
- 1335 0035 00       		.byte	0
- 1336 0036 05       		.uleb128 0x5
- 1337 0037 13       		.uleb128 0x13
- 1338 0038 01       		.byte	0x1
- 1339 0039 03       		.uleb128 0x3
- 1340 003a 0E       		.uleb128 0xe
- 1341 003b 0B       		.uleb128 0xb
- 1342 003c 0B       		.uleb128 0xb
- 1343 003d 3A       		.uleb128 0x3a
- 1344 003e 0B       		.uleb128 0xb
- 1345 003f 3B       		.uleb128 0x3b
- 1346 0040 0B       		.uleb128 0xb
- 1347 0041 01       		.uleb128 0x1
- 1348 0042 13       		.uleb128 0x13
- 1349 0043 00       		.byte	0
- 1350 0044 00       		.byte	0
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 38
+  54              		.size	zmain, .-zmain
+  55              		.text
+  56              	.Letext0:
+  57              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  58              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  59              		.file 4 ".\\ZumoLibrary/Beep.h"
+  60              		.file 5 "Generated_Source\\PSoC5/SW1.h"
+  61              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+  62              		.section	.debug_info,"",%progbits
+  63              	.Ldebug_info0:
+  64 0000 03010000 		.4byte	0x103
+  65 0004 0400     		.2byte	0x4
+  66 0006 00000000 		.4byte	.Ldebug_abbrev0
+  67 000a 04       		.byte	0x4
+  68 000b 01       		.uleb128 0x1
+  69 000c 5F000000 		.4byte	.LASF18
+  70 0010 0C       		.byte	0xc
+  71 0011 58000000 		.4byte	.LASF19
+  72 0015 2E000000 		.4byte	.LASF20
+  73 0019 00000000 		.4byte	.Ldebug_ranges0+0
+  74 001d 00000000 		.4byte	0
+  75 0021 00000000 		.4byte	.Ldebug_line0
+  76 0025 02       		.uleb128 0x2
+  77 0026 01       		.byte	0x1
+  78 0027 06       		.byte	0x6
+  79 0028 5A010000 		.4byte	.LASF0
+  80 002c 02       		.uleb128 0x2
+  81 002d 01       		.byte	0x1
+  82 002e 08       		.byte	0x8
+  83 002f 1C010000 		.4byte	.LASF1
+  84 0033 02       		.uleb128 0x2
+  85 0034 02       		.byte	0x2
+  86 0035 05       		.byte	0x5
+  87 0036 82010000 		.4byte	.LASF2
+  88 003a 02       		.uleb128 0x2
+  89 003b 02       		.byte	0x2
+  90 003c 07       		.byte	0x7
+  91 003d 0E000000 		.4byte	.LASF3
+  92 0041 03       		.uleb128 0x3
+  93 0042 72010000 		.4byte	.LASF9
+  94 0046 02       		.byte	0x2
+  95 0047 3F       		.byte	0x3f
+  96 0048 4C000000 		.4byte	0x4c
+  97 004c 02       		.uleb128 0x2
+  98 004d 04       		.byte	0x4
+  99 004e 05       		.byte	0x5
+ 100 004f 2F010000 		.4byte	.LASF4
+ 101 0053 02       		.uleb128 0x2
+ 102 0054 04       		.byte	0x4
+ 103 0055 07       		.byte	0x7
+ 104 0056 ED000000 		.4byte	.LASF5
+ 105 005a 02       		.uleb128 0x2
+ 106 005b 08       		.byte	0x8
+ 107 005c 05       		.byte	0x5
+ 108 005d 00000000 		.4byte	.LASF6
+ 109 0061 02       		.uleb128 0x2
+ 110 0062 08       		.byte	0x8
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 28
 
 
- 1351 0045 06       		.uleb128 0x6
- 1352 0046 0D       		.uleb128 0xd
- 1353 0047 00       		.byte	0
- 1354 0048 03       		.uleb128 0x3
- 1355 0049 08       		.uleb128 0x8
- 1356 004a 3A       		.uleb128 0x3a
- 1357 004b 0B       		.uleb128 0xb
- 1358 004c 3B       		.uleb128 0x3b
- 1359 004d 0B       		.uleb128 0xb
- 1360 004e 49       		.uleb128 0x49
- 1361 004f 13       		.uleb128 0x13
- 1362 0050 38       		.uleb128 0x38
- 1363 0051 0B       		.uleb128 0xb
- 1364 0052 00       		.byte	0
- 1365 0053 00       		.byte	0
- 1366 0054 07       		.uleb128 0x7
- 1367 0055 2E       		.uleb128 0x2e
- 1368 0056 01       		.byte	0x1
- 1369 0057 3F       		.uleb128 0x3f
- 1370 0058 19       		.uleb128 0x19
- 1371 0059 03       		.uleb128 0x3
- 1372 005a 0E       		.uleb128 0xe
- 1373 005b 3A       		.uleb128 0x3a
- 1374 005c 0B       		.uleb128 0xb
- 1375 005d 3B       		.uleb128 0x3b
- 1376 005e 05       		.uleb128 0x5
- 1377 005f 27       		.uleb128 0x27
- 1378 0060 19       		.uleb128 0x19
- 1379 0061 11       		.uleb128 0x11
- 1380 0062 01       		.uleb128 0x1
- 1381 0063 12       		.uleb128 0x12
- 1382 0064 06       		.uleb128 0x6
- 1383 0065 40       		.uleb128 0x40
- 1384 0066 18       		.uleb128 0x18
- 1385 0067 9742     		.uleb128 0x2117
- 1386 0069 19       		.uleb128 0x19
- 1387 006a 01       		.uleb128 0x1
- 1388 006b 13       		.uleb128 0x13
- 1389 006c 00       		.byte	0
- 1390 006d 00       		.byte	0
- 1391 006e 08       		.uleb128 0x8
- 1392 006f 34       		.uleb128 0x34
- 1393 0070 00       		.byte	0
- 1394 0071 03       		.uleb128 0x3
- 1395 0072 08       		.uleb128 0x8
- 1396 0073 3A       		.uleb128 0x3a
- 1397 0074 0B       		.uleb128 0xb
- 1398 0075 3B       		.uleb128 0x3b
- 1399 0076 05       		.uleb128 0x5
- 1400 0077 49       		.uleb128 0x49
- 1401 0078 13       		.uleb128 0x13
- 1402 0079 02       		.uleb128 0x2
- 1403 007a 18       		.uleb128 0x18
- 1404 007b 00       		.byte	0
- 1405 007c 00       		.byte	0
- 1406 007d 09       		.uleb128 0x9
- 1407 007e 898201   		.uleb128 0x4109
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 39
+ 111 0063 07       		.byte	0x7
+ 112 0064 FF000000 		.4byte	.LASF7
+ 113 0068 04       		.uleb128 0x4
+ 114 0069 04       		.byte	0x4
+ 115 006a 05       		.byte	0x5
+ 116 006b 696E7400 		.ascii	"int\000"
+ 117 006f 02       		.uleb128 0x2
+ 118 0070 04       		.byte	0x4
+ 119 0071 07       		.byte	0x7
+ 120 0072 21000000 		.4byte	.LASF8
+ 121 0076 03       		.uleb128 0x3
+ 122 0077 8C010000 		.4byte	.LASF10
+ 123 007b 03       		.byte	0x3
+ 124 007c 2C       		.byte	0x2c
+ 125 007d 41000000 		.4byte	0x41
+ 126 0081 02       		.uleb128 0x2
+ 127 0082 04       		.byte	0x4
+ 128 0083 04       		.byte	0x4
+ 129 0084 7C010000 		.4byte	.LASF11
+ 130 0088 02       		.uleb128 0x2
+ 131 0089 08       		.byte	0x8
+ 132 008a 04       		.byte	0x4
+ 133 008b 3D010000 		.4byte	.LASF12
+ 134 008f 02       		.uleb128 0x2
+ 135 0090 01       		.byte	0x1
+ 136 0091 08       		.byte	0x8
+ 137 0092 2A010000 		.4byte	.LASF13
+ 138 0096 02       		.uleb128 0x2
+ 139 0097 08       		.byte	0x8
+ 140 0098 04       		.byte	0x4
+ 141 0099 66010000 		.4byte	.LASF14
+ 142 009d 02       		.uleb128 0x2
+ 143 009e 04       		.byte	0x4
+ 144 009f 07       		.byte	0x7
+ 145 00a0 94010000 		.4byte	.LASF15
+ 146 00a4 05       		.uleb128 0x5
+ 147 00a5 16010000 		.4byte	.LASF21
+ 148 00a9 01       		.byte	0x1
+ 149 00aa 8C05     		.2byte	0x58c
+ 150 00ac 00000000 		.4byte	.LFB85
+ 151 00b0 18000000 		.4byte	.LFE85-.LFB85
+ 152 00b4 01       		.uleb128 0x1
+ 153 00b5 9C       		.byte	0x9c
+ 154 00b6 DF000000 		.4byte	0xdf
+ 155 00ba 06       		.uleb128 0x6
+ 156 00bb 0E000000 		.4byte	.LVL0
+ 157 00bf F0000000 		.4byte	0xf0
+ 158 00c3 D5000000 		.4byte	0xd5
+ 159 00c7 07       		.uleb128 0x7
+ 160 00c8 01       		.uleb128 0x1
+ 161 00c9 50       		.byte	0x50
+ 162 00ca 03       		.uleb128 0x3
+ 163 00cb 0A       		.byte	0xa
+ 164 00cc E803     		.2byte	0x3e8
+ 165 00ce 07       		.uleb128 0x7
+ 166 00cf 01       		.uleb128 0x1
+ 167 00d0 51       		.byte	0x51
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 29
 
 
- 1408 0081 00       		.byte	0
- 1409 0082 11       		.uleb128 0x11
- 1410 0083 01       		.uleb128 0x1
- 1411 0084 31       		.uleb128 0x31
- 1412 0085 13       		.uleb128 0x13
- 1413 0086 00       		.byte	0
- 1414 0087 00       		.byte	0
- 1415 0088 0A       		.uleb128 0xa
- 1416 0089 898201   		.uleb128 0x4109
- 1417 008c 01       		.byte	0x1
- 1418 008d 11       		.uleb128 0x11
- 1419 008e 01       		.uleb128 0x1
- 1420 008f 31       		.uleb128 0x31
- 1421 0090 13       		.uleb128 0x13
- 1422 0091 01       		.uleb128 0x1
- 1423 0092 13       		.uleb128 0x13
- 1424 0093 00       		.byte	0
- 1425 0094 00       		.byte	0
- 1426 0095 0B       		.uleb128 0xb
- 1427 0096 8A8201   		.uleb128 0x410a
- 1428 0099 00       		.byte	0
- 1429 009a 02       		.uleb128 0x2
- 1430 009b 18       		.uleb128 0x18
- 1431 009c 9142     		.uleb128 0x2111
- 1432 009e 18       		.uleb128 0x18
- 1433 009f 00       		.byte	0
- 1434 00a0 00       		.byte	0
- 1435 00a1 0C       		.uleb128 0xc
- 1436 00a2 898201   		.uleb128 0x4109
- 1437 00a5 01       		.byte	0x1
- 1438 00a6 11       		.uleb128 0x11
- 1439 00a7 01       		.uleb128 0x1
- 1440 00a8 31       		.uleb128 0x31
- 1441 00a9 13       		.uleb128 0x13
- 1442 00aa 00       		.byte	0
- 1443 00ab 00       		.byte	0
- 1444 00ac 0D       		.uleb128 0xd
- 1445 00ad 2E       		.uleb128 0x2e
- 1446 00ae 01       		.byte	0x1
- 1447 00af 3F       		.uleb128 0x3f
- 1448 00b0 19       		.uleb128 0x19
- 1449 00b1 03       		.uleb128 0x3
- 1450 00b2 0E       		.uleb128 0xe
- 1451 00b3 3A       		.uleb128 0x3a
- 1452 00b4 0B       		.uleb128 0xb
- 1453 00b5 3B       		.uleb128 0x3b
- 1454 00b6 05       		.uleb128 0x5
- 1455 00b7 27       		.uleb128 0x27
- 1456 00b8 19       		.uleb128 0x19
- 1457 00b9 8701     		.uleb128 0x87
- 1458 00bb 19       		.uleb128 0x19
- 1459 00bc 11       		.uleb128 0x11
- 1460 00bd 01       		.uleb128 0x1
- 1461 00be 12       		.uleb128 0x12
- 1462 00bf 06       		.uleb128 0x6
- 1463 00c0 40       		.uleb128 0x40
- 1464 00c1 18       		.uleb128 0x18
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 40
+ 168 00d1 02       		.uleb128 0x2
+ 169 00d2 09       		.byte	0x9
+ 170 00d3 E6       		.byte	0xe6
+ 171 00d4 00       		.byte	0
+ 172 00d5 08       		.uleb128 0x8
+ 173 00d6 12000000 		.4byte	.LVL1
+ 174 00da FB000000 		.4byte	0xfb
+ 175 00de 00       		.byte	0
+ 176 00df 09       		.uleb128 0x9
+ 177 00e0 4D010000 		.4byte	.LASF22
+ 178 00e4 06       		.byte	0x6
+ 179 00e5 1207     		.2byte	0x712
+ 180 00e7 EB000000 		.4byte	0xeb
+ 181 00eb 0A       		.uleb128 0xa
+ 182 00ec 76000000 		.4byte	0x76
+ 183 00f0 0B       		.uleb128 0xb
+ 184 00f1 38010000 		.4byte	.LASF16
+ 185 00f5 38010000 		.4byte	.LASF16
+ 186 00f9 04       		.byte	0x4
+ 187 00fa 05       		.byte	0x5
+ 188 00fb 0B       		.uleb128 0xb
+ 189 00fc 44010000 		.4byte	.LASF17
+ 190 0100 44010000 		.4byte	.LASF17
+ 191 0104 05       		.byte	0x5
+ 192 0105 29       		.byte	0x29
+ 193 0106 00       		.byte	0
+ 194              		.section	.debug_abbrev,"",%progbits
+ 195              	.Ldebug_abbrev0:
+ 196 0000 01       		.uleb128 0x1
+ 197 0001 11       		.uleb128 0x11
+ 198 0002 01       		.byte	0x1
+ 199 0003 25       		.uleb128 0x25
+ 200 0004 0E       		.uleb128 0xe
+ 201 0005 13       		.uleb128 0x13
+ 202 0006 0B       		.uleb128 0xb
+ 203 0007 03       		.uleb128 0x3
+ 204 0008 0E       		.uleb128 0xe
+ 205 0009 1B       		.uleb128 0x1b
+ 206 000a 0E       		.uleb128 0xe
+ 207 000b 55       		.uleb128 0x55
+ 208 000c 17       		.uleb128 0x17
+ 209 000d 11       		.uleb128 0x11
+ 210 000e 01       		.uleb128 0x1
+ 211 000f 10       		.uleb128 0x10
+ 212 0010 17       		.uleb128 0x17
+ 213 0011 00       		.byte	0
+ 214 0012 00       		.byte	0
+ 215 0013 02       		.uleb128 0x2
+ 216 0014 24       		.uleb128 0x24
+ 217 0015 00       		.byte	0
+ 218 0016 0B       		.uleb128 0xb
+ 219 0017 0B       		.uleb128 0xb
+ 220 0018 3E       		.uleb128 0x3e
+ 221 0019 0B       		.uleb128 0xb
+ 222 001a 03       		.uleb128 0x3
+ 223 001b 0E       		.uleb128 0xe
+ 224 001c 00       		.byte	0
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 30
 
 
- 1465 00c2 9742     		.uleb128 0x2117
- 1466 00c4 19       		.uleb128 0x19
- 1467 00c5 01       		.uleb128 0x1
- 1468 00c6 13       		.uleb128 0x13
- 1469 00c7 00       		.byte	0
- 1470 00c8 00       		.byte	0
- 1471 00c9 0E       		.uleb128 0xe
- 1472 00ca 2E       		.uleb128 0x2e
- 1473 00cb 01       		.byte	0x1
- 1474 00cc 3F       		.uleb128 0x3f
- 1475 00cd 19       		.uleb128 0x19
- 1476 00ce 03       		.uleb128 0x3
- 1477 00cf 0E       		.uleb128 0xe
- 1478 00d0 3A       		.uleb128 0x3a
- 1479 00d1 0B       		.uleb128 0xb
- 1480 00d2 3B       		.uleb128 0x3b
- 1481 00d3 05       		.uleb128 0x5
- 1482 00d4 3C       		.uleb128 0x3c
- 1483 00d5 19       		.uleb128 0x19
- 1484 00d6 01       		.uleb128 0x1
- 1485 00d7 13       		.uleb128 0x13
- 1486 00d8 00       		.byte	0
- 1487 00d9 00       		.byte	0
- 1488 00da 0F       		.uleb128 0xf
- 1489 00db 18       		.uleb128 0x18
- 1490 00dc 00       		.byte	0
- 1491 00dd 00       		.byte	0
- 1492 00de 00       		.byte	0
- 1493 00df 10       		.uleb128 0x10
- 1494 00e0 34       		.uleb128 0x34
- 1495 00e1 00       		.byte	0
- 1496 00e2 03       		.uleb128 0x3
- 1497 00e3 0E       		.uleb128 0xe
- 1498 00e4 3A       		.uleb128 0x3a
- 1499 00e5 0B       		.uleb128 0xb
- 1500 00e6 3B       		.uleb128 0x3b
- 1501 00e7 05       		.uleb128 0x5
- 1502 00e8 49       		.uleb128 0x49
- 1503 00e9 13       		.uleb128 0x13
- 1504 00ea 02       		.uleb128 0x2
- 1505 00eb 18       		.uleb128 0x18
- 1506 00ec 00       		.byte	0
- 1507 00ed 00       		.byte	0
- 1508 00ee 11       		.uleb128 0x11
- 1509 00ef 0B       		.uleb128 0xb
- 1510 00f0 01       		.byte	0x1
- 1511 00f1 11       		.uleb128 0x11
- 1512 00f2 01       		.uleb128 0x1
- 1513 00f3 12       		.uleb128 0x12
- 1514 00f4 06       		.uleb128 0x6
- 1515 00f5 01       		.uleb128 0x1
- 1516 00f6 13       		.uleb128 0x13
- 1517 00f7 00       		.byte	0
- 1518 00f8 00       		.byte	0
- 1519 00f9 12       		.uleb128 0x12
- 1520 00fa 34       		.uleb128 0x34
- 1521 00fb 00       		.byte	0
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 41
+ 225 001d 00       		.byte	0
+ 226 001e 03       		.uleb128 0x3
+ 227 001f 16       		.uleb128 0x16
+ 228 0020 00       		.byte	0
+ 229 0021 03       		.uleb128 0x3
+ 230 0022 0E       		.uleb128 0xe
+ 231 0023 3A       		.uleb128 0x3a
+ 232 0024 0B       		.uleb128 0xb
+ 233 0025 3B       		.uleb128 0x3b
+ 234 0026 0B       		.uleb128 0xb
+ 235 0027 49       		.uleb128 0x49
+ 236 0028 13       		.uleb128 0x13
+ 237 0029 00       		.byte	0
+ 238 002a 00       		.byte	0
+ 239 002b 04       		.uleb128 0x4
+ 240 002c 24       		.uleb128 0x24
+ 241 002d 00       		.byte	0
+ 242 002e 0B       		.uleb128 0xb
+ 243 002f 0B       		.uleb128 0xb
+ 244 0030 3E       		.uleb128 0x3e
+ 245 0031 0B       		.uleb128 0xb
+ 246 0032 03       		.uleb128 0x3
+ 247 0033 08       		.uleb128 0x8
+ 248 0034 00       		.byte	0
+ 249 0035 00       		.byte	0
+ 250 0036 05       		.uleb128 0x5
+ 251 0037 2E       		.uleb128 0x2e
+ 252 0038 01       		.byte	0x1
+ 253 0039 3F       		.uleb128 0x3f
+ 254 003a 19       		.uleb128 0x19
+ 255 003b 03       		.uleb128 0x3
+ 256 003c 0E       		.uleb128 0xe
+ 257 003d 3A       		.uleb128 0x3a
+ 258 003e 0B       		.uleb128 0xb
+ 259 003f 3B       		.uleb128 0x3b
+ 260 0040 05       		.uleb128 0x5
+ 261 0041 27       		.uleb128 0x27
+ 262 0042 19       		.uleb128 0x19
+ 263 0043 11       		.uleb128 0x11
+ 264 0044 01       		.uleb128 0x1
+ 265 0045 12       		.uleb128 0x12
+ 266 0046 06       		.uleb128 0x6
+ 267 0047 40       		.uleb128 0x40
+ 268 0048 18       		.uleb128 0x18
+ 269 0049 9742     		.uleb128 0x2117
+ 270 004b 19       		.uleb128 0x19
+ 271 004c 01       		.uleb128 0x1
+ 272 004d 13       		.uleb128 0x13
+ 273 004e 00       		.byte	0
+ 274 004f 00       		.byte	0
+ 275 0050 06       		.uleb128 0x6
+ 276 0051 898201   		.uleb128 0x4109
+ 277 0054 01       		.byte	0x1
+ 278 0055 11       		.uleb128 0x11
+ 279 0056 01       		.uleb128 0x1
+ 280 0057 31       		.uleb128 0x31
+ 281 0058 13       		.uleb128 0x13
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 31
 
 
- 1522 00fc 03       		.uleb128 0x3
- 1523 00fd 08       		.uleb128 0x8
- 1524 00fe 3A       		.uleb128 0x3a
- 1525 00ff 0B       		.uleb128 0xb
- 1526 0100 3B       		.uleb128 0x3b
- 1527 0101 05       		.uleb128 0x5
- 1528 0102 49       		.uleb128 0x49
- 1529 0103 13       		.uleb128 0x13
- 1530 0104 02       		.uleb128 0x2
- 1531 0105 17       		.uleb128 0x17
- 1532 0106 00       		.byte	0
- 1533 0107 00       		.byte	0
- 1534 0108 13       		.uleb128 0x13
- 1535 0109 34       		.uleb128 0x34
- 1536 010a 00       		.byte	0
- 1537 010b 03       		.uleb128 0x3
- 1538 010c 0E       		.uleb128 0xe
- 1539 010d 3A       		.uleb128 0x3a
- 1540 010e 0B       		.uleb128 0xb
- 1541 010f 3B       		.uleb128 0x3b
- 1542 0110 05       		.uleb128 0x5
- 1543 0111 49       		.uleb128 0x49
- 1544 0112 13       		.uleb128 0x13
- 1545 0113 3F       		.uleb128 0x3f
- 1546 0114 19       		.uleb128 0x19
- 1547 0115 3C       		.uleb128 0x3c
- 1548 0116 19       		.uleb128 0x19
- 1549 0117 00       		.byte	0
- 1550 0118 00       		.byte	0
- 1551 0119 14       		.uleb128 0x14
- 1552 011a 35       		.uleb128 0x35
- 1553 011b 00       		.byte	0
- 1554 011c 49       		.uleb128 0x49
- 1555 011d 13       		.uleb128 0x13
- 1556 011e 00       		.byte	0
- 1557 011f 00       		.byte	0
- 1558 0120 15       		.uleb128 0x15
- 1559 0121 34       		.uleb128 0x34
- 1560 0122 00       		.byte	0
- 1561 0123 03       		.uleb128 0x3
- 1562 0124 08       		.uleb128 0x8
- 1563 0125 3A       		.uleb128 0x3a
- 1564 0126 0B       		.uleb128 0xb
- 1565 0127 3B       		.uleb128 0x3b
- 1566 0128 05       		.uleb128 0x5
- 1567 0129 49       		.uleb128 0x49
- 1568 012a 13       		.uleb128 0x13
- 1569 012b 3F       		.uleb128 0x3f
- 1570 012c 19       		.uleb128 0x19
- 1571 012d 02       		.uleb128 0x2
- 1572 012e 18       		.uleb128 0x18
- 1573 012f 00       		.byte	0
- 1574 0130 00       		.byte	0
- 1575 0131 16       		.uleb128 0x16
- 1576 0132 2E       		.uleb128 0x2e
- 1577 0133 00       		.byte	0
- 1578 0134 3F       		.uleb128 0x3f
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 42
+ 282 0059 01       		.uleb128 0x1
+ 283 005a 13       		.uleb128 0x13
+ 284 005b 00       		.byte	0
+ 285 005c 00       		.byte	0
+ 286 005d 07       		.uleb128 0x7
+ 287 005e 8A8201   		.uleb128 0x410a
+ 288 0061 00       		.byte	0
+ 289 0062 02       		.uleb128 0x2
+ 290 0063 18       		.uleb128 0x18
+ 291 0064 9142     		.uleb128 0x2111
+ 292 0066 18       		.uleb128 0x18
+ 293 0067 00       		.byte	0
+ 294 0068 00       		.byte	0
+ 295 0069 08       		.uleb128 0x8
+ 296 006a 898201   		.uleb128 0x4109
+ 297 006d 00       		.byte	0
+ 298 006e 11       		.uleb128 0x11
+ 299 006f 01       		.uleb128 0x1
+ 300 0070 31       		.uleb128 0x31
+ 301 0071 13       		.uleb128 0x13
+ 302 0072 00       		.byte	0
+ 303 0073 00       		.byte	0
+ 304 0074 09       		.uleb128 0x9
+ 305 0075 34       		.uleb128 0x34
+ 306 0076 00       		.byte	0
+ 307 0077 03       		.uleb128 0x3
+ 308 0078 0E       		.uleb128 0xe
+ 309 0079 3A       		.uleb128 0x3a
+ 310 007a 0B       		.uleb128 0xb
+ 311 007b 3B       		.uleb128 0x3b
+ 312 007c 05       		.uleb128 0x5
+ 313 007d 49       		.uleb128 0x49
+ 314 007e 13       		.uleb128 0x13
+ 315 007f 3F       		.uleb128 0x3f
+ 316 0080 19       		.uleb128 0x19
+ 317 0081 3C       		.uleb128 0x3c
+ 318 0082 19       		.uleb128 0x19
+ 319 0083 00       		.byte	0
+ 320 0084 00       		.byte	0
+ 321 0085 0A       		.uleb128 0xa
+ 322 0086 35       		.uleb128 0x35
+ 323 0087 00       		.byte	0
+ 324 0088 49       		.uleb128 0x49
+ 325 0089 13       		.uleb128 0x13
+ 326 008a 00       		.byte	0
+ 327 008b 00       		.byte	0
+ 328 008c 0B       		.uleb128 0xb
+ 329 008d 2E       		.uleb128 0x2e
+ 330 008e 00       		.byte	0
+ 331 008f 3F       		.uleb128 0x3f
+ 332 0090 19       		.uleb128 0x19
+ 333 0091 3C       		.uleb128 0x3c
+ 334 0092 19       		.uleb128 0x19
+ 335 0093 6E       		.uleb128 0x6e
+ 336 0094 0E       		.uleb128 0xe
+ 337 0095 03       		.uleb128 0x3
+ 338 0096 0E       		.uleb128 0xe
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 32
 
 
- 1579 0135 19       		.uleb128 0x19
- 1580 0136 3C       		.uleb128 0x3c
- 1581 0137 19       		.uleb128 0x19
- 1582 0138 6E       		.uleb128 0x6e
- 1583 0139 0E       		.uleb128 0xe
- 1584 013a 03       		.uleb128 0x3
- 1585 013b 0E       		.uleb128 0xe
- 1586 013c 3A       		.uleb128 0x3a
- 1587 013d 0B       		.uleb128 0xb
- 1588 013e 3B       		.uleb128 0x3b
- 1589 013f 0B       		.uleb128 0xb
- 1590 0140 00       		.byte	0
- 1591 0141 00       		.byte	0
- 1592 0142 17       		.uleb128 0x17
- 1593 0143 2E       		.uleb128 0x2e
- 1594 0144 00       		.byte	0
- 1595 0145 3F       		.uleb128 0x3f
- 1596 0146 19       		.uleb128 0x19
- 1597 0147 3C       		.uleb128 0x3c
- 1598 0148 19       		.uleb128 0x19
- 1599 0149 6E       		.uleb128 0x6e
- 1600 014a 0E       		.uleb128 0xe
- 1601 014b 03       		.uleb128 0x3
- 1602 014c 0E       		.uleb128 0xe
- 1603 014d 3A       		.uleb128 0x3a
- 1604 014e 0B       		.uleb128 0xb
- 1605 014f 3B       		.uleb128 0x3b
- 1606 0150 05       		.uleb128 0x5
- 1607 0151 00       		.byte	0
- 1608 0152 00       		.byte	0
- 1609 0153 00       		.byte	0
- 1610              		.section	.debug_loc,"",%progbits
- 1611              	.Ldebug_loc0:
- 1612              	.LLST0:
- 1613 0000 54000000 		.4byte	.LVL27
- 1614 0004 63000000 		.4byte	.LVL29-1
- 1615 0008 0100     		.2byte	0x1
- 1616 000a 52       		.byte	0x52
- 1617 000b 00000000 		.4byte	0
- 1618 000f 00000000 		.4byte	0
- 1619              	.LLST1:
- 1620 0013 54000000 		.4byte	.LVL27
- 1621 0017 5E000000 		.4byte	.LVL28
- 1622 001b 0200     		.2byte	0x2
- 1623 001d 30       		.byte	0x30
- 1624 001e 9F       		.byte	0x9f
- 1625 001f 5E000000 		.4byte	.LVL28
- 1626 0023 63000000 		.4byte	.LVL29-1
- 1627 0027 0100     		.2byte	0x1
- 1628 0029 51       		.byte	0x51
- 1629 002a 00000000 		.4byte	0
- 1630 002e 00000000 		.4byte	0
- 1631              		.section	.debug_aranges,"",%progbits
- 1632 0000 2C000000 		.4byte	0x2c
- 1633 0004 0200     		.2byte	0x2
- 1634 0006 00000000 		.4byte	.Ldebug_info0
- 1635 000a 04       		.byte	0x4
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 43
+ 339 0097 3A       		.uleb128 0x3a
+ 340 0098 0B       		.uleb128 0xb
+ 341 0099 3B       		.uleb128 0x3b
+ 342 009a 0B       		.uleb128 0xb
+ 343 009b 00       		.byte	0
+ 344 009c 00       		.byte	0
+ 345 009d 00       		.byte	0
+ 346              		.section	.debug_aranges,"",%progbits
+ 347 0000 1C000000 		.4byte	0x1c
+ 348 0004 0200     		.2byte	0x2
+ 349 0006 00000000 		.4byte	.Ldebug_info0
+ 350 000a 04       		.byte	0x4
+ 351 000b 00       		.byte	0
+ 352 000c 0000     		.2byte	0
+ 353 000e 0000     		.2byte	0
+ 354 0010 00000000 		.4byte	.LFB85
+ 355 0014 18000000 		.4byte	.LFE85-.LFB85
+ 356 0018 00000000 		.4byte	0
+ 357 001c 00000000 		.4byte	0
+ 358              		.section	.debug_ranges,"",%progbits
+ 359              	.Ldebug_ranges0:
+ 360 0000 00000000 		.4byte	.LFB85
+ 361 0004 18000000 		.4byte	.LFE85
+ 362 0008 00000000 		.4byte	0
+ 363 000c 00000000 		.4byte	0
+ 364              		.section	.debug_line,"",%progbits
+ 365              	.Ldebug_line0:
+ 366 0000 7A010000 		.section	.debug_str,"MS",%progbits,1
+ 366      02006001 
+ 366      00000201 
+ 366      FB0E0D00 
+ 366      01010101 
+ 367              	.LASF6:
+ 368 0000 6C6F6E67 		.ascii	"long long int\000"
+ 368      206C6F6E 
+ 368      6720696E 
+ 368      7400
+ 369              	.LASF3:
+ 370 000e 73686F72 		.ascii	"short unsigned int\000"
+ 370      7420756E 
+ 370      7369676E 
+ 370      65642069 
+ 370      6E7400
+ 371              	.LASF8:
+ 372 0021 756E7369 		.ascii	"unsigned int\000"
+ 372      676E6564 
+ 372      20696E74 
+ 372      00
+ 373              	.LASF20:
+ 374 002e 433A5C52 		.ascii	"C:\\Robo-Project\\Zumo-master\\ZumoBot.cydsn\000"
+ 374      6F626F2D 
+ 374      50726F6A 
+ 374      6563745C 
+ 374      5A756D6F 
+ 375              	.LASF19:
+ 376 0058 6D61696E 		.ascii	"main.c\000"
+ 376      2E6300
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 33
 
 
- 1636 000b 00       		.byte	0
- 1637 000c 0000     		.2byte	0
- 1638 000e 0000     		.2byte	0
- 1639 0010 00000000 		.4byte	.LFB86
- 1640 0014 E4000000 		.4byte	.LFE86-.LFB86
- 1641 0018 00000000 		.4byte	.LFB87
- 1642 001c 40010000 		.4byte	.LFE87-.LFB87
- 1643 0020 00000000 		.4byte	.LFB85
- 1644 0024 84000000 		.4byte	.LFE85-.LFB85
- 1645 0028 00000000 		.4byte	0
- 1646 002c 00000000 		.4byte	0
- 1647              		.section	.debug_ranges,"",%progbits
- 1648              	.Ldebug_ranges0:
- 1649 0000 00000000 		.4byte	.LFB86
- 1650 0004 E4000000 		.4byte	.LFE86
- 1651 0008 00000000 		.4byte	.LFB87
- 1652 000c 40010000 		.4byte	.LFE87
- 1653 0010 00000000 		.4byte	.LFB85
- 1654 0014 84000000 		.4byte	.LFE85
- 1655 0018 00000000 		.4byte	0
- 1656 001c 00000000 		.4byte	0
- 1657              		.section	.debug_line,"",%progbits
- 1658              	.Ldebug_line0:
- 1659 0000 7B030000 		.section	.debug_str,"MS",%progbits,1
- 1659      02005302 
- 1659      00000201 
- 1659      FB0E0D00 
- 1659      01010101 
- 1660              	.LASF27:
- 1661 0000 7265666C 		.ascii	"reflectance_read\000"
- 1661      65637461 
- 1661      6E63655F 
- 1661      72656164 
- 1661      00
- 1662              	.LASF20:
- 1663 0011 5469636B 		.ascii	"TickType_t\000"
- 1663      54797065 
- 1663      5F7400
- 1664              	.LASF41:
- 1665 001c 433A5C52 		.ascii	"C:\\Robo-Project\\Zumo-master\\ZumoBot.cydsn\000"
- 1665      6F626F2D 
- 1665      50726F6A 
- 1665      6563745C 
- 1665      5A756D6F 
- 1666              	.LASF5:
- 1667 0046 5F5F696E 		.ascii	"__int32_t\000"
- 1667      7433325F 
- 1667      7400
- 1668              	.LASF28:
- 1669 0050 7265666C 		.ascii	"reflectance_digital\000"
- 1669      65637461 
- 1669      6E63655F 
- 1669      64696769 
- 1669      74616C00 
- 1670              	.LASF25:
- 1671 0064 7265666C 		.ascii	"reflectance_start\000"
- 1671      65637461 
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 44
+ 377              	.LASF18:
+ 378 005f 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 378      43313120 
+ 378      352E342E 
+ 378      31203230 
+ 378      31363036 
+ 379 0092 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 379      20726576 
+ 379      6973696F 
+ 379      6E203233 
+ 379      37373135 
+ 380 00c5 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 380      66756E63 
+ 380      74696F6E 
+ 380      2D736563 
+ 380      74696F6E 
+ 381              	.LASF5:
+ 382 00ed 6C6F6E67 		.ascii	"long unsigned int\000"
+ 382      20756E73 
+ 382      69676E65 
+ 382      6420696E 
+ 382      7400
+ 383              	.LASF7:
+ 384 00ff 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 384      206C6F6E 
+ 384      6720756E 
+ 384      7369676E 
+ 384      65642069 
+ 385              	.LASF21:
+ 386 0116 7A6D6169 		.ascii	"zmain\000"
+ 386      6E00
+ 387              	.LASF1:
+ 388 011c 756E7369 		.ascii	"unsigned char\000"
+ 388      676E6564 
+ 388      20636861 
+ 388      7200
+ 389              	.LASF13:
+ 390 012a 63686172 		.ascii	"char\000"
+ 390      00
+ 391              	.LASF4:
+ 392 012f 6C6F6E67 		.ascii	"long int\000"
+ 392      20696E74 
+ 392      00
+ 393              	.LASF16:
+ 394 0138 42656570 		.ascii	"Beep\000"
+ 394      00
+ 395              	.LASF12:
+ 396 013d 646F7562 		.ascii	"double\000"
+ 396      6C6500
+ 397              	.LASF17:
+ 398 0144 5357315F 		.ascii	"SW1_Read\000"
+ 398      52656164 
+ 398      00
+ 399              	.LASF22:
+ 400 014d 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 400      52784275 
+ 400      66666572 
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccpkO7uq.s 			page 34
 
 
- 1671      6E63655F 
- 1671      73746172 
- 1671      7400
- 1672              	.LASF31:
- 1673 0076 6D6F746F 		.ascii	"motor_turn\000"
- 1673      725F7475 
- 1673      726E00
- 1674              	.LASF15:
- 1675 0081 666C6F61 		.ascii	"float\000"
- 1675      7400
- 1676              	.LASF10:
- 1677 0087 6C6F6E67 		.ascii	"long long unsigned int\000"
- 1677      206C6F6E 
- 1677      6720756E 
- 1677      7369676E 
- 1677      65642069 
- 1678              	.LASF26:
- 1679 009e 7265666C 		.ascii	"reflectance_set_threshold\000"
- 1679      65637461 
- 1679      6E63655F 
- 1679      7365745F 
- 1679      74687265 
- 1680              	.LASF38:
- 1681 00b8 49525F67 		.ascii	"IR_get\000"
- 1681      657400
- 1682              	.LASF1:
- 1683 00bf 756E7369 		.ascii	"unsigned char\000"
- 1683      676E6564 
- 1683      20636861 
- 1683      7200
- 1684              	.LASF39:
- 1685 00cd 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
- 1685      43313120 
- 1685      352E342E 
- 1685      31203230 
- 1685      31363036 
- 1686 0100 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
- 1686      20726576 
- 1686      6973696F 
- 1686      6E203233 
- 1686      37373135 
- 1687 0133 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 1687      66756E63 
- 1687      74696F6E 
- 1687      2D736563 
- 1687      74696F6E 
- 1688              	.LASF23:
- 1689 015b 49525F76 		.ascii	"IR_val\000"
- 1689      616C00
- 1690              	.LASF8:
- 1691 0162 6C6F6E67 		.ascii	"long unsigned int\000"
- 1691      20756E73 
- 1691      69676E65 
- 1691      6420696E 
- 1691      7400
- 1692              	.LASF3:
- 1693 0174 73686F72 		.ascii	"short unsigned int\000"
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 45
-
-
- 1693      7420756E 
- 1693      7369676E 
- 1693      65642069 
- 1693      6E7400
- 1694              	.LASF24:
- 1695 0187 49544D5F 		.ascii	"ITM_RxBuffer\000"
- 1695      52784275 
- 1695      66666572 
- 1695      00
- 1696              	.LASF30:
- 1697 0194 6D6F746F 		.ascii	"motor_forward\000"
- 1697      725F666F 
- 1697      72776172 
- 1697      6400
- 1698              	.LASF4:
- 1699 01a2 5F5F7569 		.ascii	"__uint16_t\000"
- 1699      6E743136 
- 1699      5F7400
- 1700              	.LASF16:
- 1701 01ad 646F7562 		.ascii	"double\000"
- 1701      6C6500
- 1702              	.LASF7:
- 1703 01b4 5F5F7569 		.ascii	"__uint32_t\000"
- 1703      6E743332 
- 1703      5F7400
- 1704              	.LASF43:
- 1705 01bf 7A6D6169 		.ascii	"zmain\000"
- 1705      6E00
- 1706              	.LASF11:
- 1707 01c5 756E7369 		.ascii	"unsigned int\000"
- 1707      676E6564 
- 1707      20696E74 
- 1707      00
- 1708              	.LASF34:
- 1709 01d2 49525F53 		.ascii	"IR_Start\000"
- 1709      74617274 
- 1709      00
- 1710              	.LASF17:
- 1711 01db 63686172 		.ascii	"char\000"
- 1711      00
- 1712              	.LASF35:
- 1713 01e0 6D6F746F 		.ascii	"motor_start\000"
- 1713      725F7374 
- 1713      61727400 
- 1714              	.LASF32:
- 1715 01ec 42656570 		.ascii	"Beep\000"
- 1715      00
- 1716              	.LASF36:
- 1717 01f1 5357315F 		.ascii	"SW1_Read\000"
- 1717      52656164 
- 1717      00
- 1718              	.LASF13:
- 1719 01fa 696E7433 		.ascii	"int32_t\000"
- 1719      325F7400 
- 1720              	.LASF19:
- 1721 0202 73697A65 		.ascii	"sizetype\000"
- 1721      74797065 
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 46
-
-
- 1721      00
- 1722              	.LASF9:
- 1723 020b 6C6F6E67 		.ascii	"long long int\000"
- 1723      206C6F6E 
- 1723      6720696E 
- 1723      7400
- 1724              	.LASF40:
- 1725 0219 6D61696E 		.ascii	"main.c\000"
- 1725      2E6300
- 1726              	.LASF22:
- 1727 0220 7265666C 		.ascii	"reflectancedrive\000"
- 1727      65637461 
- 1727      6E636564 
- 1727      72697665 
- 1727      00
- 1728              	.LASF29:
- 1729 0231 7072696E 		.ascii	"printf\000"
- 1729      746600
- 1730              	.LASF2:
- 1731 0238 73686F72 		.ascii	"short int\000"
- 1731      7420696E 
- 1731      7400
- 1732              	.LASF12:
- 1733 0242 75696E74 		.ascii	"uint16_t\000"
- 1733      31365F74 
- 1733      00
- 1734              	.LASF14:
- 1735 024b 75696E74 		.ascii	"uint32_t\000"
- 1735      33325F74 
- 1735      00
- 1736              	.LASF6:
- 1737 0254 6C6F6E67 		.ascii	"long int\000"
- 1737      20696E74 
- 1737      00
- 1738              	.LASF37:
- 1739 025d 76546173 		.ascii	"vTaskDelay\000"
- 1739      6B44656C 
- 1739      617900
- 1740              	.LASF18:
- 1741 0268 6C6F6E67 		.ascii	"long double\000"
- 1741      20646F75 
- 1741      626C6500 
- 1742              	.LASF0:
- 1743 0274 7369676E 		.ascii	"signed char\000"
- 1743      65642063 
- 1743      68617200 
- 1744              	.LASF42:
- 1745 0280 73656E73 		.ascii	"sensors_\000"
- 1745      6F72735F 
- 1745      00
- 1746              	.LASF33:
- 1747 0289 49525F66 		.ascii	"IR_flush\000"
- 1747      6C757368 
- 1747      00
- 1748              	.LASF21:
- 1749 0292 6C696E65 		.ascii	"linecounter\000"
- 1749      636F756E 
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccRh6nHt.s 			page 47
-
-
- 1749      74657200 
- 1750              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
+ 400      00
+ 401              	.LASF0:
+ 402 015a 7369676E 		.ascii	"signed char\000"
+ 402      65642063 
+ 402      68617200 
+ 403              	.LASF14:
+ 404 0166 6C6F6E67 		.ascii	"long double\000"
+ 404      20646F75 
+ 404      626C6500 
+ 405              	.LASF9:
+ 406 0172 5F5F696E 		.ascii	"__int32_t\000"
+ 406      7433325F 
+ 406      7400
+ 407              	.LASF11:
+ 408 017c 666C6F61 		.ascii	"float\000"
+ 408      7400
+ 409              	.LASF2:
+ 410 0182 73686F72 		.ascii	"short int\000"
+ 410      7420696E 
+ 410      7400
+ 411              	.LASF10:
+ 412 018c 696E7433 		.ascii	"int32_t\000"
+ 412      325F7400 
+ 413              	.LASF15:
+ 414 0194 73697A65 		.ascii	"sizetype\000"
+ 414      74797065 
+ 414      00
+ 415              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
