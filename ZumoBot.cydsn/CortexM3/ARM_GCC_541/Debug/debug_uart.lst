@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
   29:ZumoLibrary/debug_uart.c **** static int cmd_connect(char *cmd);
   30:ZumoLibrary/debug_uart.c **** static int cmd_close(char *cmd);
   31:ZumoLibrary/debug_uart.c **** static int cmd_read(char *cmd);
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 2
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 2
 
 
   32:ZumoLibrary/debug_uart.c **** static int cmd_write(char *cmd);
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
   86:ZumoLibrary/debug_uart.c **** int _write(int file, const char *ptr, int len)
   87:ZumoLibrary/debug_uart.c **** {
   88:ZumoLibrary/debug_uart.c ****     (void)file; /* Parameter is not used, suppress unused argument warning */
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 3
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 3
 
 
   89:ZumoLibrary/debug_uart.c **** 	int n;
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  143:ZumoLibrary/debug_uart.c ****     (void) cmd;
  144:ZumoLibrary/debug_uart.c ****     
  145:ZumoLibrary/debug_uart.c ****     esp_socket(NETWORK_SSID, NETWORK_PASSWORD);
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 4
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 4
 
 
  146:ZumoLibrary/debug_uart.c ****     
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  200:ZumoLibrary/debug_uart.c **** static int cmd_stats(char *cmd)
  201:ZumoLibrary/debug_uart.c **** {
  202:ZumoLibrary/debug_uart.c ****     (void) cmd;
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 5
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 5
 
 
  203:ZumoLibrary/debug_uart.c **** 
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
   59              		.loc 1 221 0
   60 0012 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
   61 0014 0AB1     		cbz	r2, .L5
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 6
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 6
 
 
  221:ZumoLibrary/debug_uart.c ****     cmdend++;
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  236:ZumoLibrary/debug_uart.c ****     int k;
  237:ZumoLibrary/debug_uart.c ****     for(k = 0; cmd[k] != '\0' && cmdtable[i].name[k] != '\0'; k++) {
  238:ZumoLibrary/debug_uart.c ****       if(cmdtable[i].name[k] != cmd[k]) break;
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 7
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 7
 
 
  100              		.loc 1 238 0
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  147 0072 0135     		adds	r5, r5, #1
  148              	.LVL18:
  149              	.L11:
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 8
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 8
 
 
  235:ZumoLibrary/debug_uart.c ****     int k;
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  191              	.LVL22:
  253:ZumoLibrary/debug_uart.c ****   int i;
  254:ZumoLibrary/debug_uart.c **** 
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 9
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 9
 
 
  255:ZumoLibrary/debug_uart.c ****   ds("commands: \n");
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  232              		@ args = 0, pretend = 0, frame = 0
  233              		@ frame_needed = 0, uses_anonymous_args = 0
  234              	.LVL27:
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 10
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 10
 
 
  235 0000 38B5     		push	{r3, r4, r5, lr}
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  278              	.L38:
  279              	.LBE4:
  280 0022 0023     		movs	r3, #0
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 11
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 11
 
 
  281              	.L36:
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  317 0050 0020     		movs	r0, #0
  318 0052 38BD     		pop	{r3, r4, r5, pc}
  319              	.L41:
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 12
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 12
 
 
  320              		.align	2
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  370              		.cfi_def_cfa_offset 8
  371              		.cfi_offset 3, -8
  372              		.cfi_offset 14, -4
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 13
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 13
 
 
  194:ZumoLibrary/debug_uart.c ****     ds(prt_buffer);
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  422              		.thumb_func
  423              		.type	cmd_read, %function
  424              	cmd_read:
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 14
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 14
 
 
  425              	.LFB76:
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  473              		@ args = 0, pretend = 0, frame = 0
  474              		@ frame_needed = 0, uses_anonymous_args = 0
  475              	.LVL53:
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 15
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 15
 
 
  476 0000 08B5     		push	{r3, lr}
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  525              		.align	2
  526              		.thumb
  527              		.thumb_func
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 16
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 16
 
 
  528              		.type	cmd_socket, %function
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  577              		.loc 1 63 0 discriminator 1
  578 0002 6420     		movs	r0, #100
  579 0004 FFF7FEFF 		bl	vTaskDelay
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 17
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 17
 
 
  580              	.LVL64:
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  630              		.loc 1 103 0
  631              		.cfi_startproc
  632              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 18
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 18
 
 
  633              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  120:ZumoLibrary/debug_uart.c ****             if(c == '\n' || c == '\r') {
  681              		.loc 1 120 0
  682 0026 9DF84730 		ldrb	r3, [sp, #71]	@ zero_extendqisi2
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 19
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 19
 
 
  683 002a 53B3     		cbz	r3, .L77
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  727 0074 0548     		ldr	r0, .L82
  728 0076 D0F84004 		ldr	r0, [r0, #1088]
  729 007a FFF7FEFF 		bl	xQueueGenericSend
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 20
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 20
 
 
  730              	.LVL77:
@@ -1167,149 +1167,150 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  751              		.type	cmdtable, %object
  752              		.size	cmdtable, 120
  753              	cmdtable:
- 754 0000 28000000 		.word	.LC3
+ 754 0000 2C000000 		.word	.LC3
  755 0004 00000000 		.word	cmd_help
- 756 0008 2C000000 		.word	.LC4
- 757 000c 3C000000 		.word	.LC5
+ 756 0008 30000000 		.word	.LC4
+ 757 000c 40000000 		.word	.LC5
  758 0010 00000000 		.word	cmd_help
- 759 0014 2C000000 		.word	.LC4
- 760 0018 44000000 		.word	.LC6
+ 759 0014 30000000 		.word	.LC4
+ 760 0018 48000000 		.word	.LC6
  761 001c 00000000 		.word	cmd_socket
- 762 0020 4C000000 		.word	.LC7
- 763 0024 74000000 		.word	.LC8
+ 762 0020 50000000 		.word	.LC7
+ 763 0024 78000000 		.word	.LC8
  764 0028 00000000 		.word	cmd_connect
- 765 002c 7C000000 		.word	.LC9
- 766 0030 9C000000 		.word	.LC10
+ 765 002c 80000000 		.word	.LC9
+ 766 0030 A0000000 		.word	.LC10
  767 0034 00000000 		.word	cmd_close
- 768 0038 A4000000 		.word	.LC11
- 769 003c C0000000 		.word	.LC12
+ 768 0038 A8000000 		.word	.LC11
+ 769 003c C4000000 		.word	.LC12
  770 0040 00000000 		.word	cmd_read
- 771 0044 C8000000 		.word	.LC13
- 772 0048 DC000000 		.word	.LC14
+ 771 0044 CC000000 		.word	.LC13
+ 772 0048 E0000000 		.word	.LC14
  773 004c 00000000 		.word	cmd_write
- 774 0050 E4000000 		.word	.LC15
- 775 0054 0C010000 		.word	.LC16
+ 774 0050 E8000000 		.word	.LC15
+ 775 0054 10010000 		.word	.LC16
  776 0058 00000000 		.word	cmd_tasklist
- 777 005c 14010000 		.word	.LC17
- 778 0060 3C010000 		.word	.LC18
+ 777 005c 18010000 		.word	.LC17
+ 778 0060 40010000 		.word	.LC18
  779 0064 00000000 		.word	cmd_stats
- 780 0068 44010000 		.word	.LC19
- 781 006c 68010000 		.word	.LC20
+ 780 0068 48010000 		.word	.LC19
+ 781 006c 6C010000 		.word	.LC20
  782 0070 00000000 		.word	0
- 783 0074 68010000 		.word	.LC20
+ 783 0074 6C010000 		.word	.LC20
  784              		.section	.rodata.str1.4,"aMS",%progbits,1
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 21
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 21
 
 
  785              		.align	2
  786              	.LC0:
- 787 0000 3139322E 		.ascii	"192.168.1.179\000"
+ 787 0000 3139322E 		.ascii	"192.168.1.254\000"
  787      3136382E 
- 787      312E3137 
- 787      3900
+ 787      312E3235 
+ 787      3400
  788 000e 0000     		.space	2
  789              	.LC1:
- 790 0010 70617373 		.ascii	"password\000"
- 790      776F7264 
+ 790 0010 536D6172 		.ascii	"SmartIot\000"
+ 790      74496F74 
  790      00
  791 0019 000000   		.space	3
  792              	.LC2:
- 793 001c 4D595F4E 		.ascii	"MY_NETWORK\000"
- 793      4554574F 
- 793      524B00
- 794 0027 00       		.space	1
+ 793 001c 536D6172 		.ascii	"SmartIotMQTT\000"
+ 793      74496F74 
+ 793      4D515454 
+ 793      00
+ 794 0029 000000   		.space	3
  795              	.LC3:
- 796 0028 3F00     		.ascii	"?\000"
- 797 002a 0000     		.space	2
+ 796 002c 3F00     		.ascii	"?\000"
+ 797 002e 0000     		.space	2
  798              	.LC4:
- 799 002c 68656C70 		.ascii	"help [command]\012\000"
+ 799 0030 68656C70 		.ascii	"help [command]\012\000"
  799      205B636F 
  799      6D6D616E 
  799      645D0A00 
  800              	.LC5:
- 801 003c 68656C70 		.ascii	"help\000"
+ 801 0040 68656C70 		.ascii	"help\000"
  801      00
- 802 0041 000000   		.space	3
+ 802 0045 000000   		.space	3
  803              	.LC6:
- 804 0044 736F636B 		.ascii	"socket\000"
+ 804 0048 736F636B 		.ascii	"socket\000"
  804      657400
- 805 004b 00       		.space	1
+ 805 004f 00       		.space	1
  806              	.LC7:
- 807 004c 736F636B 		.ascii	"socket - starts ESP8266 socket task\012\000"
+ 807 0050 736F636B 		.ascii	"socket - starts ESP8266 socket task\012\000"
  807      6574202D 
  807      20737461 
  807      72747320 
  807      45535038 
- 808 0071 000000   		.space	3
+ 808 0075 000000   		.space	3
  809              	.LC8:
- 810 0074 636F6E6E 		.ascii	"connect\000"
+ 810 0078 636F6E6E 		.ascii	"connect\000"
  810      65637400 
  811              	.LC9:
- 812 007c 636F6E6E 		.ascii	"connect - connect to a server\012\000"
+ 812 0080 636F6E6E 		.ascii	"connect - connect to a server\012\000"
  812      65637420 
  812      2D20636F 
  812      6E6E6563 
  812      7420746F 
- 813 009b 00       		.space	1
+ 813 009f 00       		.space	1
  814              	.LC10:
- 815 009c 636C6F73 		.ascii	"close\000"
+ 815 00a0 636C6F73 		.ascii	"close\000"
  815      6500
- 816 00a2 0000     		.space	2
+ 816 00a6 0000     		.space	2
  817              	.LC11:
- 818 00a4 636C6F73 		.ascii	"close - close connection\012\000"
+ 818 00a8 636C6F73 		.ascii	"close - close connection\012\000"
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 22
+
+
  818      65202D20 
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 22
-
-
  818      636C6F73 
  818      6520636F 
  818      6E6E6563 
- 819 00be 0000     		.space	2
+ 819 00c2 0000     		.space	2
  820              	.LC12:
- 821 00c0 72656164 		.ascii	"read\000"
+ 821 00c4 72656164 		.ascii	"read\000"
  821      00
- 822 00c5 000000   		.space	3
+ 822 00c9 000000   		.space	3
  823              	.LC13:
- 824 00c8 72656164 		.ascii	"read from socket\012\000"
+ 824 00cc 72656164 		.ascii	"read from socket\012\000"
  824      2066726F 
  824      6D20736F 
  824      636B6574 
  824      0A00
- 825 00da 0000     		.space	2
+ 825 00de 0000     		.space	2
  826              	.LC14:
- 827 00dc 77726974 		.ascii	"write\000"
+ 827 00e0 77726974 		.ascii	"write\000"
  827      6500
- 828 00e2 0000     		.space	2
+ 828 00e6 0000     		.space	2
  829              	.LC15:
- 830 00e4 77726974 		.ascii	"write <data> - writes <data> to socket\012\000"
+ 830 00e8 77726974 		.ascii	"write <data> - writes <data> to socket\012\000"
  830      65203C64 
  830      6174613E 
  830      202D2077 
  830      72697465 
  831              	.LC16:
- 832 010c 6C697374 		.ascii	"list\000"
+ 832 0110 6C697374 		.ascii	"list\000"
  832      00
- 833 0111 000000   		.space	3
+ 833 0115 000000   		.space	3
  834              	.LC17:
- 835 0114 6C697374 		.ascii	"list - list currently running tasks\012\000"
+ 835 0118 6C697374 		.ascii	"list - list currently running tasks\012\000"
  835      202D206C 
  835      69737420 
  835      63757272 
  835      656E746C 
- 836 0139 000000   		.space	3
+ 836 013d 000000   		.space	3
  837              	.LC18:
- 838 013c 73746174 		.ascii	"stat\000"
+ 838 0140 73746174 		.ascii	"stat\000"
  838      00
- 839 0141 000000   		.space	3
+ 839 0145 000000   		.space	3
  840              	.LC19:
- 841 0144 73746174 		.ascii	"stat - print runtime statistics\012\000"
+ 841 0148 73746174 		.ascii	"stat - print runtime statistics\012\000"
  841      202D2070 
  841      72696E74 
  841      2072756E 
  841      74696D65 
- 842 0165 000000   		.space	3
+ 842 0169 000000   		.space	3
  843              	.LC20:
- 844 0168 00       		.ascii	"\000"
+ 844 016c 00       		.ascii	"\000"
  845              		.bss
  846              		.align	2
  847              		.set	.LANCHOR1,. + 0
@@ -1317,10 +1318,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  849              		.size	prt_buffer, 1024
  850              	prt_buffer:
  851 0000 00000000 		.space	1024
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 23
+
+
  851      00000000 
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 23
-
-
  851      00000000 
  851      00000000 
  851      00000000 
@@ -1377,10 +1378,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  898 0037 02       		.uleb128 0x2
  899 0038 01       		.byte	0x1
  900 0039 08       		.byte	0x8
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 24
+
+
  901 003a 50010000 		.4byte	.LASF1
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 24
-
-
  902 003e 02       		.uleb128 0x2
  903 003f 02       		.byte	0x2
  904 0040 05       		.byte	0x5
@@ -1437,10 +1438,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  955 00a3 B0010000 		.4byte	.LASF14
  956 00a7 03       		.byte	0x3
  957 00a8 30       		.byte	0x30
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 25
+
+
  958 00a9 5E000000 		.4byte	0x5e
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 25
-
-
  959 00ad 02       		.uleb128 0x2
  960 00ae 04       		.byte	0x4
  961 00af 04       		.byte	0x4
@@ -1497,10 +1498,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1012 0115 01       		.byte	0x1
  1013 0116 24       		.byte	0x24
  1014 0117 40010000 		.4byte	0x140
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 26
+
+
  1015 011b 09       		.uleb128 0x9
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 26
-
-
  1016 011c 23010000 		.4byte	.LASF24
  1017 0120 01       		.byte	0x1
  1018 0121 25       		.byte	0x25
@@ -1557,10 +1558,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1069 0191 D2000000 		.4byte	0xd2
  1070 0195 47000000 		.4byte	.LLST2
  1071 0199 10       		.uleb128 0x10
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 27
+
+
  1072 019a E1000000 		.4byte	.LASF27
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 27
-
-
  1073 019e 01       		.byte	0x1
  1074 019f D5       		.byte	0xd5
  1075 01a0 D2000000 		.4byte	0xd2
@@ -1617,10 +1618,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1126 0210 D2000000 		.4byte	0xd2
  1127 0214 E1000000 		.4byte	.LLST6
  1128 0218 17       		.uleb128 0x17
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 28
+
+
  1129 0219 6900     		.ascii	"i\000"
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 28
-
-
  1130 021b 01       		.byte	0x1
  1131 021c 0B01     		.2byte	0x10b
  1132 021e 7E000000 		.4byte	0x7e
@@ -1677,10 +1678,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1183 0298 9C       		.byte	0x9c
  1184 0299 C0020000 		.4byte	0x2c0
  1185 029d 0E       		.uleb128 0xe
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 29
+
+
  1186 029e 636D6400 		.ascii	"cmd\000"
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 29
-
-
  1187 02a2 01       		.byte	0x1
  1188 02a3 BE       		.byte	0xbe
  1189 02a4 D2000000 		.4byte	0xd2
@@ -1737,10 +1738,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1240 030d 02       		.uleb128 0x2
  1241 030e 74       		.byte	0x74
  1242 030f 00       		.sleb128 0
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 30
+
+
  1243 0310 00       		.byte	0
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 30
-
-
  1244 0311 00       		.byte	0
  1245 0312 1A       		.uleb128 0x1a
  1246 0313 0A000000 		.4byte	.LASF33
@@ -1797,10 +1798,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1297 0379 1D       		.uleb128 0x1d
  1298 037a BB000000 		.4byte	0xbb
  1299 037e 89030000 		.4byte	0x389
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 31
+
+
  1300 0382 1E       		.uleb128 0x1e
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 31
-
-
  1301 0383 C9000000 		.4byte	0xc9
  1302 0387 3F       		.byte	0x3f
  1303 0388 00       		.byte	0
@@ -1857,10 +1858,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1354 03f7 14       		.uleb128 0x14
  1355 03f8 01       		.uleb128 0x1
  1356 03f9 51       		.byte	0x51
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 32
+
+
  1357 03fa 05       		.uleb128 0x5
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 32
-
-
  1358 03fb 03       		.byte	0x3
  1359 03fc 00000000 		.4byte	.LC0
  1360 0400 14       		.uleb128 0x14
@@ -1917,10 +1918,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1411 0464 F1010000 		.4byte	.LASF39
  1412 0468 01       		.byte	0x1
  1413 0469 3B       		.byte	0x3b
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 33
+
+
  1414 046a D0000000 		.4byte	0xd0
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 33
-
-
  1415 046e 6B020000 		.4byte	.LLST17
  1416 0472 21       		.uleb128 0x21
  1417 0473 6300     		.ascii	"c\000"
@@ -1977,10 +1978,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1468 04cc 01       		.uleb128 0x1
  1469 04cd 31       		.byte	0x31
  1470 04ce 00       		.byte	0
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 34
+
+
  1471 04cf 00       		.byte	0
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 34
-
-
  1472 04d0 23       		.uleb128 0x23
  1473 04d1 647300   		.ascii	"ds\000"
  1474 04d4 01       		.byte	0x1
@@ -2037,10 +2038,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1525 053a AD020000 		.4byte	.LLST19
  1526 053e 1B       		.uleb128 0x1b
  1527 053f 14000000 		.4byte	.LVL71
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 35
+
+
  1528 0543 E2060000 		.4byte	0x6e2
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 35
-
-
  1529 0547 52050000 		.4byte	0x552
  1530 054b 14       		.uleb128 0x14
  1531 054c 01       		.uleb128 0x1
@@ -2097,10 +2098,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1582 0597 A3050000 		.4byte	0x5a3
  1583 059b 14       		.uleb128 0x14
  1584 059c 01       		.uleb128 0x1
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 36
+
+
  1585 059d 50       		.byte	0x50
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 36
-
-
  1586 059e 03       		.uleb128 0x3
  1587 059f 91       		.byte	0x91
  1588 05a0 AC7F     		.sleb128 -84
@@ -2157,10 +2158,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1639 05f8 07       		.uleb128 0x7
  1640 05f9 D2050000 		.4byte	0x5d2
  1641 05fd 1C       		.uleb128 0x1c
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 37
+
+
  1642 05fe 14010000 		.4byte	.LASF44
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 37
-
-
  1643 0602 01       		.byte	0x1
  1644 0603 37       		.byte	0x37
  1645 0604 F9000000 		.4byte	0xf9
@@ -2217,10 +2218,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1696 067a 9406     		.2byte	0x694
  1697 067c 2A       		.uleb128 0x2a
  1698 067d 85000000 		.4byte	.LASF50
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 38
+
+
  1699 0681 85000000 		.4byte	.LASF50
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 38
-
-
  1700 0685 07       		.byte	0x7
  1701 0686 5E06     		.2byte	0x65e
  1702 0688 2B       		.uleb128 0x2b
@@ -2277,10 +2278,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1753              		.section	.debug_abbrev,"",%progbits
  1754              	.Ldebug_abbrev0:
  1755 0000 01       		.uleb128 0x1
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 39
+
+
  1756 0001 11       		.uleb128 0x11
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 39
-
-
  1757 0002 01       		.byte	0x1
  1758 0003 25       		.uleb128 0x25
  1759 0004 0E       		.uleb128 0xe
@@ -2337,10 +2338,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1810 0037 0F       		.uleb128 0xf
  1811 0038 00       		.byte	0
  1812 0039 0B       		.uleb128 0xb
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 40
+
+
  1813 003a 0B       		.uleb128 0xb
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 40
-
-
  1814 003b 00       		.byte	0
  1815 003c 00       		.byte	0
  1816 003d 06       		.uleb128 0x6
@@ -2397,10 +2398,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1867 0070 3A       		.uleb128 0x3a
  1868 0071 0B       		.uleb128 0xb
  1869 0072 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 41
+
+
  1870 0073 0B       		.uleb128 0xb
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 41
-
-
  1871 0074 49       		.uleb128 0x49
  1872 0075 13       		.uleb128 0x13
  1873 0076 38       		.uleb128 0x38
@@ -2457,10 +2458,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1924 00aa 08       		.uleb128 0x8
  1925 00ab 3A       		.uleb128 0x3a
  1926 00ac 0B       		.uleb128 0xb
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 42
+
+
  1927 00ad 3B       		.uleb128 0x3b
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 42
-
-
  1928 00ae 0B       		.uleb128 0xb
  1929 00af 49       		.uleb128 0x49
  1930 00b0 13       		.uleb128 0x13
@@ -2517,10 +2518,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  1981 00e3 27       		.uleb128 0x27
  1982 00e4 19       		.uleb128 0x19
  1983 00e5 11       		.uleb128 0x11
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 43
+
+
  1984 00e6 01       		.uleb128 0x1
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 43
-
-
  1985 00e7 12       		.uleb128 0x12
  1986 00e8 06       		.uleb128 0x6
  1987 00e9 40       		.uleb128 0x40
@@ -2577,10 +2578,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2038 0123 16       		.uleb128 0x16
  2039 0124 05       		.uleb128 0x5
  2040 0125 00       		.byte	0
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 44
+
+
  2041 0126 03       		.uleb128 0x3
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 44
-
-
  2042 0127 08       		.uleb128 0x8
  2043 0128 3A       		.uleb128 0x3a
  2044 0129 0B       		.uleb128 0xb
@@ -2637,10 +2638,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2095 015e 27       		.uleb128 0x27
  2096 015f 19       		.uleb128 0x19
  2097 0160 49       		.uleb128 0x49
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 45
+
+
  2098 0161 13       		.uleb128 0x13
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 45
-
-
  2099 0162 11       		.uleb128 0x11
  2100 0163 01       		.uleb128 0x1
  2101 0164 12       		.uleb128 0x12
@@ -2697,10 +2698,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2152 019a 0B       		.uleb128 0xb
  2153 019b 00       		.byte	0
  2154 019c 00       		.byte	0
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 46
+
+
  2155 019d 1F       		.uleb128 0x1f
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 46
-
-
  2156 019e 2E       		.uleb128 0x2e
  2157 019f 01       		.byte	0x1
  2158 01a0 3F       		.uleb128 0x3f
@@ -2757,10 +2758,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2209 01d5 00       		.byte	0
  2210 01d6 22       		.uleb128 0x22
  2211 01d7 2E       		.uleb128 0x2e
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 47
+
+
  2212 01d8 01       		.byte	0x1
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 47
-
-
  2213 01d9 3F       		.uleb128 0x3f
  2214 01da 19       		.uleb128 0x19
  2215 01db 03       		.uleb128 0x3
@@ -2817,10 +2818,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2266 0210 0B       		.uleb128 0xb
  2267 0211 3B       		.uleb128 0x3b
  2268 0212 0B       		.uleb128 0xb
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 48
+
+
  2269 0213 49       		.uleb128 0x49
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 48
-
-
  2270 0214 13       		.uleb128 0x13
  2271 0215 02       		.uleb128 0x2
  2272 0216 18       		.uleb128 0x18
@@ -2877,10 +2878,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2323 0249 49       		.uleb128 0x49
  2324 024a 13       		.uleb128 0x13
  2325 024b 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 49
+
+
  2326 024c 19       		.uleb128 0x19
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 49
-
-
  2327 024d 3C       		.uleb128 0x3c
  2328 024e 19       		.uleb128 0x19
  2329 024f 00       		.byte	0
@@ -2937,10 +2938,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2380 000b 06000000 		.4byte	.LVL1
  2381 000f 6E000000 		.4byte	.LVL15
  2382 0013 0100     		.2byte	0x1
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 50
+
+
  2383 0015 50       		.byte	0x50
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 50
-
-
  2384 0016 72000000 		.4byte	.LVL17
  2385 001a 86000000 		.4byte	.LVL19
  2386 001e 0100     		.2byte	0x1
@@ -2997,10 +2998,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2437 00a8 64000000 		.4byte	.LVL14
  2438 00ac 0100     		.2byte	0x1
  2439 00ae 53       		.byte	0x53
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 51
+
+
  2440 00af 64000000 		.4byte	.LVL14
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 51
-
-
  2441 00b3 74000000 		.4byte	.LVL18
  2442 00b7 0100     		.2byte	0x1
  2443 00b9 56       		.byte	0x56
@@ -3057,10 +3058,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2494 013a 53       		.byte	0x53
  2495 013b 00000000 		.4byte	0
  2496 013f 00000000 		.4byte	0
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 52
+
+
  2497              	.LLST8:
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 52
-
-
  2498 0143 1A000000 		.4byte	.LVL32
  2499 0147 22000000 		.4byte	.LVL34
  2500 014b 0100     		.2byte	0x1
@@ -3117,10 +3118,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2551 01cb 50       		.byte	0x50
  2552 01cc 08000000 		.4byte	.LVL49
  2553 01d0 28000000 		.4byte	.LFE76
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 53
+
+
  2554 01d4 0400     		.2byte	0x4
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 53
-
-
  2555 01d6 F3       		.byte	0xf3
  2556 01d7 01       		.uleb128 0x1
  2557 01d8 50       		.byte	0x50
@@ -3177,10 +3178,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2608 0252 0100     		.2byte	0x1
  2609 0254 50       		.byte	0x50
  2610 0255 06000000 		.4byte	.LVL60
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 54
+
+
  2611 0259 18000000 		.4byte	.LFE73
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 54
-
-
  2612 025d 0400     		.2byte	0x4
  2613 025f F3       		.byte	0xf3
  2614 0260 01       		.uleb128 0x1
@@ -3237,10 +3238,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2665 02da 55       		.byte	0x55
  2666 02db 5C000000 		.4byte	.LVL76
  2667 02df 82000000 		.4byte	.LVL78
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 55
+
+
  2668 02e3 0100     		.2byte	0x1
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 55
-
-
  2669 02e5 54       		.byte	0x54
  2670 02e6 82000000 		.4byte	.LVL78
  2671 02ea 90000000 		.4byte	.LFE72
@@ -3297,10 +3298,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2722 0018 1A000000 		.4byte	.LBB4
  2723 001c 22000000 		.4byte	.LBE4
  2724 0020 24000000 		.4byte	.LBB5
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 56
+
+
  2725 0024 38000000 		.4byte	.LBE5
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 56
-
-
  2726 0028 00000000 		.4byte	0
  2727 002c 00000000 		.4byte	0
  2728 0030 00000000 		.4byte	.LFB80
@@ -3357,10 +3358,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2768      62756666 
  2768      657200
  2769              	.LASF48:
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 57
+
+
  2770 0027 76546173 		.ascii	"vTaskDelay\000"
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 57
-
-
  2770      6B44656C 
  2770      617900
  2771              	.LASF18:
@@ -3417,10 +3418,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2796 00b9 636D645F 		.ascii	"cmd_connect\000"
  2796      636F6E6E 
  2796      65637400 
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 58
+
+
  2797              	.LASF54:
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 58
-
-
  2798 00c5 6573705F 		.ascii	"esp_close\000"
  2798      636C6F73 
  2798      6500
@@ -3477,10 +3478,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2822 0150 756E7369 		.ascii	"unsigned char\000"
  2822      676E6564 
  2822      20636861 
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 59
+
+
  2822      7200
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 59
-
-
  2823              	.LASF49:
  2824 015e 76546173 		.ascii	"vTaskGetRunTimeStats\000"
  2824      6B476574 
@@ -3537,10 +3538,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2844      74657273 
  2844      00
  2845              	.LASF3:
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 60
+
+
  2846 01fe 73686F72 		.ascii	"short unsigned int\000"
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 60
-
-
  2846      7420756E 
  2846      7369676E 
  2846      65642069 
@@ -3597,10 +3598,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2871              	.LASF5:
  2872 02ac 5F5F696E 		.ascii	"__int32_t\000"
  2872      7433325F 
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 61
+
+
  2872      7400
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 61
-
-
  2873              	.LASF30:
  2874 02b6 636D645F 		.ascii	"cmd_stats\000"
  2874      73746174 
@@ -3657,10 +3658,10 @@ ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 1
  2894      4C696272 
  2894      6172795C 
  2894      64656275 
+ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccC1GBqV.s 			page 62
+
+
  2894      675F7561 
-ARM GAS  C:\Users\8523~1\AppData\Local\Temp\ccWZMIhY.s 			page 62
-
-
  2895              	.LASF55:
  2896 03b8 6573705F 		.ascii	"esp_connect\000"
  2896      636F6E6E 

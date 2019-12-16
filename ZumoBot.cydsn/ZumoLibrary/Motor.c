@@ -43,15 +43,6 @@ void motor_forward(uint8 speed,uint32 delay)
     vTaskDelay(delay);
 }
 
-void tank_turn(uint8 l_speed, uint8 r_speed, uint32 delay)
-{
-    MotorDirLeft_Write(0);      // set LeftMotor forward mode
-    MotorDirRight_Write(1);     // set RightMotor forward mode
-    PWM_WriteCompare1(l_speed); 
-    PWM_WriteCompare2(r_speed); 
-    vTaskDelay(delay);
-}
-
 
 /**
 * @brief    Moving motors to make a turn 
