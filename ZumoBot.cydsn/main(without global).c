@@ -28,10 +28,10 @@
     I2C, UART, Serial<br>
     </p>
 */
-
+    
 //=================Zumo robot project. Metropolia University of Applied Sciences. Helsinki 13.12.2019=================//
-
-        //===========Electric lady group: Alexander Seleznev, Minni Ojala, Jan Ranta===========//
+    
+            //===========Electric lady group: Alexander Seleznev, Minni Ojala, Jan Ranta===========//
 
 #include <project.h>
 #include <stdio.h>
@@ -115,40 +115,39 @@
 
     // PROJECT // 1:RING //
 
-int line, x_or_x;
-int x, y, angle, hittime, distance;
 TickType_t starttime, finishtime, timepass;
-void sensors();
-void reflectance();
+int online();
+int x_or_x();
 void linefollow();
 void ring();
 void escape();
-void accangles();
 void tank_turn_left(uint8, uint32);
 void tank_turn_right(uint8, uint32);
     
 void zmain(void)    // main program
 {
     IR_Start();
-    LSM303D_Start();
     reflectance_start();
     IR_flush();
     Ultra_Start();
     motor_start();
     
-    while(SW1_Read() == 1);             // wait for user button
+    struct sensors_ dig;
+    reflectance_set_threshold(15000, 15000, 15000, 15000, 15000, 15000);    // set reflectance treshold
+    reflectance_digital(&dig);
     
-    while(x_or_x != 1)             // drive to first line
+    while(SW1_Read() == 1); // wait for user button
+    
+    while(x_or_x() != 1)    // drive to first line
         {
-            sensors();
-            
+            online();
             linefollow();
         }
         
     motor_forward(0, 0);
     print_mqtt("Zumo021/ready ", "zumo");   // send mqtt message ready
     
-    while(true)             // wait for IR signal
+    while(true) // wait for IR signal
         {
             IR_wait();
             
@@ -162,7 +161,7 @@ void zmain(void)    // main program
 
     while(SW1_Read() == 1)             // drive in ring; exit while user button is pressed
         {
-            sensors();
+            online();
             
             ring();
             
@@ -179,41 +178,46 @@ void zmain(void)    // main program
     
 }
 
-void sensors(void)    // get values from reflectance sensors
+int online()    // get values from reflectance sensors
     {
         struct sensors_ dig;
         
-        reflectance_set_threshold(15000, 15000, 15000, 15000, 15000, 15000);    // set reflectance treshold
+        int line = 32*dig.l3 + 16*dig.l2 + 8*dig.l1 + 4*dig.r1 + 2*dig.r2 + 1*dig.r3;   // set all sensors values in one variable using binary numbers
+        
+        return line;
+    }
 
-        reflectance_digital(&dig);
+int x_or_x()    // set exception value if only l3 or r3 is active
+    {
+        int x_or_x;
         
-        line = 32*dig.l3 + 16*dig.l2 + 8*dig.l1 + 4*dig.r1 + 2*dig.r2 + 1*dig.r3;   // set all sensor values in one variable using binary numbers
+        struct sensors_ dig;
         
-        if (dig.l3 == 1 || dig.r3==1)    // set exception value if only l3 or r3 is active
+        if (dig.l3 == 1 || dig.r3==1)
             {
                 x_or_x = 1;
             }
             
         else x_or_x = 0;
             
-        distance = Ultra_GetDistance(); // set distance value
+        return x_or_x;
     }
   
-void linefollow(void)   // linefollow function; using binary numbers in if-statements for better representation
+void linefollow(void)   // linefollow function; using binary numbers in if statements for better representation
     {
-        if (line == 0b001100)
+        if (online() == 0b001100)
             {
-                motor_forward(100, 0);
+                motor_forward(100, 0);  // go forward
             }
             
-        else if (line == 0b011000)
+        else if (online() == 0b011000)
             {
-                motor_turn(50, 200, 0);
+                motor_turn(50, 200, 0); // slight left
             }
             
-        else if (line == 0b000110)
+        else if (online() == 0b000110)
             {
-                motor_turn(200, 50, 0);
+                motor_turn(200, 50, 0); // slight right
             }
                 
         else motor_forward(100, 0);
@@ -225,9 +229,9 @@ void ring(void) // ring function for competition; drive forward and take random 
         
         for (int i = 0; i <500; i++)    // drive forward
             {
-                sensors();
+                x_or_x();
                 
-                if (x_or_x != 1 && distance > 30)
+                if (x_or_x() != 1 && Ultra_GetDistance() > 30)
                     {
                         motor_forward (200, 1);
                     }
@@ -235,13 +239,13 @@ void ring(void) // ring function for competition; drive forward and take random 
                 else break;
             }
             
-        if (r == 0)                                      // turn left
+        if (r == 0) // turn left
                 {
                     for (int i = 0; i <200; i++)
                         {
-                            sensors();
+                            x_or_x();
                             
-                            if (x_or_x != 1 && distance > 30)
+                            if (x_or_x() != 1 && Ultra_GetDistance() > 30)
                                 {
                                     motor_turn(0, 255, 1);
                                 }
@@ -250,13 +254,13 @@ void ring(void) // ring function for competition; drive forward and take random 
                         }
                 }
             
-        if (r == 1)                                      // turn right
+        if (r == 1) // turn right
             {
                 for (int i = 0; i <200; i++)
                     {
-                        sensors();
+                        x_or_x();
                         
-                        if (x_or_x != 1 && distance > 30)
+                        if (x_or_x() != 1 && Ultra_GetDistance() > 30)
                             {
                                 motor_turn(255, 0, 1);
                             }
@@ -265,7 +269,7 @@ void ring(void) // ring function for competition; drive forward and take random 
                     }
             }
         
-        if (x_or_x != 1 && distance < 30) //attack if distance to enemy is < 30 cm
+        if (x_or_x() != 1 && Ultra_GetDistance() < 30) //attack if distance to enemy is < 30 cm
             {
                 motor_forward(255, 0);
             }
@@ -275,75 +279,24 @@ void escape(void)   // escape function if robot is on edge
     {
         int r = rand() % 2; // get random number for turns
         
-        if (x_or_x == 1)  // if edge detected -> drive backward
+        if (x_or_x() == 1)  // if edge detected -> drive backward
             {
                 motor_backward(255, 200);
             }
             
-        if (x_or_x == 1 && r == 0)    // take random turns
+        if (x_or_x() == 1 && r == 0)    // take random turns
                 {
                     tank_turn_left(255, 200);
                     motor_forward(0, 0);
                 }
                 
-                else if (x_or_x == 1 && r == 1)
+                else if (x_or_x() == 1 && r == 1)
                 {
                     tank_turn_right(255, 200);
                     motor_forward(0, 0);
                 }
     }
     
-void accangles(void)    // get accelerometer values // not used in competition due to incompleteness
-    {
-        struct accData_ data;
-        
-        LSM303D_Read_Acc(&data);
-        hittime = xTaskGetTickCount();
-            
-        x = data.accX;
-        y = data.accY;
-
-        if (x < -20000 || y > 20000 )
-            {
-                if (x < -20000 && y > 20000 )
-                    {
-                        angle = 45;
-                    }
-                
-                else if (x < -20000)
-                    {
-                        angle = 0;
-                    }
-                    
-                else if (y > 20000)
-                    {
-                        angle = 90;
-                    }
-                    
-                print_mqtt("Zumo021/hit ", "%d %d", hittime, angle);
-            }
-            
-            else if (y < -20000 || x > 20000)
-                {
-                    if (y < -20000 && x > 20000)
-                        {
-                            angle = 225;
-                        }
-                        
-                    else if (y < -20000)
-                        {
-                            angle = 270;
-                        }
-                        
-                    else if (x > 20000)
-                        {
-                            angle = 180;
-                        }
-                        
-                    print_mqtt("Zumo021/hit ", "%d %d", hittime, angle);
-                }
-    }
-
 void tank_turn_left(uint8 speed, uint32 delay)  // custom tank turn function
     {
         MotorDirLeft_Write(1);      // set LeftMotor backward mode
@@ -364,16 +317,12 @@ void tank_turn_right(uint8 speed, uint32 delay)  // custom tank turn function
     
 #endif
 
-
 #if 1   // 1 = program enabled; 0 = program disbled;
 
     // PROJECT // 2:LINE FOLLOWER //
 
-int line;
-int onblack, onwhite, passed;
-TickType_t starttime, finishtime, timepass;
-void sensors();
-void linecounter();
+int online();
+int linecounter();
 void drive();
 void reveille();
 void darude();
@@ -384,20 +333,24 @@ void zmain(void)    // main program
     IR_flush();
     reflectance_start();
     motor_start();
+    
+    TickType_t starttime, finishtime, timepass;
+    struct sensors_ dig;
+    reflectance_set_threshold(15000, 15000, 15000, 15000, 15000, 15000);    // set reflectance treshold
+    reflectance_digital(&dig);
 
     while (SW1_Read() == 1);    // wait for user button
     
     while (true)                // drive to fisrt line
         {
-            sensors();
+            online();
             drive();
             
-            if (line == 0b111111)   // stop when on line
+            if (online() == 0b111111)   // stop when on line
                 {
                     motor_forward(0, 0);
                     Beep(100, 100);
-                    passed ++;
-                    print_mqtt("Zumo021/ready ", "line");   // print mqtt message ready
+                    print_mqtt("Zumo021/ready ", "line");   // print mqtt message
                     break;
                 }
                 
@@ -418,13 +371,13 @@ void zmain(void)    // main program
         break;
     }
     
-    while (true)    // drive
+    while (true)    // drive from start to finish
         {
-            sensors();
+            online();
             linecounter();
             drive();
             
-            if (passed == 2 && onblack == 1) // stop on second line
+            if (linecounter() == 1 && online() == 0b111111) // stop on second line
                 {
                     motor_forward(0, 0);
                     
@@ -444,25 +397,21 @@ void zmain(void)    // main program
         
 }
     
-void sensors(void)    // get values from reflectance sensors
+int online()    // get values from reflectance sensors
     {
         struct sensors_ dig;
         
-        reflectance_set_threshold(15000, 15000, 15000, 15000, 15000, 15000);    // set reflectance treshold
-
-        reflectance_digital(&dig);
+        int line = 32*dig.l3 + 16*dig.l2 + 8*dig.l1 + 4*dig.r1 + 2*dig.r2 + 1*dig.r3;   // set all sensors values in one variable using binary numbers
         
-        line = 32*dig.l3 + 16*dig.l2 + 8*dig.l1 + 4*dig.r1 + 2*dig.r2 + 1*dig.r3;   // set all sensors values in one variable using binary numbers
+        return line;
         
     }
 
-void linecounter(void)  // linecounter function
+int linecounter()   // count passed lines
     {
         struct sensors_ dig;
         
-        reflectance_set_threshold(15000, 15000, 15000, 15000, 15000, 15000);    // set reflectance treshold
-        
-        reflectance_digital(&dig);
+        int onblack, onwhite, passed;
         
         if (dig.l3 == 1 && dig.r3 == 1)
             {
@@ -476,42 +425,43 @@ void linecounter(void)  // linecounter function
             
         if (onblack == 1 && onwhite == 1)
             {
-                passed++;   // count passed lines
+                passed++;
                 onblack = 0;
+                onwhite = 0;
             }
             
-        else onwhite = 0;
+        return passed;
     }
     
-void drive(void)    // drive from start to finish; using binary numbers in if-statements for better representation
+void drive(void)    // main drive function; using binary numbers in if statements for better representation
     {
-        if (line == 0b001100)
+        if (online() == 0b001100)
             {
-                motor_turn(255, 0);    // go forward
+                motor_forward(255, 0);    // go forward
                 return;
             }
             
-        if (line == 0b011000)
+        if (online() == 0b011000)
             {
-                motor_turn(0, 150, 0);  // slight left
+                motor_turn(0, 150, 0);  // slight turn left
                 return;
             }
             
-        if (line == 0b000110)
+        if (online() == 0b000110)
             {
-                motor_turn(150, 0, 0);  // slight right
+                motor_turn(150, 0, 0);  // slight turn right
                 return;
             }
                     
-        if (line == 0b110000)
+        if (online() == 0b110000)
             {
-                motor_turn(0, 255, 0);  // hard left
+                motor_turn(0, 255, 0);  // hard turn left
                 return;
             }
                         
-        if (line == 0b000011)
+        if (online() == 0b000011)
             {
-                motor_turn(255, 0, 0);  // hard right
+                motor_turn(255, 0, 0);  // hard turn right
                 return;
             }
     }
@@ -663,20 +613,15 @@ void darude(void)   // music function
     
 #endif
 
-
 #if 1      // 1 = program enabled; 0 = program disbled;
 
     // PROJECT // 3:MAZE //
-   
-int line;
-int x, y = -1, distance, obstacle;
-int onblack, onwhite, online;
-TickType_t starttime, finishtime, timepass;
-char compass;
-void sensors();
-void linedetector();
-void coordinatecounter();
-void drive();
+    
+int line();
+int obstacle();
+int linedetector(int onblack, int online);
+void coordinate(int *px, int *py);
+char drive();
 void turn_left();
 void turn_right();
 void tank_turn_left(uint8, uint32);
@@ -693,28 +638,38 @@ void zmain(void)    // main program
     reflectance_start();
     motor_start();
     
-    while (SW1_Read() == 1);    // wait for user button
+    char compass = drive();
     
-    compass = 'N';
+    int x, y;                   // get x, y from memory using memory pointer
+    coordinate(&x, &y);
+    
+    TickType_t starttime, finishtime, timepass;
+    
+    struct sensors_ dig;
+    reflectance_set_threshold(15000, 15000, 15000, 15000, 15000, 15000);    // set reflectance sensor treshold
+    reflectance_digital(&dig);
+    
+    
+    while (SW1_Read() == 1);    // wait for user button
     
     while (true)                // drive to fisrt line
         {
-            sensors();
+            line();
             drive();
             
-            if(line == 0b111111)    // stop when on line
+            if(line() == 0b111111)  // stop when on line
                 {
                     motor_forward(0, 0);
                     Beep(100, 100);
-                    print_mqtt("Zumo021/ready ", "maze");   // send mqtt message ready
+                    print_mqtt("Zumo021/ready ", "maze");   // print mqtt message ready
                     break;
                 }
         }
         
-    while(true)                 // wait for IR signal
+    while(true) // wait for IR signal
         {
             IR_wait();
-            reveille();
+            reveille(); //  play music
             
             starttime = xTaskGetTickCount();    // get starttime
             print_mqtt("Zumo021/start ", "%d", starttime);  // print mqtt message starttime
@@ -722,132 +677,140 @@ void zmain(void)    // main program
             break;
         }
             
-    while (true)                // main maze drive
+    while (true)    // main maze drive
     {
-        sensors();
-        
-        linedetector();
-        
-        coordinatecounter();
-        
         drive();
         
-        if (line == 0b000000 && y == 13 && x == 0) // stop when maze passed
+        if (line() == 0b000000 && y == 13 && x == 0)    // break if maze passed
             {
                 motor_stop();
                 
-                finishtime = xTaskGetTickCount();   // get finish time
+                finishtime = xTaskGetTickCount();   // get finishtime
                 print_mqtt("Zumo021/stop ", "%d", finishtime);  // print mqtt message finishtime
                 
                 timepass = finishtime - starttime;  // count passed time
-                print_mqtt("Zumo021/time ", "%d", timepass);    // print mqtt message timepassed
+                print_mqtt("Zumo021/time ", "%d", timepass);    // print mqtt message passed time
                 
-                champions();    // play Queen :=)
+                champions();    // play music
                 break;
             }
     }
 }
 
-void sensors(void)  // sensors function; get values from several sensors
+int line()  // get reflectance sensors values
     {
         struct sensors_ dig;
+
+        int line = 32*dig.l3 + 16*dig.l2 + 8*dig.l1 + 4*dig.r1 + 2*dig.r2 + 1*dig.r3;   // set sensor values in one variable using binary number
         
-        reflectance_set_threshold(15000, 15000, 15000, 15000, 15000, 15000);    // set reflectance treshold
+        return line;
+    }
 
-        reflectance_digital(&dig);
-
-        line = 32*dig.l3 + 16*dig.l2 + 8*dig.l1 + 4*dig.r1 + 2*dig.r2 + 1*dig.r3;   // set sensor values in one variable using binary numbers
-      
-        distance = Ultra_GetDistance(); // set distance value
-                
-        if (distance < 15)  // set obstacle on if distance to obstacle < 15 cm
+int obstacle()  // detect obstacle
+    {
+        int obstacle;
+            
+        if (Ultra_GetDistance() < 15)   // set obstacle value if obstacle closer than 15 cm
             {
                 obstacle = 1;
             }
             
         else obstacle = 0;
             
+        return obstacle;
     }
     
-void linedetector(void)   // line detector function; using binary numbers in if-statements for better representation
+int linedetector(int onblack, int online)   // line detector function
     {
+        int onwhite, x, y;  // get x, y from memory using memory pointer
+        coordinate(&x, &y);
         
-        if (line == 0b001100 || line == 0b011000 || line == 0b000110)
+        if (line() == 0b001100 || line() == 0b011000 || line() == 0b000110)
             {
                 onwhite = 1;
                 onblack = 0;
             }
 
-        if (line == 0b111111 || line == 0b011111 || line == 0b111110 || line == 0b001111 || line == 0b111100 || line == 0b000111 || line == 0b111000)
+        if (line() == 0b111111 || line() == 0b011111 || line() == 0b111110 || line() == 0b001111 || line() == 0b111100 || line() == 0b000111 || line() == 0b111000)
             {
                 onblack = 1;
             }
     
-        if (onwhite == 1 && onblack == 1)   // set online = 1 when robot staying on line
+        if (onwhite == 1 && onblack == 1)
             {
                 online = 1;
                 onwhite = 0;
                 onblack = 0;
-                print_mqtt("Zumo021/position ", "%d %d", x, y); // print coordinates via mqtt
+                print_mqtt("Zumo021/position ", "%d %d", x, y); // print robot coordinates via mqtt
             }
+            
+        return online;  // return online value for coordinate counter
     }
     
-void coordinatecounter(void)    // count x & y coordinates depending on compass value
+void coordinate(int *px, int *py)   // coordinate counter; using memory pointer to return multiple values from function
     {
-        if (online == 1 && compass == 'N')
+        char compass;     // get compass character from memory using memory pointer
+        drive(&compass);
+        
+        int x, y = -1;
+        
+        
+        
+        if (linedetector(1, 1) == 1 && compass == 'N')
             {
                 y++;
-                online = 0;
-                onblack = 0;
+                linedetector(0, 0);
             }
             
-        if (online == 1 && compass == 'W')
+        if (linedetector(1, 1) == 1 && compass == 'W')
             {
                 x--;
-                online = 0;
+                linedetector(0, 0);
             }
             
-        if (online == 1 && compass == 'E')
+        if (linedetector(1, 1) == 1 && compass == 'E')
             {
                 x++;
-                online = 0;
+                linedetector(0, 0);
             }
+            
+        (*px) = x;  // put x, y to memory
+        (*py) = y;
     }
     
-void drive(void)   // main drive function; using binary numbers in if-statements for better representation
+char drive()    // main drive function
     {
+        char compass = 'N';
         
-        if (line == 0b001100)
+        int x, y;   // get x, y from memory using memory pointer
+        coordinate(&x, &y);
+        
+        if (line() == 0b001100)
             {
-                motor_forward(75, 0);   // go forward
-                return;
+                motor_forward(75, 0);   // drive forward
             }
             
-        if (line == 0b011000)
+        if (line() == 0b011000)
             {
                 motor_turn(0, 100, 0);  // slight left
-                return;
             }
             
-        if (line == 0b000110)
+        if (line() == 0b000110)
             {
                 motor_turn(100, 0, 0);  // slight right
-                return;
             }
                     
-        if (line == 0b110000 || line == 0b010000)
+        if (line() == 0b110000 || line() == 0b010000)
             {
                 motor_turn(0, 150, 0);  // hard left
-                return;
             }
                         
-        if (line == 0b000011 || line == 0b000010)
+        if (line() == 0b000011 || line() == 0b000010)
             {
-                motor_turn(150, 0, 0);  // hard rigth
-                return;
+                motor_turn(150, 0, 0);  // hard right
             }
                             
-        if (line == 0b111111 && obstacle == 1 && compass == 'N')    // turn if north and obstackle!
+        if (line() == 0b111111 && obstacle() == 1 && compass == 'N')    // turn if north and obstackle!
             {
                 if (x >= 0) // if robot on right side, take first left
                     {
@@ -857,7 +820,7 @@ void drive(void)   // main drive function; using binary numbers in if-statements
                         
                         compass = 'W';  // set compass
                                             
-                        if (obstacle == 1)  // check corner; if obstacle > turn away
+                        if (obstacle() == 1)  // check corner; if obstacle > turn away
                             {
                                 turn_right();
                                 turn_right();
@@ -873,18 +836,16 @@ void drive(void)   // main drive function; using binary numbers in if-statements
                                 
                             compass = 'E';  // set compass
                                                     
-                                if (obstacle == 1)  // check corner; if obstacle > turn away
+                                if (obstacle() == 1)  // check corner; if obstacle > turn away
                                     {
                                         turn_left();
                                         turn_left();
                                         compass = 'W';  // set compass
                                     }
                         }
-                
-                return;
             }
                                     
-        if (line == 0b111111 && obstacle == 0 && compass == 'W' && x != -3)   // turn right if west & no obstacle
+        if (line() == 0b111111 && obstacle() == 0 && compass == 'W' && x != -3)   // turn right if west & no obstacle
             {
                 vTaskDelay(250);
                                                         
@@ -892,16 +853,14 @@ void drive(void)   // main drive function; using binary numbers in if-statements
                     
                 compass = 'N';  // set compass
                                         
-                if (obstacle == 1)  // check corner; if obstacle > turn away
+                if (obstacle() == 1)  // check corner; if obstacle > turn away
                     {
                         turn_left();
                         compass = 'W';  // set compass
                     }
-                    
-                return;
             }
             
-        if ((line == 0b111111 && obstacle == 1 && compass == 'W') || (line == 0b111111 && x == -3 && compass == 'W'))    // turn right if west & obstacle!   ||  return from x -3
+        if ((line() == 0b111111 && obstacle() == 1 && compass == 'W') || (line() == 0b111111 && x == -3 && compass == 'W'))    // turn right if west & obstacle!   ||  return from x -3
             {
                 vTaskDelay(250);
                                                         
@@ -909,16 +868,14 @@ void drive(void)   // main drive function; using binary numbers in if-statements
                                            
                 compass = 'N';  // set compass
                     
-                if (obstacle == 1)  // check corner; if obstacle > turn away
+                if (obstacle() == 1)  // check corner; if obstacle > turn away
                     {
                         turn_right();
                         compass = 'E';  // set compass
                     }
-                    
-                    return;
             }
             
-        if (line == 0b111111 && obstacle == 0 && compass == 'E' && x != 3)    // turn left if east & no obstacle
+        if (line() == 0b111111 && obstacle() == 0 && compass == 'E' && x != 3)    // turn left if east & no obstacle
             {
                 vTaskDelay(250);
                                                         
@@ -926,16 +883,14 @@ void drive(void)   // main drive function; using binary numbers in if-statements
                                            
                 compass = 'N';  // set compass
                     
-                if (obstacle == 1)  // check corner; if obstacle > turn away
+                if (obstacle() == 1)  // check corner; if obstacle > turn away
                     {
                         turn_right();
                         compass = 'E';  // set compass
                     }
-                    
-                return;
             }
             
-        if ((line == 0b111111 && obstacle == 1 && compass == 'E') || (line == 0b111111 && x == 3 && compass == 'E'))    // turn left if east & obstacle!   ||  return from x +3
+        if ((line() == 0b111111 && obstacle() == 1 && compass == 'E') || (line() == 0b111111 && x == 3 && compass == 'E'))    // turn left if east & obstacle!   ||  return from x +3
             {
                 vTaskDelay(250);
                                                         
@@ -943,24 +898,18 @@ void drive(void)   // main drive function; using binary numbers in if-statements
                                            
                 compass = 'N';  // set compass
                     
-                if (obstacle == 1)  // check corner; if obstacle > turn away
+                if (obstacle() == 1)  // check corner; if obstacle > turn away
                     {
                         turn_left();
                         compass = 'W';  // set compass
                     }
-                    
-                return;
             }
            
-        if ((line == 0b011111 || line == 0b111110 || line == 0b001111 || line == 0b111100 || line == 0b000111 || line == 0b111000) && obstacle == 1)   // sides with obstacle
+        if ((line() == 0b011111 || line() == 0b111110 || line() == 0b001111 || line() == 0b111100 || line() == 0b000111 || line() == 0b111000) && obstacle() == 1)   // sides with obstacle
             {
                 vTaskDelay(50);
                         
-                    sensors();
-                    coordinatecounter();
-                    linedetector();
-                    
-                    if (line == 0b011111 || line == 0b111110 || line == 0b001111 || line == 0b111100 || line == 0b000111 || line == 0b111000)   // recheck if robot drive at an angle
+                    if (line() == 0b011111 || line() == 0b111110 || line() == 0b001111 || line() == 0b111100 || line() == 0b000111 || line() == 0b111000)   // recheck if robot drive at an angle
                         {
                             if (x < 0)  // turn right if x < 0
                                 {
@@ -978,20 +927,15 @@ void drive(void)   // main drive function; using binary numbers in if-statements
                                         compass = 'W';  // set compass
                                     }
                         }
-            return;
-            
             }
             
-        if ((line == 0b011111 || line == 0b111110 || line == 0b001111 || line == 0b111100 || line == 0b000111 || line == 0b111000) && obstacle == 0)    // sides and corners without obstacles
+        if ((line() == 0b011111 || line() == 0b111110 || line() == 0b001111 || line() == 0b111100 || line() == 0b000111 || line() == 0b111000) && obstacle() == 0)    // sides and corners without obstacles
             {
                 vTaskDelay(50);
                         
-                    sensors();
-                    coordinatecounter();
-                    linedetector();
-                    
-                    if (line == 0b011111 || line == 0b111110 || line == 0b001111 || line == 0b111100 || line == 0b000111 || line == 0b111000)   // recheck if robot drive at an angle
+                    if (line() == 0b011111 || line() == 0b111110 || line() == 0b001111 || line() == 0b111100 || line() == 0b000111 || line() == 0b111000)   // recheck if robot drive at an angle
                         {
+                            
                             if (x < 0)  // turn right if x < 0
                                 {
                                     vTaskDelay(200);
@@ -1008,10 +952,11 @@ void drive(void)   // main drive function; using binary numbers in if-statements
                                         compass = 'W';  // set compass
                                     }
                         }
-            return;
             }
              
         else motor_forward(75, 0);
+
+        return compass; // return compass value
     }
 
 void turn_left(void)    // turn left function with auto tune -> no dependence on battery level
